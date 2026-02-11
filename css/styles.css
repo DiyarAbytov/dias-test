@@ -189,7 +189,7 @@ tr:hover td { background: rgba(255,255,255,0.02); }
 .form-row textarea { min-height: 60px; resize: vertical; }
 .form-actions { margin-top: 0.75rem; }
 
-/* Tabs */
+/* Tabs: показ по :target; первая вкладка по умолчанию задаётся в app.js */
 .tabs {
   border-bottom: 1px solid var(--border);
   margin-bottom: 0.75rem;
@@ -208,12 +208,6 @@ tr:hover td { background: rgba(255,255,255,0.02); }
 .tabs a.active { color: var(--accent); border-bottom-color: var(--accent); }
 .tab-panel { display: none; }
 .tab-panel:target { display: block; }
-@supports selector(:has(*)) {
-  :root:not(:has(.tab-panel:target)) .tab-panel:first-of-type { display: block; }
-}
-@supports not (selector(:has(*))) {
-  .tab-panel:first-of-type { display: block; }
-}
 
 /* Modals */
 .modal-overlay {
@@ -304,3 +298,26 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   border: 1px dashed var(--border);
   border-radius: var(--radius);
 }
+
+/* Цепочка этапов: подсказки «поступает с» / «передаётся в» */
+.flow-hint {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.flow-hint .flow-from,
+.flow-hint .flow-to { display: flex; align-items: center; gap: 0.35rem; }
+.flow-hint a { color: var(--accent); text-decoration: none; }
+.flow-hint a:hover { text-decoration: underline; }
+.flow-chain {
+  font-size: 13px;
+  color: var(--text-muted);
+  overflow-x: auto;
+  padding: 0.25rem 0;
+}
+.flow-chain a { color: var(--accent); text-decoration: none; }
+.flow-chain a:hover { text-decoration: underline; }

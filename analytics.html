@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Аналитика — DIYAS</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="logo">DIYAS <span class="logo-sub">Пластик</span></div>
+      <nav>
+        <a href="index.html">Выход</a>
+        <a href="users.html">Пользователи</a>
+        <a href="lines.html">Линии</a>
+        <a href="materials.html">Склад сырья</a>
+        <a href="chemistry.html">Хим. элементы</a>
+        <a href="recipes.html">Рецепты</a>
+        <a href="shifts.html">Смены</a>
+        <a href="orders.html">Заказы</a>
+        <a href="production.html">Производство</a>
+        <a href="otk.html">ОТК</a>
+        <a href="warehouse.html">Склад ГП</a>
+        <a href="sales.html">Продажа</a>
+        <a href="shipment.html">Отгрузка</a>
+        <a href="clients.html">База клиентов</a>
+        <a href="analytics.html" class="active">Аналитика</a>
+      </nav>
+    </aside>
+    <main class="main">
+      <h1 class="page-title">Аналитика</h1>
+      <p class="page-desc">Сводки по этапам: производство, ОТК, склад ГП, продажи и отгрузки.</p>
+
+      <div class="card">
+        <h2 style="margin: 0 0 0.75rem;">Цепочка этапов</h2>
+        <div class="flow-chain">
+          <a href="materials.html">Склад сырья</a> → <a href="chemistry.html">Хим. элементы</a> → <a href="recipes.html">Рецепты</a> → <a href="orders.html">Заказы</a> → <a href="production.html">Производство</a> → <a href="otk.html">ОТК</a> → <a href="warehouse.html">Склад ГП</a> → <a href="sales.html">Продажа</a> → <a href="shipment.html">Отгрузка</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2>Сводка за период</h2>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Показатель</th>
+                <th>Значение</th>
+                <th>Этап</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Приход сырья, кг</td>
+                <td>550</td>
+                <td>Склад сырья</td>
+              </tr>
+              <tr>
+                <td>Выполнено заданий (хим.)</td>
+                <td>3</td>
+                <td>Хим. элементы</td>
+              </tr>
+              <tr>
+                <td>Заказы в работе</td>
+                <td>1</td>
+                <td>Заказы / Производство</td>
+              </tr>
+              <tr>
+                <td>Партий принято ОТК</td>
+                <td>2</td>
+                <td>ОТК</td>
+              </tr>
+              <tr>
+                <td>Принято на склад ГП</td>
+                <td>2 партии</td>
+                <td>Склад ГП</td>
+              </tr>
+              <tr>
+                <td>Заказов клиентов</td>
+                <td>3</td>
+                <td>Продажа</td>
+              </tr>
+              <tr>
+                <td>Отгрузок</td>
+                <td>1</td>
+                <td>Отгрузка</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 style="margin: 0 0 0.75rem;">Остатки и движение</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Склад / Раздел</th>
+                <th>Кратко</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Склад сырья</td>
+                <td>Остатки по партиям, приходы</td>
+              </tr>
+              <tr>
+                <td>Склад ГП</td>
+                <td>Доступно / Зарезервировано / Отгружено</td>
+              </tr>
+              <tr>
+                <td>Продажа</td>
+                <td>Новый → В работе → Передан в отгрузку</td>
+              </tr>
+              <tr>
+                <td>Отгрузка</td>
+                <td>К отгрузке → Отгружено</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="js/app.js"></script>
+</body>
+</html>

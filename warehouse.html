@@ -22,10 +22,20 @@
         <a href="production.html">Производство</a>
         <a href="otk.html">ОТК</a>
         <a href="warehouse.html" class="active">Склад ГП</a>
+        <a href="sales.html">Продажа</a>
+        <a href="shipment.html">Отгрузка</a>
+        <a href="clients.html">База клиентов</a>
+        <a href="analytics.html">Аналитика</a>
       </nav>
     </aside>
     <main class="main">
       <h1 class="page-title">Склад ГП</h1>
+      <p class="page-desc">Приёмка партий из ОТК. Готовая продукция доступна для резерва и заказов в <strong>Продажа</strong>.</p>
+
+      <div class="card flow-hint">
+        <span class="flow-from">Поступает из: <a href="otk.html">ОТК</a></span>
+        <span class="flow-to">Передаётся в: <a href="sales.html">Продажа</a> (резерв под заказ клиента)</span>
+      </div>
 
       <div class="tabs">
         <a href="#tab-accept" class="active">Приёмка</a>
@@ -190,5 +200,6 @@
       </div>
     </main>
   </div>
+  <script src="js/app.js"></script>
 </body>
 </html>

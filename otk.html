@@ -22,10 +22,20 @@
         <a href="production.html">Производство</a>
         <a href="otk.html" class="active">ОТК</a>
         <a href="warehouse.html">Склад ГП</a>
+        <a href="sales.html">Продажа</a>
+        <a href="shipment.html">Отгрузка</a>
+        <a href="clients.html">База клиентов</a>
+        <a href="analytics.html">Аналитика</a>
       </nav>
     </aside>
     <main class="main">
       <h1 class="page-title">ОТК</h1>
+      <p class="page-desc">Проверка партий. Принятое передаётся на <strong>Склад ГП</strong>.</p>
+
+      <div class="card flow-hint">
+        <span class="flow-from">Поступает из: <a href="production.html">Производство</a></span>
+        <span class="flow-to">Передаётся в: <a href="warehouse.html">Склад ГП</a></span>
+      </div>
 
       <div class="tabs">
         <a href="#tab-pending" class="active">Ожидают</a>
@@ -133,5 +143,6 @@
       </div>
     </main>
   </div>
+  <script src="js/app.js"></script>
 </body>
 </html>
