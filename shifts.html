@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Смены — DIYAS</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="logo">DIYAS <span class="logo-sub">Пластик</span></div>
+      <nav>
+        <a href="index.html">Выход</a>
+        <a href="users.html">Пользователи</a>
+        <a href="lines.html">Линии</a>
+        <a href="materials.html">Склад сырья</a>
+        <a href="chemistry.html">Хим. элементы</a>
+        <a href="recipes.html">Рецепты</a>
+        <a href="shifts.html" class="active">Смены</a>
+        <a href="orders.html">Заказы</a>
+        <a href="production.html">Производство</a>
+        <a href="otk.html">ОТК</a>
+        <a href="warehouse.html">Склад ГП</a>
+      </nav>
+    </aside>
+    <main class="main">
+      <h1 class="page-title">Смены</h1>
+
+      <div class="tabs">
+        <a href="#tab-active" class="active">Активные</a>
+        <a href="#tab-history">История</a>
+      </div>
+
+      <div id="tab-active" class="tab-panel">
+        <div class="card">
+          <div class="card-header">
+            <h2>Активные смены</h2>
+            <a href="#modal-open-shift" class="btn btn-primary">Открыть смену</a>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Статус</th>
+                  <th>Дата смены</th>
+                  <th>Линия</th>
+                  <th>Начальник смены</th>
+                  <th>Время начала</th>
+                  <th>Действия</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="badge badge-success">Активна</span></td>
+                  <td>11.02.2025</td>
+                  <td>Линия экструзии №1</td>
+                  <td>Петрова Анна</td>
+                  <td>08:00</td>
+                  <td class="actions">
+                    <a href="#modal-close-shift" class="btn btn-danger btn-sm">Закрыть</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-history" class="tab-panel">
+        <div class="card">
+          <div class="card-header">
+            <h2>История смен</h2>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Статус</th>
+                  <th>Дата</th>
+                  <th>Линия</th>
+                  <th>Начальник</th>
+                  <th>Начало</th>
+                  <th>Окончание</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="badge badge-success">Активна</span></td>
+                  <td>11.02.2025</td>
+                  <td>Линия экструзии №1</td>
+                  <td>Петрова Анна</td>
+                  <td>08:00</td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-default">Закрыта</span></td>
+                  <td>10.02.2025</td>
+                  <td>Линия экструзии №1</td>
+                  <td>Иванов И.</td>
+                  <td>08:00</td>
+                  <td>16:00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="modal-open-shift" class="modal-overlay">
+        <div class="modal">
+          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <h3>Открыть смену</h3>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Дата смены</label>
+              <input type="date" required>
+            </div>
+            <div class="form-row">
+              <label>Производственная линия</label>
+              <select>
+                <option>Линия экструзии №1</option>
+                <option>Линия выдува №2</option>
+              </select>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">Начальник смены определяется системой (текущий пользователь).</p>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Открыть</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="modal-close-shift" class="modal-overlay">
+        <div class="modal">
+          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <h3>Закрыть смену?</h3>
+          <p>Смена перейдёт в статус «Закрыта». Подтвердите действие.</p>
+          <div class="modal-actions">
+            <a href="#" class="btn btn-danger">Закрыть смену</a>
+            <a href="#" class="btn btn-secondary">Отмена</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

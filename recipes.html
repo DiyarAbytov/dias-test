@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Рецепты — DIYAS</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="logo">DIYAS <span class="logo-sub">Пластик</span></div>
+      <nav>
+        <a href="index.html">Выход</a>
+        <a href="users.html">Пользователи</a>
+        <a href="lines.html">Линии</a>
+        <a href="materials.html">Склад сырья</a>
+        <a href="chemistry.html">Хим. элементы</a>
+        <a href="recipes.html" class="active">Рецепты</a>
+        <a href="shifts.html">Смены</a>
+        <a href="orders.html">Заказы</a>
+        <a href="production.html">Производство</a>
+        <a href="otk.html">ОТК</a>
+        <a href="warehouse.html">Склад ГП</a>
+      </nav>
+    </aside>
+    <main class="main">
+      <h1 class="page-title">Рецепты</h1>
+
+      <div class="card">
+        <div class="card-header">
+          <h2>Список</h2>
+          <a href="#modal-create-recipe" class="btn btn-primary">Создать</a>
+        </div>
+        <div class="toolbar">
+          <input type="search" class="search" placeholder="Поиск">
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Рецепт</th>
+                <th>Товар (продукт)</th>
+                <th>Состав</th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Плёнка ПВД</td>
+                <td>Плёнка ПВД 50 мкм</td>
+                <td>Композиция ПВД 0.5 кг, Гранулы ПВД 0.1 кг</td>
+                <td class="actions">
+                  <a href="#modal-edit-recipe" class="btn btn-secondary btn-sm">Редактировать</a>
+                  <a href="#modal-delete-recipe" class="btn btn-danger btn-sm">Удалить</a>
+                </td>
+              </tr>
+              <tr>
+                <td>Пакет ПВД</td>
+                <td>Пакет с ручками</td>
+                <td>Композиция ПВД 0.3 кг, Мастербатч цветной 0.05 кг</td>
+                <td class="actions">
+                  <a href="#modal-edit-recipe" class="btn btn-secondary btn-sm">Редактировать</a>
+                  <a href="#modal-delete-recipe" class="btn btn-danger btn-sm">Удалить</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="modal-create-recipe" class="modal-overlay">
+        <div class="modal" style="max-width: 520px;">
+          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <h3>Создать рецепт</h3>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Название рецепта</label>
+              <input type="text" placeholder="Технологическое название" required>
+            </div>
+            <div class="form-row">
+              <label>Название товара</label>
+              <input type="text" placeholder="Коммерческое название" required>
+            </div>
+            <div class="form-row">
+              <label>Состав</label>
+              <div>
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap; align-items: center;">
+                  <select style="min-width: 160px;" title="Тип">
+                    <option>Сырьё (склад сырья)</option>
+                    <option>Химический элемент (склад хим. элементов)</option>
+                  </select>
+                  <select style="min-width: 160px;">
+                    <option>Гранулы ПВД</option>
+                    <option>Гранулы ПП</option>
+                    <option>Краситель</option>
+                    <option>Композиция ПВД</option>
+                    <option>Мастербатч цветной</option>
+                  </select>
+                  <input type="number" step="any" min="0.01" placeholder="Кол-во" style="width: 90px;">
+                  <span style="color: var(--text-muted);">ед.</span>
+                  <button type="button" class="btn btn-secondary btn-sm">Добавить</button>
+                </div>
+                <div class="table-wrap">
+                  <table>
+                    <thead><tr><th>Тип</th><th>Наименование</th><th>Количество</th><th></th></tr></thead>
+                    <tbody>
+                      <tr><td>Хим. элемент</td><td>Композиция ПВД</td><td>0.5 кг</td><td><a href="#" class="btn btn-danger btn-sm">×</a></td></tr>
+                      <tr><td>Сырьё</td><td>Гранулы ПВД</td><td>0.1 кг</td><td><a href="#" class="btn btn-danger btn-sm">×</a></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Создать</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="modal-edit-recipe" class="modal-overlay">
+        <div class="modal" style="max-width: 520px;">
+          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <h3>Редактировать рецепт</h3>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Название рецепта</label>
+              <input type="text" value="Плёнка ПВД" required>
+            </div>
+            <div class="form-row">
+              <label>Название товара</label>
+              <input type="text" value="Плёнка ПВД 50 мкм" required>
+            </div>
+            <div class="form-row">
+              <label>Состав</label>
+              <div>
+                <div class="table-wrap">
+                  <table>
+                    <thead><tr><th>Тип</th><th>Наименование</th><th>Количество</th><th></th></tr></thead>
+                    <tbody>
+                      <tr><td>Хим. элемент</td><td>Композиция ПВД</td><td><input type="number" step="any" value="0.5" style="width:80px;"> кг</td><td><a href="#" class="btn btn-danger btn-sm">×</a></td></tr>
+                      <tr><td>Сырьё</td><td>Гранулы ПВД</td><td><input type="number" step="any" value="0.1" style="width:80px;"> кг</td><td><a href="#" class="btn btn-danger btn-sm">×</a></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <button type="button" class="btn btn-secondary btn-sm" style="margin-top: 0.5rem;">Добавить</button>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Сохранить</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="modal-delete-recipe" class="modal-overlay">
+        <div class="modal">
+          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <h3>Удалить рецепт?</h3>
+          <p>При использовании в заказах удаление может быть запрещено.</p>
+          <div class="modal-actions">
+            <a href="#" class="btn btn-danger">Удалить</a>
+            <a href="#" class="btn btn-secondary">Отмена</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

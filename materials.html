@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Материалы склада — DIYAS</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="logo">DIYAS <span class="logo-sub">Пластик</span></div>
+      <nav>
+        <a href="index.html">Выход</a>
+        <a href="users.html">Пользователи</a>
+        <a href="lines.html">Линии</a>
+        <a href="materials.html" class="active">Склад сырья</a>
+        <a href="chemistry.html">Хим. элементы</a>
+        <a href="recipes.html">Рецепты</a>
+        <a href="shifts.html">Смены</a>
+        <a href="orders.html">Заказы</a>
+        <a href="production.html">Производство</a>
+        <a href="otk.html">ОТК</a>
+        <a href="warehouse.html">Склад ГП</a>
+      </nav>
+    </aside>
+    <main class="main">
+      <h1 class="page-title">Склад сырья</h1>
+
+      <div class="tabs">
+        <a href="#tab-raw" class="active">Справочник</a>
+        <a href="#tab-incoming">Приход</a>
+        <a href="#tab-balances">Остатки</a>
+      </div>
+
+      <div id="tab-raw" class="tab-panel">
+        <div class="card">
+          <div class="card-header">
+            <h2>Справочник</h2>
+            <a href="#modal-add-raw" class="btn btn-primary">Добавить</a>
+          </div>
+          <div class="toolbar">
+            <input type="search" class="search" placeholder="Поиск по названию">
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Название</th>
+                  <th>Единица измерения</th>
+                  <th>Действия</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Гранулы ПВД</td>
+                  <td>кг</td>
+                  <td class="actions">
+                    <a href="#modal-edit-raw" class="btn btn-secondary btn-sm">Редактировать</a>
+                    <a href="#modal-delete-raw" class="btn btn-danger btn-sm">Удалить</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Гранулы ПП</td>
+                  <td>кг</td>
+                  <td class="actions">
+                    <a href="#modal-edit-raw" class="btn btn-secondary btn-sm">Редактировать</a>
+                    <a href="#modal-delete-raw" class="btn btn-danger btn-sm">Удалить</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Краситель</td>
+                  <td>кг</td>
+                  <td class="actions">
+                    <a href="#modal-edit-raw" class="btn btn-secondary btn-sm">Редактировать</a>
+                    <a href="#modal-delete-raw" class="btn btn-danger btn-sm">Удалить</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Добавка антиокислитель</td>
+                  <td>кг</td>
+                  <td class="actions">
+                    <a href="#modal-edit-raw" class="btn btn-secondary btn-sm">Редактировать</a>
+                    <a href="#modal-delete-raw" class="btn btn-danger btn-sm">Удалить</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-incoming" class="tab-panel">
+        <div class="card">
+          <div class="card-header">
+            <h2>Приход</h2>
+            <a href="#modal-incoming" class="btn btn-primary">Оформить</a>
+          </div>
+          <div class="toolbar">
+            <input type="search" class="search" placeholder="По дате, сырью, партии, поставщику…">
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Дата</th>
+                  <th>Сырьё</th>
+                  <th>Количество</th>
+                  <th>Партия</th>
+                  <th>Поставщик</th>
+                  <th>Комментарий</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>10.02.2025</td>
+                  <td>Гранулы ПВД</td>
+                  <td>500 кг</td>
+                  <td>LOT-2025-001</td>
+                  <td>ПолимерСнаб</td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <td>09.02.2025</td>
+                  <td>Добавка антиокислитель</td>
+                  <td>50 кг</td>
+                  <td>LOT-2024-015</td>
+                  <td>ХимПласт</td>
+                  <td>—</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-balances" class="tab-panel">
+        <div class="card">
+          <div class="card-header">
+            <h2>Остатки сырья</h2>
+          </div>
+          <div class="toolbar">
+            <input type="search" class="search" placeholder="По названию сырья, партии, поставщику">
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Сырьё</th>
+                  <th>Общий остаток</th>
+                  <th>Партия</th>
+                  <th>Количество</th>
+                  <th>Дата прихода</th>
+                  <th>Поставщик</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Гранулы ПВД</td>
+                  <td>500 кг</td>
+                  <td>LOT-2025-001</td>
+                  <td>500 кг</td>
+                  <td>10.02.2025</td>
+                  <td>ПолимерСнаб</td>
+                </tr>
+                <tr>
+                  <td>Добавка антиокислитель</td>
+                  <td>50 кг</td>
+                  <td>LOT-2024-015</td>
+                  <td>50 кг</td>
+                  <td>09.02.2025</td>
+                  <td>ХимПласт</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="modal-add-raw" class="modal-overlay">
+        <div class="modal">
+          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <h3>Добавить сырьё</h3>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Название</label>
+              <input type="text" placeholder="Название" required>
+            </div>
+            <div class="form-row">
+              <label>Единица</label>
+              <select>
+                <option>г</option>
+                <option>кг</option>
+                <option>мл</option>
+                <option selected>л</option>
+              </select>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Добавить</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="modal-edit-raw" class="modal-overlay">
+        <div class="modal">
+          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <h3>Редактировать сырьё</h3>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Название</label>
+              <input type="text" value="Гранулы ПВД" required>
+            </div>
+            <div class="form-row">
+              <label>Единица</label>
+              <select>
+                <option selected>кг</option>
+                <option>г</option>
+                <option>мл</option>
+                <option>л</option>
+              </select>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Сохранить</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="modal-incoming" class="modal-overlay">
+        <div class="modal">
+          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <h3>Оформить приход</h3>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Дата прихода</label>
+              <input type="date" required>
+            </div>
+            <div class="form-row">
+              <label>Сырьё</label>
+              <select>
+                <option>Гранулы ПВД</option>
+                <option>Гранулы ПП</option>
+                <option>Краситель</option>
+                <option>Добавка антиокислитель</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>Количество</label>
+              <input type="number" step="any" min="0.01" placeholder="0" required>
+            </div>
+            <div class="form-row">
+              <label>Номер партии</label>
+              <input type="text" placeholder="LOT-2024-001">
+            </div>
+            <div class="form-row">
+              <label>Поставщик</label>
+              <input type="text" placeholder="Необязательно">
+            </div>
+            <div class="form-row">
+              <label>Комментарий</label>
+              <textarea placeholder="Необязательно"></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Оформить</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="modal-delete-raw" class="modal-overlay">
+        <div class="modal">
+          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <h3>Удалить сырьё?</h3>
+          <p>Удаление запрещено, если у сырья есть приходы или оно в рецептах.</p>
+          <div class="modal-actions">
+            <a href="#" class="btn btn-danger">Удалить</a>
+            <a href="#" class="btn btn-secondary">Отмена</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

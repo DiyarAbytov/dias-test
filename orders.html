@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Заказы на производство — DIYAS</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="logo">DIYAS <span class="logo-sub">Пластик</span></div>
+      <nav>
+        <a href="index.html">Выход</a>
+        <a href="users.html">Пользователи</a>
+        <a href="lines.html">Линии</a>
+        <a href="materials.html">Склад сырья</a>
+        <a href="chemistry.html">Хим. элементы</a>
+        <a href="recipes.html">Рецепты</a>
+        <a href="shifts.html">Смены</a>
+        <a href="orders.html" class="active">Заказы</a>
+        <a href="production.html">Производство</a>
+        <a href="otk.html">ОТК</a>
+        <a href="warehouse.html">Склад ГП</a>
+      </nav>
+    </aside>
+    <main class="main">
+      <h1 class="page-title">Заказы</h1>
+
+      <div class="card">
+        <div class="card-header">
+          <h2>План по линии</h2>
+          <select class="search" style="min-width: 160px;">
+            <option>Линия экструзии №1</option>
+            <option>Линия выдува №2</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Статус</th>
+                <th>Продукт</th>
+                <th>План</th>
+                <th>Выпущено</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="badge badge-warning">В работе</span></td>
+                <td>Плёнка ПВД 50 мкм</td>
+                <td>1000</td>
+                <td>500</td>
+                <td><a href="production.html#modal-produce" class="btn btn-primary btn-sm">Выпустить</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2>Все заказы</h2>
+          <a href="#modal-create-order" class="btn btn-primary">Создать</a>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Статус</th>
+                <th>Продукт</th>
+                <th>Рецепт</th>
+                <th>План, шт</th>
+                <th>Линия</th>
+                <th>Кто создал</th>
+                <th>Дата</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="badge badge-warning">В работе</span></td>
+                <td>Плёнка ПВД 50 мкм</td>
+                <td>Плёнка ПВД</td>
+                <td>1000</td>
+                <td>Линия экструзии №1</td>
+                <td>Петрова А.</td>
+                <td>11.02.2025</td>
+              </tr>
+              <tr>
+                <td><span class="badge badge-default">Создан</span></td>
+                <td>Пакет с ручками</td>
+                <td>Пакет ПВД</td>
+                <td>2000</td>
+                <td>Линия выдува №2</td>
+                <td>Иванов И.</td>
+                <td>10.02.2025</td>
+              </tr>
+              <tr>
+                <td><span class="badge badge-success">Готово</span></td>
+                <td>Плёнка ПВД 50 мкм</td>
+                <td>Плёнка ПВД</td>
+                <td>500</td>
+                <td>Линия экструзии №1</td>
+                <td>Иванов И.</td>
+                <td>09.02.2025</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="modal-create-order" class="modal-overlay">
+        <div class="modal">
+          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <h3>Создать заказ</h3>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Рецепт</label>
+              <select>
+                <option>Плёнка ПВД — Плёнка ПВД 50 мкм</option>
+                <option>Пакет ПВД — Пакет с ручками</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>Линия</label>
+              <select>
+                <option>Линия экструзии №1</option>
+                <option>Линия выдува №2</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>Кол-во, шт</label>
+              <input type="number" min="1" value="1000" required>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Создать</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

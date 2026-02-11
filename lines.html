@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Линии — DIYAS</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="logo">DIYAS <span class="logo-sub">Пластик</span></div>
+      <nav>
+        <a href="index.html">Выход</a>
+        <a href="users.html">Пользователи</a>
+        <a href="lines.html" class="active">Линии</a>
+        <a href="materials.html">Склад сырья</a>
+        <a href="chemistry.html">Хим. элементы</a>
+        <a href="recipes.html">Рецепты</a>
+        <a href="shifts.html">Смены</a>
+        <a href="orders.html">Заказы</a>
+        <a href="production.html">Производство</a>
+        <a href="otk.html">ОТК</a>
+        <a href="warehouse.html">Склад ГП</a>
+      </nav>
+    </aside>
+    <main class="main">
+      <h1 class="page-title">Линии</h1>
+
+      <div class="card">
+        <div class="card-header">
+          <h2>Список</h2>
+          <a href="#modal-create-line" class="btn btn-primary">Создать</a>
+        </div>
+        <div class="toolbar">
+          <select class="search" style="min-width: 220px;">
+            <option>Поиск по названию…</option>
+            <option>Линия экструзии №1</option>
+            <option>Линия выдува №2</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Название</th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Линия экструзии №1</td>
+                <td class="actions">
+                  <a href="#modal-edit-line" class="btn btn-secondary btn-sm">Редактировать</a>
+                  <a href="#modal-delete-line" class="btn btn-danger btn-sm">Удалить</a>
+                </td>
+              </tr>
+              <tr>
+                <td>Линия выдува №2</td>
+                <td class="actions">
+                  <a href="#modal-edit-line" class="btn btn-secondary btn-sm">Редактировать</a>
+                  <a href="#modal-delete-line" class="btn btn-danger btn-sm">Удалить</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="modal-create-line" class="modal-overlay">
+        <div class="modal">
+          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <h3>Создать линию</h3>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Название</label>
+              <input type="text" placeholder="Например: Линия экструзии №1" maxlength="255" required>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Создать</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="modal-edit-line" class="modal-overlay">
+        <div class="modal">
+          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <h3>Редактировать линию</h3>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Название</label>
+              <input type="text" value="Линия экструзии №1" maxlength="255" required>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Сохранить</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="modal-delete-line" class="modal-overlay">
+        <div class="modal">
+          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <h3>Удалить линию?</h3>
+          <p>Если линия используется в сменах или заказах, удаление может быть запрещено.</p>
+          <div class="modal-actions">
+            <a href="#" class="btn btn-danger">Удалить</a>
+            <a href="#" class="btn btn-secondary">Отмена</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

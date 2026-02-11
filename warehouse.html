@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Склад готовой продукции — DIYAS</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="logo">DIYAS <span class="logo-sub">Пластик</span></div>
+      <nav>
+        <a href="index.html">Выход</a>
+        <a href="users.html">Пользователи</a>
+        <a href="lines.html">Линии</a>
+        <a href="materials.html">Склад сырья</a>
+        <a href="chemistry.html">Хим. элементы</a>
+        <a href="recipes.html">Рецепты</a>
+        <a href="shifts.html">Смены</a>
+        <a href="orders.html">Заказы</a>
+        <a href="production.html">Производство</a>
+        <a href="otk.html">ОТК</a>
+        <a href="warehouse.html" class="active">Склад ГП</a>
+      </nav>
+    </aside>
+    <main class="main">
+      <h1 class="page-title">Склад ГП</h1>
+
+      <div class="tabs">
+        <a href="#tab-accept" class="active">Приёмка</a>
+        <a href="#tab-batches">Партии</a>
+        <a href="#tab-balances-gp">Остатки</a>
+      </div>
+
+      <div id="tab-accept" class="tab-panel">
+        <div class="card">
+          <div class="card-header">
+            <h2>К приёмке</h2>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Продукт</th>
+                  <th>Принято ОТК, шт</th>
+                  <th>Дата производства</th>
+                  <th>Инспектор ОТК</th>
+                  <th>Действия</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Плёнка ПВД 50 мкм</td>
+                  <td>50</td>
+                  <td>11.02.2025</td>
+                  <td>Иванов Иван</td>
+                  <td class="actions">
+                    <a href="#modal-accept-gp" class="btn btn-primary btn-sm">Принять</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <h2 style="margin: 0 0 0.75rem;">История</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Партия ГП</th>
+                  <th>Продукт</th>
+                  <th>Количество</th>
+                  <th>Дата приёмки</th>
+                  <th>Кто принял</th>
+                  <th>Комментарий</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>FG-001-20250209</td>
+                  <td>Плёнка ПВД 50 мкм</td>
+                  <td>50</td>
+                  <td>09.02.2025</td>
+                  <td>Петрова Анна</td>
+                  <td>—</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-batches" class="tab-panel">
+        <div class="card">
+          <div class="card-header">
+            <h2>Партии ГП</h2>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Статус</th>
+                  <th>Номер партии ГП</th>
+                  <th>Продукт</th>
+                  <th>Заказ</th>
+                  <th>Количество</th>
+                  <th>Остаток</th>
+                  <th>Дата производства</th>
+                  <th>Дата приёмки</th>
+                  <th>Кто принял</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="badge badge-success">Доступна</span></td>
+                  <td>FG-001-20250209</td>
+                  <td>Плёнка ПВД 50 мкм</td>
+                  <td>Заказ от 09.02</td>
+                  <td>50</td>
+                  <td>50</td>
+                  <td>09.02.2025</td>
+                  <td>09.02.2025</td>
+                  <td>Петрова Анна</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-balances-gp" class="tab-panel">
+        <div class="card">
+          <div class="card-header">
+            <h2>Остатки ГП</h2>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Продукт</th>
+                  <th>Всего на складе</th>
+                  <th>Партия</th>
+                  <th>Статус</th>
+                  <th>Остаток</th>
+                  <th>Дата производства</th>
+                  <th>Дата приёмки</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Плёнка ПВД 50 мкм</td>
+                  <td>50 шт</td>
+                  <td>FG-001-20250209</td>
+                  <td><span class="badge badge-success">Доступна</span></td>
+                  <td>50</td>
+                  <td>09.02.2025</td>
+                  <td>09.02.2025</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="modal-accept-gp" class="modal-overlay">
+        <div class="modal">
+          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <h3>Принять на склад</h3>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Продукт</label>
+              <span>Плёнка ПВД 50 мкм, 50 шт</span>
+            </div>
+            <div class="form-row">
+              <label>Номер партии</label>
+              <input type="text" value="FG-002-20250211">
+            </div>
+            <div class="form-row">
+              <label>Комментарий</label>
+              <textarea placeholder="Необязательно"></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Принять</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
