@@ -30,19 +30,18 @@
     </aside>
     <main class="main">
       <h1 class="page-title">Рецепты</h1>
-      <p class="page-desc">Технолог составляет рецепт: берёт товары из <strong>Склада сырья</strong> и готовые <strong>Химические элементы</strong> из их склада, смешивает — создаётся рецепт.</p>
 
-      <div class="warning-block">
-        <strong>Важно:</strong> В рецептах можно использовать только те химические элементы, которые <strong>подтверждены</strong> в разделе <strong>Хим. элементы</strong> и поступили на склад хим. элементов. Пока химик не подтвердит выполнение задания, элемент недоступен.
+      <div class="info-block">
+        Используйте только подтверждённые хим. элементы.
       </div>
 
       <div class="card">
         <div class="card-header">
-          <h2>Список</h2>
+          <h2>Рецепты</h2>
           <a href="#modal-create-recipe" class="btn btn-primary">Создать</a>
         </div>
         <div class="toolbar">
-          <input type="search" class="search" placeholder="Поиск">
+          <input type="search" class="search" placeholder="Поиск…">
         </div>
         <div class="table-wrap">
           <table>
@@ -62,7 +61,7 @@
                 <td>Композиция ПВД 0.5 кг, Гранулы ПВД 0.1 кг</td>
                 <td><span class="badge badge-success">Подтверждён <span class="confirmed-badge">✓</span></span></td>
                 <td class="actions">
-                  <span style="color: var(--success); font-size: 12px;">✓ Доступен для заказов</span>
+                  <span style="color: var(--success); font-size: 12px;">✓ Доступен</span>
                   <a href="#modal-edit-recipe" class="btn btn-secondary btn-sm">Редактировать</a>
                   <a href="#modal-delete-recipe" class="btn btn-danger btn-sm">Удалить</a>
                 </td>
@@ -73,7 +72,7 @@
                 <td>Композиция ПВД 0.3 кг, Мастербатч цветной 0.05 кг</td>
                 <td><span class="badge badge-warning">Создан</span></td>
                 <td class="actions">
-                  <a href="#modal-confirm-recipe-2" class="btn btn-success btn-sm">Подтвердить рецепт</a>
+                  <a href="#modal-confirm-recipe-2" class="btn btn-success btn-sm">Подтвердить</a>
                   <a href="#modal-edit-recipe" class="btn btn-secondary btn-sm">Редактировать</a>
                   <a href="#modal-delete-recipe" class="btn btn-danger btn-sm">Удалить</a>
                 </td>
@@ -86,15 +85,15 @@
       <div id="modal-create-recipe" class="modal-overlay">
         <div class="modal" style="max-width: 520px;">
           <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
-          <h3>Создать рецепт</h3>
+          <h3>Создать</h3>
           <form class="form-grid">
             <div class="form-row">
-              <label>Название рецепта</label>
-              <input type="text" placeholder="Технологическое название" required>
+              <label>Рецепт</label>
+              <input type="text" placeholder="Название" required>
             </div>
             <div class="form-row">
-              <label>Название товара</label>
-              <input type="text" placeholder="Коммерческое название" required>
+              <label>Товар</label>
+              <input type="text" placeholder="Товар" required>
             </div>
             <div class="form-row">
               <label>Состав</label>
@@ -123,7 +122,7 @@
                 </div>
                 <div class="table-wrap">
                   <table>
-                    <thead><tr><th>Тип</th><th>Наименование</th><th>Количество</th><th></th></tr></thead>
+                    <thead><tr><th>Тип</th><th>Наименование</th><th>Кол-во</th><th></th></tr></thead>
                     <tbody>
                       <tr>
                         <td>Хим. элемент <span class="confirmed-badge">✓</span></td>
@@ -153,14 +152,14 @@
       <div id="modal-edit-recipe" class="modal-overlay">
         <div class="modal" style="max-width: 520px;">
           <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
-          <h3>Редактировать рецепт</h3>
+          <h3>Редактировать</h3>
           <form class="form-grid">
             <div class="form-row">
-              <label>Название рецепта</label>
+              <label>Рецепт</label>
               <input type="text" value="Плёнка ПВД" required>
             </div>
             <div class="form-row">
-              <label>Название товара</label>
+              <label>Товар</label>
               <input type="text" value="Плёнка ПВД 50 мкм" required>
             </div>
             <div class="form-row">
@@ -168,7 +167,7 @@
               <div>
                 <div class="table-wrap">
                   <table>
-                    <thead><tr><th>Тип</th><th>Наименование</th><th>Количество</th><th></th></tr></thead>
+                    <thead><tr><th>Тип</th><th>Наименование</th><th>Кол-во</th><th></th></tr></thead>
                     <tbody>
                       <tr>
                         <td>Хим. элемент <span class="confirmed-badge">✓</span></td>
@@ -200,17 +199,17 @@
       <div id="modal-confirm-recipe-2" class="modal-overlay">
         <div class="modal">
           <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
-          <h3>Подтвердить рецепт</h3>
+          <h3>Подтвердить</h3>
           <p><strong>Рецепт:</strong> Пакет ПВД</p>
           <p><strong>Товар:</strong> Пакет с ручками</p>
-          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 0.75rem;">После подтверждения рецепт станет доступен для использования в <strong>Заказах</strong>.</p>
+          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 0.75rem;">После подтверждения рецепт станет доступен в Заказах.</p>
           <form class="form-grid">
             <div class="form-row">
               <label>Комментарий</label>
-              <textarea placeholder="Необязательно"></textarea>
+              <textarea></textarea>
             </div>
             <div class="form-actions">
-              <button type="submit" class="btn btn-success">Подтвердить рецепт</button>
+              <button type="submit" class="btn btn-success">Подтвердить</button>
               <a href="#" class="btn btn-secondary">Отмена</a>
             </div>
           </form>
@@ -220,8 +219,8 @@
       <div id="modal-delete-recipe" class="modal-overlay">
         <div class="modal">
           <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
-          <h3>Удалить рецепт?</h3>
-          <p>При использовании в заказах удаление может быть запрещено.</p>
+          <h3>Удалить?</h3>
+          <p>Если рецепт используется, удаление может быть запрещено.</p>
           <div class="modal-actions">
             <a href="#" class="btn btn-danger">Удалить</a>
             <a href="#" class="btn btn-secondary">Отмена</a>

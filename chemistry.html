@@ -30,7 +30,6 @@
     </aside>
     <main class="main">
       <h1 class="page-title">Хим. элементы</h1>
-      <p class="page-desc">Химики берут сырьё из <strong>Склада сырья</strong>, смешивают и создают химические элементы. Готовые элементы хранятся на складе хим. элементов.</p>
 
       <div class="tabs">
         <a href="#tab-chem-plan" class="active">План</a>
@@ -40,11 +39,11 @@
 
       <div id="tab-chem-plan" class="tab-panel">
         <div class="info-block">
-          <strong>Важно:</strong> Пока задание не подтверждено как "Выполнено", химический элемент не будет доступен в <strong>Рецептах</strong>. Каждый этап должен подтвердить свою работу.
+          Подтвердите выполнение — элемент станет доступен в Рецептах.
         </div>
         <div class="card">
           <div class="card-header">
-            <h2>План заданий</h2>
+            <h2>План</h2>
             <a href="#modal-create-task-chem" class="btn btn-primary">Добавить</a>
           </div>
           <div class="table-wrap">
@@ -53,7 +52,7 @@
                 <tr>
                   <th>Задание</th>
                   <th>Хим. элемент</th>
-                  <th>Кол-во</th>
+                  <th>Кол-во, кг</th>
                   <th>Срок</th>
                   <th>Статус</th>
                   <th>Исполнитель</th>
@@ -70,7 +69,7 @@
                   <td>Сидоров П.</td>
                   <td class="actions">
                     <a href="#modal-produce-chem" class="btn btn-primary btn-sm">Выполнить</a>
-                    <a href="#modal-confirm-chem-1" class="btn btn-success btn-sm">Подтвердить выполнение</a>
+                    <a href="#modal-confirm-chem-1" class="btn btn-success btn-sm">Подтвердить</a>
                   </td>
                 </tr>
                 <tr>
@@ -92,7 +91,7 @@
                   <td><span class="badge badge-success">Выполнено <span class="confirmed-badge">Подтверждено</span></span></td>
                   <td>Сидоров П.</td>
                   <td class="actions">
-                    <span style="color: var(--success); font-size: 12px;">✓ Доступно для рецептов</span>
+                    <span style="color: var(--success); font-size: 12px;">✓ Доступно</span>
                   </td>
                 </tr>
               </tbody>
@@ -108,7 +107,7 @@
             <a href="#modal-create-chem" class="btn btn-primary">Создать</a>
           </div>
           <div class="toolbar">
-            <input type="search" class="search" placeholder="Поиск по названию">
+            <input type="search" class="search" placeholder="Поиск…">
           </div>
           <div class="table-wrap">
             <table>
@@ -192,7 +191,7 @@
       <div id="modal-create-task-chem" class="modal-overlay">
         <div class="modal">
           <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
-          <h3>Добавить задание</h3>
+          <h3>Добавить</h3>
           <form class="form-grid">
             <div class="form-row">
               <label>Хим. элемент</label>
@@ -202,7 +201,7 @@
               </select>
             </div>
             <div class="form-row">
-              <label>Количество</label>
+              <label>Кол-во</label>
               <input type="number" step="any" min="0.01" value="200"> <span style="margin-left: 0.5rem; color: var(--text-muted);">кг</span>
             </div>
             <div class="form-row">
@@ -229,7 +228,7 @@
       <div id="modal-create-chem" class="modal-overlay">
         <div class="modal" style="max-width: 540px;">
           <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
-          <h3>Создать хим. элемент</h3>
+          <h3>Создать</h3>
           <form class="form-grid">
             <div class="form-row">
               <label>Название</label>
@@ -317,7 +316,7 @@
       <div id="modal-produce-chem" class="modal-overlay">
         <div class="modal" style="max-width: 560px;">
           <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
-          <h3>Создать партию</h3>
+          <h3>Создать</h3>
           <form class="form-grid">
             <div class="form-row">
               <label>Хим. элемент</label>
@@ -331,11 +330,11 @@
               <input type="number" step="any" min="0.01" value="10"> <span style="margin-left: 0.35rem; color: var(--text-muted);">кг</span>
             </div>
             <div class="form-row">
-              <label>Сырьё со склада сырья (списание)</label>
+              <label>Списание</label>
               <div class="table-wrap">
                 <table>
                   <thead>
-                    <tr><th>Сырьё</th><th>Требуется</th><th>Партия со склада сырья</th><th>Остаток на складе</th></tr>
+                    <tr><th>Сырьё</th><th>Требуется</th><th>Партия</th><th>Остаток</th></tr>
                   </thead>
                   <tbody>
                     <tr>
@@ -356,16 +355,16 @@
             </div>
             <div class="form-row">
               <label>Результат</label>
-              <div style="padding: 0.5rem; background: rgba(88, 166, 255, 0.1); border-left: 3px solid var(--accent); font-size: 12px; color: var(--text-muted);">
-                <strong>Важно:</strong> После создания партии нужно вернуться к заданию и нажать <strong>"Подтвердить выполнение"</strong>. Только после подтверждения химический элемент станет доступен в разделе <strong>Рецепты</strong>.
+              <div class="info-block" style="margin: 0;">
+                После создания подтвердите выполнение.
               </div>
             </div>
             <div class="form-row">
-              <label>Номер партии</label>
+              <label>Партия</label>
               <input type="text" value="CHEM-002-20250211">
             </div>
             <div class="form-actions">
-              <button type="submit" class="btn btn-primary">Создать партию</button>
+              <button type="submit" class="btn btn-primary">Создать</button>
               <a href="#" class="btn btn-secondary">Отмена</a>
             </div>
           </form>
@@ -378,22 +377,22 @@
           <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
           <h3>Подтвердить выполнение</h3>
           <p><strong>Задание #1:</strong> Композиция ПВД, 200 кг</p>
-          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 0.75rem;">После подтверждения химический элемент поступит на склад хим. элементов и станет доступен для использования в <strong>Рецептах</strong>.</p>
+          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 0.75rem;">После подтверждения элемент станет доступен в Рецептах.</p>
           <form class="form-grid">
             <div class="form-row">
               <label>Партия хим. элемента</label>
               <input type="text" value="CHEM-001-20250211" required>
             </div>
             <div class="form-row">
-              <label>Количество создано</label>
+              <label>Создано</label>
               <input type="number" step="any" min="0.01" value="200"> <span style="margin-left: 0.5rem; color: var(--text-muted);">кг</span>
             </div>
             <div class="form-row">
               <label>Комментарий</label>
-              <textarea placeholder="Необязательно"></textarea>
+              <textarea></textarea>
             </div>
             <div class="form-actions">
-              <button type="submit" class="btn btn-success">Подтвердить выполнение</button>
+              <button type="submit" class="btn btn-success">Подтвердить</button>
               <a href="#" class="btn btn-secondary">Отмена</a>
             </div>
           </form>
@@ -404,7 +403,7 @@
         <div class="modal">
           <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
           <h3>Удалить?</h3>
-          <p style="font-size: 13px; color: var(--text-muted);">Элемент используется — удаление может быть недоступно.</p>
+          <p style="font-size: 13px; color: var(--text-muted);">Если элемент используется, удаление может быть недоступно.</p>
           <div class="modal-actions">
             <a href="#" class="btn btn-danger">Удалить</a>
             <a href="#" class="btn btn-secondary">Отмена</a>

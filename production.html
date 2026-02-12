@@ -30,20 +30,18 @@
     </aside>
     <main class="main">
       <h1 class="page-title">Производство</h1>
-      <p class="page-desc">Оператор выбирает заказ, одобряет количество к выпуску. Показывается сколько уходит средств из <strong>Склада сырья</strong> и склада хим. элементов. После выпуска партия передаётся в <strong>ОТК</strong>.</p>
 
       <div class="info-block">
-        <strong>Важно:</strong> При выпуске партии происходит автоматическое списание сырья со <strong>Склада сырья</strong> и химических элементов со <strong>Склада хим. элементов</strong> согласно рецепту. После выпуска нужно <strong>подтвердить выпуск</strong> — тогда партия передаётся в <strong>ОТК</strong>.
+        При выпуске происходит списание со складов. После выпуска подтвердите — партия передаётся в ОТК.
       </div>
 
-      <div class="card flow-hint">
-        <span class="flow-from">Поступает из: <a href="orders.html">Заказы</a>, <a href="shifts.html">Смены</a></span>
-        <span class="flow-to">Передаётся в: <a href="otk.html">ОТК</a></span>
+      <div class="flow-hint">
+        <a href="orders.html">Заказы</a> → <a href="otk.html">ОТК</a>
       </div>
 
       <div class="card">
         <div class="card-header">
-          <h2>План по заказам</h2>
+          <h2>План</h2>
           <a href="#modal-produce" class="btn btn-primary">Выпустить</a>
         </div>
         <div class="table-wrap">
@@ -67,7 +65,7 @@
                 <td><span class="badge badge-warning">В работе</span></td>
                 <td class="actions">
                   <a href="#modal-produce" class="btn btn-primary btn-sm">Выпустить</a>
-                  <a href="#modal-confirm-production" class="btn btn-success btn-sm">Подтвердить выпуск</a>
+                  <a href="#modal-confirm-production" class="btn btn-success btn-sm">Подтвердить</a>
                 </td>
               </tr>
             </tbody>
@@ -77,7 +75,7 @@
 
       <div class="card">
         <div class="card-header">
-          <h2>Партии в ОТК</h2>
+          <h2>Партии</h2>
         </div>
         <div class="table-wrap">
           <table>
@@ -113,24 +111,24 @@
       <div id="modal-produce" class="modal-overlay">
         <div class="modal" style="max-width: 560px;">
           <a href="#" class="modal-close">×</a>
-          <h3>Выпустить партию</h3>
+          <h3>Выпустить</h3>
           <form class="form-grid">
             <div class="form-row">
-              <label>Производственный заказ</label>
+              <label>Заказ</label>
               <select>
                 <option>Плёнка ПВД 50 мкм (Линия экструзии №1, план 1000 шт) <span class="confirmed-badge">✓</span> Смена открыта</option>
                 <option disabled>Пакет с ручками (Линия выдува №2, план 2000 шт) — заказ не подтверждён</option>
               </select>
             </div>
             <div class="info-block" style="margin-top: 0.5rem;">
-              <strong>Проверка:</strong> Доступны только подтверждённые заказы со статусом "В работе" для линий с открытыми сменами.
+              Доступны только подтверждённые заказы для линий с открытыми сменами.
             </div>
             <div class="form-row">
               <label>Кол-во, шт</label>
               <input type="number" min="1" value="500" required>
             </div>
             <div class="form-row">
-              <label>Списание компонентов (по рецепту)</label>
+              <label>Списание</label>
               <div class="table-wrap">
                 <table>
                   <thead>
@@ -140,7 +138,7 @@
                       <th>Откуда</th>
                       <th>Партия</th>
                       <th>Остаток</th>
-                      <th>Достаточно</th>
+                      <th>Статус</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -150,7 +148,7 @@
                       <td><span style="color: var(--accent);">Склад хим. элементов</span></td>
                       <td><select><option>CHEM-001-20250210 (100 кг)</option></select></td>
                       <td>100 кг</td>
-                      <td><span style="color: var(--danger); font-weight: 600;">⚠ Недостаточно! Нужно 250 кг, есть только 100 кг</span></td>
+                      <td><span style="color: var(--danger); font-weight: 600;">⚠ Недостаточно</span></td>
                     </tr>
                     <tr>
                       <td><strong>Гранулы ПВД</strong></td>
@@ -158,20 +156,20 @@
                       <td><span style="color: var(--accent); font-weight: 600;">Склад сырья</span></td>
                       <td><select><option>LOT-2025-001 (500 кг)</option></select></td>
                       <td>500 кг</td>
-                      <td><span style="color: var(--success);">✓ Достаточно</span></td>
+                      <td><span style="color: var(--success);">✓</span></td>
                     </tr>
                   </tbody>
                 </table>
               </div>
               <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(88, 166, 255, 0.1); border-left: 3px solid var(--accent); font-size: 12px; color: var(--text-muted);">
-                <strong>Списание происходит автоматически:</strong> при выпуске партии указанные компоненты будут списаны со склада сырья и склада хим. элементов согласно рецепту.
+                Списание происходит автоматически.
               </div>
             </div>
             <div class="warning-block" style="margin-top: 0.75rem;">
-              <strong>Внимание:</strong> Проверьте остатки компонентов. Если остатков недостаточно, выпуск партии будет заблокирован.
+              Проверьте остатки.
             </div>
             <div class="form-actions">
-              <button type="submit" class="btn btn-primary" id="btn-produce" disabled>Выпустить (недостаточно компонентов)</button>
+              <button type="submit" class="btn btn-primary" id="btn-produce" disabled>Выпустить</button>
               <a href="#" class="btn btn-secondary">Отмена</a>
             </div>
           </form>
@@ -186,14 +184,14 @@
           <p><strong>Продукт:</strong> Плёнка ПВД 50 мкм</p>
           <p><strong>Линия:</strong> Линия экструзии №1</p>
           <p><strong>Выпущено:</strong> 500 шт</p>
-          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 0.75rem;">После подтверждения партия будет передана в <strong>ОТК</strong> на проверку. Списание со склада сырья и склада хим. элементов уже выполнено.</p>
+          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 0.75rem;">После подтверждения партия передаётся в ОТК.</p>
           <form class="form-grid">
             <div class="form-row">
               <label>Комментарий</label>
-              <textarea placeholder="Необязательно"></textarea>
+              <textarea></textarea>
             </div>
             <div class="form-actions">
-              <button type="submit" class="btn btn-success">Подтвердить выпуск</button>
+              <button type="submit" class="btn btn-success">Подтвердить</button>
               <a href="#" class="btn btn-secondary">Отмена</a>
             </div>
           </form>

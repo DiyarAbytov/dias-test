@@ -30,20 +30,18 @@
     </aside>
     <main class="main">
       <h1 class="page-title">Заказы</h1>
-      <p class="page-desc">Планировщик создаёт заказ: выбирает <strong>Рецепт</strong>, <strong>Линию</strong> и <strong>Количество</strong>. Заказы в работе выполняются в <strong>Производство</strong>.</p>
 
       <div class="info-block">
-        <strong>Статусы заказов:</strong> <span class="badge badge-default">Создан</span> → <span class="badge badge-warning">В работе</span> (после подтверждения) → <span class="badge badge-success">Готово</span>. Пока заказ не подтверждён, он недоступен в <strong>Производстве</strong>.
+        Статусы: <span class="badge badge-default">Создан</span> → <span class="badge badge-warning">В работе</span> → <span class="badge badge-success">Готово</span>
       </div>
 
-      <div class="card flow-hint">
-        <span class="flow-from">Поступает из: <a href="recipes.html">Рецепты</a>, <a href="lines.html">Линии</a>, <a href="shifts.html">Смены</a></span>
-        <span class="flow-to">Передаётся в: <a href="production.html">Производство</a></span>
+      <div class="flow-hint">
+        <a href="recipes.html">Рецепты</a> → <a href="production.html">Производство</a>
       </div>
 
       <div class="card">
         <div class="card-header">
-          <h2>План по линии</h2>
+          <h2>План</h2>
           <select class="search" style="min-width: 160px;">
             <option>Линия экструзии №1</option>
             <option>Линия выдува №2</option>
@@ -75,7 +73,7 @@
 
       <div class="card">
         <div class="card-header">
-          <h2>Все заказы</h2>
+          <h2>Заказы</h2>
           <a href="#modal-create-order" class="btn btn-primary">Создать</a>
         </div>
         <div class="table-wrap">
@@ -85,9 +83,9 @@
                 <th>Статус</th>
                 <th>Продукт</th>
                 <th>Рецепт</th>
-                <th>План, шт</th>
+                <th>План</th>
                 <th>Линия</th>
-                <th>Кто создал</th>
+                <th>Кто</th>
                 <th>Дата</th>
                 <th>Действия</th>
               </tr>
@@ -102,7 +100,7 @@
                 <td>Петрова А.</td>
                 <td>11.02.2025</td>
                 <td class="actions">
-                  <span style="color: var(--success); font-size: 12px;">✓ Доступен в производстве</span>
+                  <span style="color: var(--success); font-size: 12px;">✓ Доступен</span>
                 </td>
               </tr>
               <tr>
@@ -114,7 +112,7 @@
                 <td>Иванов И.</td>
                 <td>10.02.2025</td>
                 <td class="actions">
-                  <a href="#modal-confirm-order-2" class="btn btn-success btn-sm">Подтвердить заказ</a>
+                  <a href="#modal-confirm-order-2" class="btn btn-success btn-sm">Подтвердить</a>
                 </td>
               </tr>
               <tr>
@@ -135,7 +133,7 @@
       <div id="modal-create-order" class="modal-overlay">
         <div class="modal">
           <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
-          <h3>Создать заказ</h3>
+          <h3>Создать</h3>
           <form class="form-grid">
             <div class="form-row">
               <label>Рецепт</label>
@@ -144,8 +142,8 @@
                 <option disabled>Пакет ПВД — Пакет с ручками (не подтверждён)</option>
               </select>
             </div>
-            <div class="warning-block" style="margin-top: 0.5rem;">
-              <strong>Важно:</strong> Можно выбрать только подтверждённые рецепты. Неподтверждённые рецепты недоступны для создания заказа.
+            <div class="info-block" style="margin-top: 0.5rem;">
+              Доступны только подтверждённые рецепты.
             </div>
             <div class="form-row">
               <label>Линия</label>
@@ -155,7 +153,7 @@
               </select>
             </div>
             <div class="form-row">
-              <label>Кол-во, шт</label>
+              <label>Кол-во</label>
               <input type="number" min="1" value="1000" required>
             </div>
             <div class="form-actions">
@@ -170,19 +168,19 @@
       <div id="modal-confirm-order-2" class="modal-overlay">
         <div class="modal">
           <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
-          <h3>Подтвердить заказ</h3>
+          <h3>Подтвердить</h3>
           <p><strong>Заказ:</strong> Пакет с ручками</p>
           <p><strong>Рецепт:</strong> Пакет ПВД</p>
           <p><strong>Линия:</strong> Линия выдува №2</p>
           <p><strong>План:</strong> 2000 шт</p>
-          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 0.75rem;">После подтверждения заказ перейдёт в статус "В работе" и станет доступен в разделе <strong>Производство</strong>.</p>
+          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 0.75rem;">После подтверждения заказ станет доступен в Производстве.</p>
           <form class="form-grid">
             <div class="form-row">
               <label>Комментарий</label>
-              <textarea placeholder="Необязательно"></textarea>
+              <textarea></textarea>
             </div>
             <div class="form-actions">
-              <button type="submit" class="btn btn-success">Подтвердить заказ</button>
+              <button type="submit" class="btn btn-success">Подтвердить</button>
               <a href="#" class="btn btn-secondary">Отмена</a>
             </div>
           </form>

@@ -30,11 +30,9 @@
     </aside>
     <main class="main">
       <h1 class="page-title">Склад сырья</h1>
-      <p class="page-desc">Наш общий склад сырья. Приход и остатки. Сырьё берут <strong>Химики</strong> для создания хим. элементов и используют в <strong>Рецептах</strong>.</p>
 
-      <div class="card flow-hint">
-        <span class="flow-from">Этап начальный: приход сырья</span>
-        <span class="flow-to">Передаётся в: <a href="chemistry.html">Хим. элементы</a>, <a href="recipes.html">Рецепты</a></span>
+      <div class="flow-hint">
+        <a href="chemistry.html">Хим. элементы</a> • <a href="recipes.html">Рецепты</a>
       </div>
 
       <div class="tabs">
@@ -50,14 +48,14 @@
             <a href="#modal-add-raw" class="btn btn-primary">Добавить</a>
           </div>
           <div class="toolbar">
-            <input type="search" class="search" placeholder="Поиск по названию">
+            <input type="search" class="search" placeholder="Поиск…">
           </div>
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
                   <th>Название</th>
-                  <th>Единица измерения</th>
+                  <th>Ед.</th>
                   <th>Действия</th>
                 </tr>
               </thead>
@@ -107,7 +105,7 @@
             <a href="#modal-incoming" class="btn btn-primary">Оформить</a>
           </div>
           <div class="toolbar">
-            <input type="search" class="search" placeholder="По дате, сырью, партии, поставщику…">
+            <input type="search" class="search" placeholder="Поиск…">
           </div>
           <div class="table-wrap">
             <table>
@@ -147,17 +145,17 @@
       <div id="tab-balances" class="tab-panel">
         <div class="card">
           <div class="card-header">
-            <h2>Остатки сырья</h2>
+            <h2>Остатки</h2>
           </div>
           <div class="toolbar">
-            <input type="search" class="search" placeholder="По названию сырья, партии, поставщику">
+            <input type="search" class="search" placeholder="Поиск…">
           </div>
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
                   <th>Сырьё</th>
-                  <th>Общий остаток</th>
+                  <th>Остаток</th>
                   <th>Партия</th>
                   <th>Количество</th>
                   <th>Дата прихода</th>
@@ -190,14 +188,14 @@
       <div id="modal-add-raw" class="modal-overlay">
         <div class="modal">
           <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
-          <h3>Добавить сырьё</h3>
+          <h3>Добавить</h3>
           <form class="form-grid">
             <div class="form-row">
               <label>Название</label>
               <input type="text" placeholder="Название" required>
             </div>
             <div class="form-row">
-              <label>Единица</label>
+              <label>Ед.</label>
               <select>
                 <option>г</option>
                 <option>кг</option>
@@ -216,14 +214,14 @@
       <div id="modal-edit-raw" class="modal-overlay">
         <div class="modal">
           <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
-          <h3>Редактировать сырьё</h3>
+          <h3>Редактировать</h3>
           <form class="form-grid">
             <div class="form-row">
               <label>Название</label>
               <input type="text" value="Гранулы ПВД" required>
             </div>
             <div class="form-row">
-              <label>Единица</label>
+              <label>Ед.</label>
               <select>
                 <option selected>кг</option>
                 <option>г</option>
@@ -242,7 +240,7 @@
       <div id="modal-incoming" class="modal-overlay">
         <div class="modal">
           <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
-          <h3>Оформить приход</h3>
+          <h3>Приход</h3>
           <form class="form-grid">
             <div class="form-row">
               <label>Дата прихода</label>
@@ -262,16 +260,16 @@
               <input type="number" step="any" min="0.01" placeholder="0" required>
             </div>
             <div class="form-row">
-              <label>Номер партии</label>
+              <label>Партия</label>
               <input type="text" placeholder="LOT-2024-001">
             </div>
             <div class="form-row">
               <label>Поставщик</label>
-              <input type="text" placeholder="Необязательно">
+              <input type="text">
             </div>
             <div class="form-row">
               <label>Комментарий</label>
-              <textarea placeholder="Необязательно"></textarea>
+              <textarea></textarea>
             </div>
             <div class="form-actions">
               <button type="submit" class="btn btn-primary">Оформить</button>
@@ -284,8 +282,8 @@
       <div id="modal-delete-raw" class="modal-overlay">
         <div class="modal">
           <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
-          <h3>Удалить сырьё?</h3>
-          <p>Удаление запрещено, если у сырья есть приходы или оно в рецептах.</p>
+          <h3>Удалить?</h3>
+          <p>Если сырьё используется, удаление может быть запрещено.</p>
           <div class="modal-actions">
             <a href="#" class="btn btn-danger">Удалить</a>
             <a href="#" class="btn btn-secondary">Отмена</a>

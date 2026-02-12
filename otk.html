@@ -30,15 +30,13 @@
     </aside>
     <main class="main">
       <h1 class="page-title">ОТК</h1>
-      <p class="page-desc">Проверка фактов: <strong>СКОЛЬКО БРАК И СКОЛЬКО ПРИНЯТО</strong>. После подтверждения принятое передаётся на <strong>Склад ГП</strong>.</p>
 
       <div class="info-block">
-        <strong>Статусы:</strong> <span class="badge badge-warning">Ожидает проверки</span> → <span class="badge badge-success">Принято</span> (передано на Склад ГП) / <span class="badge badge-danger">Брак</span>. Каждая проверка должна быть подтверждена.
+        Статусы: <span class="badge badge-warning">Ожидает</span> → <span class="badge badge-success">Принято</span> / <span class="badge badge-danger">Брак</span>
       </div>
 
-      <div class="card flow-hint">
-        <span class="flow-from">Поступает из: <a href="production.html">Производство</a></span>
-        <span class="flow-to">Передаётся в: <a href="warehouse.html">Склад ГП</a></span>
+      <div class="flow-hint">
+        <a href="production.html">Производство</a> → <a href="warehouse.html">Склад ГП</a>
       </div>
 
       <div class="tabs">
@@ -49,17 +47,17 @@
       <div id="tab-pending" class="tab-panel">
         <div class="card">
           <div class="card-header">
-            <h2>Ожидают</h2>
+            <h2>Ожидают проверки</h2>
           </div>
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
                   <th>Статус</th>
-                  <th>Заказ (продукт)</th>
-                  <th>Количество</th>
+                  <th>Продукт</th>
+                  <th>Кол-во</th>
                   <th>Оператор</th>
-                  <th>Дата производства</th>
+                  <th>Дата</th>
                   <th>Действия</th>
                 </tr>
               </thead>
@@ -83,7 +81,7 @@
       <div id="tab-history-otk" class="tab-panel">
         <div class="card">
           <div class="card-header">
-            <h2>История ОТК</h2>
+            <h2>История</h2>
           </div>
           <div class="table-wrap">
             <table>
@@ -91,11 +89,11 @@
                 <tr>
                   <th>Статус</th>
                   <th>Продукт</th>
-                  <th>Принято, шт</th>
-                  <th>Брак, шт</th>
+                  <th>Принято</th>
+                  <th>Брак</th>
                   <th>Причина брака</th>
                   <th>Инспектор</th>
-                  <th>Дата проверки</th>
+                  <th>Проверено</th>
                   <th>Комментарий</th>
                 </tr>
               </thead>
@@ -108,7 +106,7 @@
                   <td>—</td>
                   <td>Иванов Иван</td>
                   <td>09.02.2025</td>
-                  <td>✓ Передано на Склад ГП</td>
+                  <td>✓ Передано</td>
                 </tr>
               </tbody>
             </table>
@@ -119,38 +117,38 @@
       <div id="modal-check-otk" class="modal-overlay">
         <div class="modal">
           <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
-          <h3>Проверить партию</h3>
+          <h3>Проверить</h3>
           <p><strong>Продукт:</strong> Плёнка ПВД 50 мкм</p>
           <p><strong>Оператор:</strong> Петрова Анна</p>
-          <p><strong>Количество произведено:</strong> 50 шт</p>
-          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 0.75rem;">Проверьте факты: <strong>СКОЛЬКО БРАК И СКОЛЬКО ПРИНЯТО</strong>. После подтверждения принятое передаётся на <strong>Склад ГП</strong>.</p>
+          <p><strong>Произведено:</strong> 50 шт</p>
+          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 0.75rem;">Проверьте брак и принято. После подтверждения передаётся на Склад ГП.</p>
           <form class="form-grid" style="margin-top: 1rem;">
             <div class="form-row">
-              <label>Принято (шт)</label>
+              <label>Принято</label>
               <input type="number" min="0" value="50" required id="otk-accepted">
             </div>
             <div class="form-row">
-              <label>Брак (шт)</label>
+              <label>Брак</label>
               <input type="number" min="0" value="0" required id="otk-rejected">
             </div>
             <div class="form-row">
               <label>Итого</label>
-              <span id="otk-total" style="color: var(--text-muted);">50 шт (должно быть 50 шт)</span>
+              <span id="otk-total" style="color: var(--text-muted);">50 шт</span>
             </div>
             <div class="warning-block" id="otk-warning" style="display: none; margin-top: 0.5rem;">
-              <strong>Ошибка:</strong> Сумма "Принято" + "Брак" должна равняться количеству произведённого (50 шт)!
+              Сумма должна быть 50 шт.
             </div>
             <div class="form-row">
               <label>Причина брака</label>
-              <input type="text" placeholder="Если брак &gt; 0">
+              <input type="text" placeholder="Причина">
             </div>
             <div class="form-row">
               <label>Комментарий</label>
-              <textarea placeholder="Необязательно"></textarea>
+              <textarea></textarea>
             </div>
             <div class="form-actions">
-              <button type="submit" name="action" value="accept" class="btn btn-success">Подтвердить: Принято</button>
-              <button type="submit" name="action" value="reject" class="btn btn-danger">Подтвердить: Брак</button>
+              <button type="submit" name="action" value="accept" class="btn btn-success">Принято</button>
+              <button type="submit" name="action" value="reject" class="btn btn-danger">Брак</button>
               <a href="#" class="btn btn-secondary">Отмена</a>
             </div>
               <button type="submit" class="btn btn-primary">Сохранить</button>

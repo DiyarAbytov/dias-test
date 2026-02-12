@@ -30,7 +30,6 @@
     </aside>
     <main class="main">
       <h1 class="page-title">Пользователи</h1>
-      <p class="page-desc">Управление сотрудниками и их ролями. Роль определяет доступ к разделам системы и права на выполнение операций.</p>
 
       <div class="tabs">
         <a href="#tab-users" class="active">Пользователи</a>
@@ -40,11 +39,11 @@
       <div id="tab-users" class="tab-panel">
       <div class="card">
         <div class="card-header">
-          <h2>Список</h2>
-          <a href="#modal-create-user" class="btn btn-primary">Создать пользователя</a>
+          <h2>Пользователи</h2>
+          <a href="#modal-create-user" class="btn btn-primary">Создать</a>
         </div>
         <div class="toolbar">
-          <input type="search" class="search" placeholder="Поиск по ФИО, Email…">
+          <input type="search" class="search" placeholder="Поиск…">
         </div>
         <div class="table-wrap">
           <table>
@@ -88,16 +87,16 @@
         <div class="card">
           <div class="card-header">
             <h2>Роли</h2>
-            <a href="#modal-create-role" class="btn btn-primary">Создать роль</a>
+            <a href="#modal-create-role" class="btn btn-primary">Создать</a>
           </div>
           <div class="toolbar">
-            <input type="search" class="search" placeholder="Поиск по названию роли">
+            <input type="search" class="search" placeholder="Поиск…">
           </div>
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Название роли</th>
+                  <th>Роль</th>
                   <th>Описание</th>
                   <th>Пользователей</th>
                   <th>Действия</th>
@@ -167,11 +166,11 @@
       <div id="modal-create-user" class="modal-overlay">
         <div class="modal">
           <a href="#" class="modal-close">×</a>
-          <h3>Создать пользователя</h3>
+          <h3>Создать</h3>
           <form class="form-grid">
             <div class="form-row">
               <label>ФИО</label>
-              <input type="text" placeholder="ФИО">
+              <input type="text" placeholder="ФИО" required>
             </div>
             <div class="form-row">
               <label>Email</label>
@@ -206,7 +205,7 @@
       <div id="modal-edit-user" class="modal-overlay">
         <div class="modal">
           <a href="#" class="modal-close">×</a>
-          <h3>Редактировать пользователя</h3>
+          <h3>Редактировать</h3>
           <form class="form-grid">
             <div class="form-row">
               <label>ФИО</label>
@@ -236,8 +235,8 @@
       <div id="modal-delete-user" class="modal-overlay">
         <div class="modal">
           <a href="#" class="modal-close">×</a>
-          <h3>Удалить пользователя?</h3>
-          <p>Пользователь будет удалён из списка. Это действие нельзя отменить.</p>
+          <h3>Удалить?</h3>
+          <p>Действие нельзя отменить.</p>
           <div class="modal-actions">
             <a href="#" class="btn btn-danger">Удалить</a>
             <a href="#" class="btn btn-secondary">Отмена</a>
@@ -249,7 +248,7 @@
       <div id="modal-access-ivanov" class="modal-overlay">
         <div class="modal modal-access">
           <a href="#" class="modal-close">×</a>
-          <h3>Доступы: ivanov</h3>
+          <h3>Доступы</h3>
           <form class="access-form">
             <label class="access-check"><input type="checkbox" name="access" value="users" checked> Пользователи</label>
             <label class="access-check"><input type="checkbox" name="access" value="lines" checked> Линии</label>
@@ -273,7 +272,7 @@
       <div id="modal-access-petrova" class="modal-overlay">
         <div class="modal modal-access">
           <a href="#" class="modal-close">×</a>
-          <h3>Доступы: petrova</h3>
+          <h3>Доступы</h3>
           <form class="access-form">
             <label class="access-check"><input type="checkbox" name="access" value="users"> Пользователи и роли</label>
             <label class="access-check"><input type="checkbox" name="access" value="lines" checked> Линии</label>
@@ -297,15 +296,15 @@
       <div id="modal-create-role" class="modal-overlay">
         <div class="modal modal-access">
           <a href="#" class="modal-close">×</a>
-          <h3>Создать роль</h3>
+          <h3>Создать</h3>
           <form class="form-grid">
             <div class="form-row">
-              <label>Название роли</label>
-              <input type="text" placeholder="Например: Менеджер по продажам" required>
+              <label>Роль</label>
+              <input type="text" placeholder="Название" required>
             </div>
             <div class="form-row">
               <label>Описание</label>
-              <textarea placeholder="Краткое описание роли и её функций"></textarea>
+              <textarea placeholder="Описание"></textarea>
             </div>
             <div class="form-row">
               <label>Доступы к разделам</label>
@@ -327,7 +326,7 @@
               </div>
             </div>
             <div class="form-actions">
-              <button type="submit" class="btn btn-primary">Создать роль</button>
+              <button type="submit" class="btn btn-primary">Создать</button>
               <a href="#" class="btn btn-secondary">Отмена</a>
             </div>
           </form>
@@ -337,10 +336,10 @@
       <div id="modal-edit-role-admin" class="modal-overlay">
         <div class="modal modal-access">
           <a href="#" class="modal-close">×</a>
-          <h3>Редактировать роль: Администратор</h3>
+          <h3>Редактировать: Администратор</h3>
           <form class="form-grid">
             <div class="form-row">
-              <label>Название роли</label>
+              <label>Роль</label>
               <input type="text" value="Администратор" required>
             </div>
             <div class="form-row">
@@ -377,10 +376,10 @@
       <div id="modal-edit-role-shift" class="modal-overlay">
         <div class="modal modal-access">
           <a href="#" class="modal-close">×</a>
-          <h3>Редактировать роль: Начальник смены</h3>
+          <h3>Редактировать: Начальник смены</h3>
           <form class="form-grid">
             <div class="form-row">
-              <label>Название роли</label>
+              <label>Роль</label>
               <input type="text" value="Начальник смены" required>
             </div>
             <div class="form-row">
@@ -413,7 +412,7 @@
           <h3>Редактировать роль: Химик</h3>
           <form class="form-grid">
             <div class="form-row">
-              <label>Название роли</label>
+              <label>Роль</label>
               <input type="text" value="Химик" required>
             </div>
             <div class="form-row">
@@ -438,10 +437,10 @@
       <div id="modal-edit-role-tech" class="modal-overlay">
         <div class="modal modal-access">
           <a href="#" class="modal-close">×</a>
-          <h3>Редактировать роль: Технолог</h3>
+          <h3>Редактировать: Технолог</h3>
           <form class="form-grid">
             <div class="form-row">
-              <label>Название роли</label>
+              <label>Роль</label>
               <input type="text" value="Технолог" required>
             </div>
             <div class="form-row">
@@ -467,10 +466,10 @@
       <div id="modal-edit-role-operator" class="modal-overlay">
         <div class="modal modal-access">
           <a href="#" class="modal-close">×</a>
-          <h3>Редактировать роль: Оператор</h3>
+          <h3>Редактировать: Оператор</h3>
           <form class="form-grid">
             <div class="form-row">
-              <label>Название роли</label>
+              <label>Роль</label>
               <input type="text" value="Оператор" required>
             </div>
             <div class="form-row">
@@ -495,10 +494,10 @@
       <div id="modal-edit-role-otk" class="modal-overlay">
         <div class="modal modal-access">
           <a href="#" class="modal-close">×</a>
-          <h3>Редактировать роль: Инспектор ОТК</h3>
+          <h3>Редактировать: Инспектор ОТК</h3>
           <form class="form-grid">
             <div class="form-row">
-              <label>Название роли</label>
+              <label>Роль</label>
               <input type="text" value="Инспектор ОТК" required>
             </div>
             <div class="form-row">
@@ -524,8 +523,8 @@
       <div id="modal-delete-role" class="modal-overlay">
         <div class="modal">
           <a href="#" class="modal-close">×</a>
-          <h3>Удалить роль?</h3>
-          <p>Если роль используется пользователями, удаление может быть ограничено. Пользователи с этой ролью останутся без роли.</p>
+          <h3>Удалить?</h3>
+          <p>Если роль используется, удаление может быть ограничено.</p>
           <div class="modal-actions">
             <a href="#" class="btn btn-danger">Удалить</a>
             <a href="#" class="btn btn-secondary">Отмена</a>

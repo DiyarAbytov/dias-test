@@ -30,17 +30,15 @@
     </aside>
     <main class="main">
       <h1 class="page-title">Продажа</h1>
-      <p class="page-desc">Заказы клиентов. ГП резервируется со <strong>Склад ГП</strong>. После оформления заказ передаётся в <strong>Отгрузка</strong>.</p>
 
-      <div class="card flow-hint">
-        <span class="flow-from">Поступает с: <a href="warehouse.html">Склад ГП</a></span>
-        <span class="flow-to">Передаётся в: <a href="shipment.html">Отгрузка</a></span>
+      <div class="flow-hint">
+        <a href="warehouse.html">Склад ГП</a> → <a href="shipment.html">Отгрузка</a>
       </div>
 
       <div class="card">
         <div class="card-header">
-          <h2>Заказы клиентов</h2>
-          <a href="#modal-create-sale" class="btn btn-primary">Создать заказ</a>
+          <h2>Заказы</h2>
+          <a href="#modal-create-sale" class="btn btn-primary">Создать</a>
         </div>
         <div class="toolbar">
           <input type="search" class="search" placeholder="По клиенту, продукту, дате">
@@ -50,10 +48,10 @@
             <thead>
               <tr>
                 <th>Статус</th>
-                <th>Номер заказа</th>
+                <th>Заказ</th>
                 <th>Клиент</th>
                 <th>Продукт</th>
-                <th>Кол-во</th>
+                <th>Кол-во, шт</th>
                 <th>Резерв со склада</th>
                 <th>Дата заказа</th>
                 <th>Менеджер</th>
@@ -71,7 +69,7 @@
                 <td>10.02.2025</td>
                 <td>Петрова А.</td>
                 <td class="actions">
-                  <a href="#modal-transfer-shipment" class="btn btn-primary btn-sm">Передать в отгрузку</a>
+                  <a href="#modal-transfer-shipment" class="btn btn-primary btn-sm">Передать</a>
                   <a href="#modal-edit-sale" class="btn btn-secondary btn-sm">Изменить</a>
                 </td>
               </tr>
@@ -85,7 +83,7 @@
                 <td>11.02.2025</td>
                 <td>Иванов И.</td>
                 <td class="actions">
-                  <a href="#modal-reserve" class="btn btn-secondary btn-sm">Резерв со склада</a>
+                  <a href="#modal-reserve" class="btn btn-secondary btn-sm">Резерв</a>
                   <a href="#modal-edit-sale" class="btn btn-secondary btn-sm">Изменить</a>
                 </td>
               </tr>
@@ -108,7 +106,7 @@
       <div id="modal-create-sale" class="modal-overlay">
         <div class="modal" style="max-width: 480px;">
           <a href="#" class="modal-close">×</a>
-          <h3>Создать заказ клиента</h3>
+          <h3>Создать</h3>
           <form class="form-grid">
             <div class="form-row">
               <label>Клиент</label>
@@ -118,26 +116,26 @@
               </select>
             </div>
             <div class="form-row">
-              <label>Продукт (со склада ГП)</label>
+              <label>Продукт</label>
               <select>
                 <option>Плёнка ПВД 50 мкм (остаток: 50 шт, доступно)</option>
                 <option disabled>Пакет с ручками (остаток: 0 шт, недоступно)</option>
               </select>
             </div>
             <div class="form-row">
-              <label>Количество</label>
+              <label>Кол-во, шт</label>
               <input type="number" min="1" max="50" value="50" required>
               <span style="margin-left: 0.5rem; color: var(--text-muted); font-size: 12px;">Макс: 50 шт (доступно на складе)</span>
             </div>
             <div class="info-block" style="margin-top: 0.5rem;">
-              <strong>Проверка:</strong> Можно заказать только то, что есть на складе ГП в статусе "Доступна".
+              Доступны только партии ГП в статусе "Доступна".
             </div>
             <div class="form-row">
               <label>Комментарий</label>
-              <textarea placeholder="Необязательно"></textarea>
+              <textarea></textarea>
             </div>
             <div class="form-actions">
-              <button type="submit" class="btn btn-primary">Создать заказ</button>
+              <button type="submit" class="btn btn-primary">Создать</button>
               <a href="#" class="btn btn-secondary">Отмена</a>
             </div>
           </form>
@@ -147,8 +145,8 @@
       <div id="modal-reserve" class="modal-overlay">
         <div class="modal">
           <a href="#" class="modal-close">×</a>
-          <h3>Резерв со склада ГП</h3>
-          <p>Зарезервировать партию под заказ SO-2025-002.</p>
+          <h3>Резерв</h3>
+          <p>Заказ SO-2025-002</p>
           <form class="form-grid">
             <div class="form-row">
               <label>Партия ГП</label>
@@ -158,10 +156,10 @@
               </select>
             </div>
             <div class="info-block" style="margin-top: 0.5rem;">
-              <strong>Важно:</strong> Для резерва доступны только партии ГП в статусе "Доступна".
+              Для резерва доступны только партии в статусе "Доступна".
             </div>
             <div class="form-actions">
-              <button type="submit" class="btn btn-primary">Зарезервировать</button>
+              <button type="submit" class="btn btn-primary">Резерв</button>
               <a href="#" class="btn btn-secondary">Отмена</a>
             </div>
           </form>
@@ -171,8 +169,8 @@
       <div id="modal-transfer-shipment" class="modal-overlay">
         <div class="modal">
           <a href="#" class="modal-close">×</a>
-          <h3>Передать в отгрузку</h3>
-          <p>Заказ SO-2025-001 будет передан в раздел <strong>Отгрузка</strong>. Там оформят отгрузку клиенту.</p>
+          <h3>Передать</h3>
+          <p>Заказ SO-2025-001 будет передан в Отгрузку.</p>
           <div class="modal-actions">
             <a href="shipment.html" class="btn btn-primary">Передать</a>
             <a href="#" class="btn btn-secondary">Отмена</a>
@@ -183,14 +181,14 @@
       <div id="modal-edit-sale" class="modal-overlay">
         <div class="modal">
           <a href="#" class="modal-close">×</a>
-          <h3>Изменить заказ</h3>
+          <h3>Изменить</h3>
           <form class="form-grid">
             <div class="form-row">
               <label>Клиент</label>
               <select><option>ООО «УпаковкаПлюс»</option><option>ИП Петров</option></select>
             </div>
             <div class="form-row">
-              <label>Количество</label>
+              <label>Кол-во, шт</label>
               <input type="number" min="1" value="50">
             </div>
             <div class="form-actions">

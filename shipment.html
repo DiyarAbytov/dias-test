@@ -30,11 +30,9 @@
     </aside>
     <main class="main">
       <h1 class="page-title">Отгрузка</h1>
-      <p class="page-desc">Оформление отгрузок клиентам. Заказы поступают из <strong>Продажа</strong>. После отгрузки партия ГП переходит в статус «Отгружена» — этап завершён.</p>
 
-      <div class="card flow-hint">
-        <span class="flow-from">Поступает из: <a href="sales.html">Продажа</a></span>
-        <span class="flow-to">Этап конечный: отгрузка клиенту</span>
+      <div class="flow-hint">
+        <a href="sales.html">Продажа</a> → Отгрузка
       </div>
 
       <div class="tabs">
@@ -46,7 +44,7 @@
         <div class="card">
           <div class="card-header">
             <h2>К отгрузке</h2>
-            <a href="#modal-ship" class="btn btn-primary">Оформить отгрузку</a>
+            <a href="#modal-ship" class="btn btn-primary">Отгрузить</a>
           </div>
           <div class="table-wrap">
             <table>
@@ -55,7 +53,7 @@
                   <th>Заказ клиента</th>
                   <th>Клиент</th>
                   <th>Продукт</th>
-                  <th>Кол-во</th>
+                  <th>Кол-во, шт</th>
                   <th>Партия ГП</th>
                   <th>Дата заказа</th>
                   <th>Действия</th>
@@ -92,9 +90,9 @@
                   <th>Заказ</th>
                   <th>Клиент</th>
                   <th>Продукт</th>
-                  <th>Кол-во</th>
-                  <th>Дата отгрузки</th>
-                  <th>Кто оформил</th>
+                  <th>Кол-во, шт</th>
+                  <th>Дата</th>
+                  <th>Кто</th>
                 </tr>
               </thead>
               <tbody>
@@ -116,27 +114,27 @@
       <div id="modal-ship" class="modal-overlay">
         <div class="modal" style="max-width: 480px;">
           <a href="#" class="modal-close">×</a>
-          <h3>Оформить отгрузку</h3>
+          <h3>Отгрузка</h3>
           <form class="form-grid">
             <div class="form-row">
               <label>Заказ</label>
               <span>SO-2025-001 — ООО «УпаковкаПлюс», Плёнка ПВД 50 мкм, 50 шт</span>
             </div>
             <div class="form-row">
-              <label>Номер накладной</label>
+              <label>Накладная</label>
               <input type="text" placeholder="SH-2025-002">
             </div>
             <div class="form-row">
-              <label>Дата отгрузки</label>
+              <label>Дата</label>
               <input type="date" required>
             </div>
             <div class="form-row">
-              <label>Адрес доставки</label>
+              <label>Адрес</label>
               <input type="text" value="г. Москва, ул. Складская, 1">
             </div>
             <div class="form-row">
               <label>Комментарий</label>
-              <textarea placeholder="Необязательно"></textarea>
+              <textarea></textarea>
             </div>
             <div class="form-actions">
               <button type="submit" class="btn btn-primary">Отгрузить</button>

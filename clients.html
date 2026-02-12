@@ -30,15 +30,14 @@
     </aside>
     <main class="main">
       <h1 class="page-title">База клиентов</h1>
-      <p class="page-desc">Справочник клиентов для заказов и отгрузок. Используется в <strong>Продажа</strong> и <strong>Отгрузка</strong>.</p>
 
       <div class="card">
         <div class="card-header">
           <h2>Клиенты</h2>
-          <a href="#modal-create-client" class="btn btn-primary">Добавить клиента</a>
+          <a href="#modal-create-client" class="btn btn-primary">Добавить</a>
         </div>
         <div class="toolbar">
-          <input type="search" class="search" placeholder="Поиск по названию, ИНН, контакту">
+          <input type="search" class="search" placeholder="Поиск…">
         </div>
         <div class="table-wrap">
           <table>
@@ -48,7 +47,7 @@
                 <th>ИНН</th>
                 <th>Контакт</th>
                 <th>Телефон</th>
-                <th>Адрес доставки</th>
+                <th>Адрес</th>
                 <th>Действия</th>
               </tr>
             </thead>
@@ -83,7 +82,7 @@
       <div id="modal-create-client" class="modal-overlay">
         <div class="modal">
           <a href="#" class="modal-close">×</a>
-          <h3>Добавить клиента</h3>
+          <h3>Добавить</h3>
           <form class="form-grid">
             <div class="form-row">
               <label>Название</label>
@@ -91,10 +90,10 @@
             </div>
             <div class="form-row">
               <label>ИНН</label>
-              <input type="text" placeholder="10 или 12 цифр">
+              <input type="text" placeholder="ИНН">
             </div>
             <div class="form-row">
-              <label>Контактное лицо</label>
+              <label>Контакт</label>
               <input type="text" placeholder="ФИО">
             </div>
             <div class="form-row">
@@ -102,8 +101,8 @@
               <input type="tel" placeholder="+7 …">
             </div>
             <div class="form-row">
-              <label>Адрес доставки</label>
-              <textarea placeholder="По умолчанию для отгрузок"></textarea>
+              <label>Адрес</label>
+              <textarea placeholder="Адрес"></textarea>
             </div>
             <div class="form-actions">
               <button type="submit" class="btn btn-primary">Добавить</button>
@@ -116,7 +115,7 @@
       <div id="modal-edit-client" class="modal-overlay">
         <div class="modal">
           <a href="#" class="modal-close">×</a>
-          <h3>Редактировать клиента</h3>
+          <h3>Редактировать</h3>
           <form class="form-grid">
             <div class="form-row">
               <label>Название</label>
@@ -127,7 +126,7 @@
               <input type="text" value="7707123456">
             </div>
             <div class="form-row">
-              <label>Контактное лицо</label>
+              <label>Контакт</label>
               <input type="text" value="Сидоров П.И.">
             </div>
             <div class="form-row">
@@ -135,7 +134,7 @@
               <input type="tel" value="+7 (495) 123-45-67">
             </div>
             <div class="form-row">
-              <label>Адрес доставки</label>
+              <label>Адрес</label>
               <textarea>г. Москва, ул. Складская, 1</textarea>
             </div>
             <div class="form-actions">
@@ -149,8 +148,8 @@
       <div id="modal-delete-client" class="modal-overlay">
         <div class="modal">
           <a href="#" class="modal-close">×</a>
-          <h3>Удалить клиента?</h3>
-          <p>Если по клиенту есть заказы или отгрузки, удаление может быть ограничено.</p>
+          <h3>Удалить?</h3>
+          <p>Если по клиенту есть заказы, удаление может быть ограничено.</p>
           <div class="modal-actions">
             <a href="#" class="btn btn-danger">Удалить</a>
             <a href="#" class="btn btn-secondary">Отмена</a>
