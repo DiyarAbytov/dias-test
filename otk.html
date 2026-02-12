@@ -6,7 +6,7 @@
   <title>Контроль качества (ОТК) — DIYAS</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body data-page="otk">
   <div class="app-layout">
     <aside class="sidebar">
       <div class="logo">DIYAS <span class="logo-sub">Пластик</span></div>
@@ -62,16 +62,6 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><span class="badge badge-warning">Ожидает проверки</span></td>
-                  <td>Плёнка ПВД 50 мкм</td>
-                  <td>50 шт</td>
-                  <td>Петрова Анна</td>
-                  <td>11.02.2025</td>
-                  <td class="actions">
-                    <a href="#modal-check-otk" class="btn btn-primary btn-sm">Проверить</a>
-                  </td>
-                </tr>
               </tbody>
             </table>
           </div>
@@ -98,16 +88,6 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><span class="badge badge-success">Принято <span class="confirmed-badge">✓</span></span></td>
-                  <td>Плёнка ПВД 50 мкм</td>
-                  <td>50</td>
-                  <td>0</td>
-                  <td>—</td>
-                  <td>Иванов Иван</td>
-                  <td>09.02.2025</td>
-                  <td>✓ Передано</td>
-                </tr>
               </tbody>
             </table>
           </div>
@@ -125,11 +105,11 @@
           <form class="form-grid" style="margin-top: 1rem;">
             <div class="form-row">
               <label>Принято</label>
-              <input type="number" min="0" value="50" required id="otk-accepted">
+              <input type="number" min="0" value="" required id="otk-accepted">
             </div>
             <div class="form-row">
               <label>Брак</label>
-              <input type="number" min="0" value="0" required id="otk-rejected">
+              <input type="number" min="0" value="" required id="otk-rejected">
             </div>
             <div class="form-row">
               <label>Итого</label>

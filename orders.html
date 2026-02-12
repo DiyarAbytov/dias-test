@@ -6,7 +6,7 @@
   <title>Заказы на производство — DIYAS</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body data-page="orders">
   <div class="app-layout">
     <aside class="sidebar">
       <div class="logo">DIYAS <span class="logo-sub">Пластик</span></div>
@@ -59,13 +59,6 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td><span class="badge badge-warning">В работе</span></td>
-                <td>Плёнка ПВД 50 мкм</td>
-                <td>1000</td>
-                <td>500</td>
-                <td><a href="production.html#modal-produce" class="btn btn-primary btn-sm">Выпустить</a></td>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -91,40 +84,6 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td><span class="badge badge-warning">В работе <span class="confirmed-badge">✓</span></span></td>
-                <td>Плёнка ПВД 50 мкм</td>
-                <td>Плёнка ПВД</td>
-                <td>1000</td>
-                <td>Линия экструзии №1</td>
-                <td>Петрова А.</td>
-                <td>11.02.2025</td>
-                <td class="actions">
-                  <span style="color: var(--success); font-size: 12px;">✓ Доступен</span>
-                </td>
-              </tr>
-              <tr>
-                <td><span class="badge badge-default">Создан</span></td>
-                <td>Пакет с ручками</td>
-                <td>Пакет ПВД</td>
-                <td>2000</td>
-                <td>Линия выдува №2</td>
-                <td>Иванов И.</td>
-                <td>10.02.2025</td>
-                <td class="actions">
-                  <a href="#modal-confirm-order-2" class="btn btn-success btn-sm">Подтвердить</a>
-                </td>
-              </tr>
-              <tr>
-                <td><span class="badge badge-success">Готово <span class="confirmed-badge">✓</span></span></td>
-                <td>Плёнка ПВД 50 мкм</td>
-                <td>Плёнка ПВД</td>
-                <td>500</td>
-                <td>Линия экструзии №1</td>
-                <td>Иванов И.</td>
-                <td>09.02.2025</td>
-                <td class="actions">—</td>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -138,8 +97,6 @@
             <div class="form-row">
               <label>Рецепт</label>
               <select>
-                <option>Плёнка ПВД — Плёнка ПВД 50 мкм <span class="confirmed-badge">✓</span></option>
-                <option disabled>Пакет ПВД — Пакет с ручками (не подтверждён)</option>
               </select>
             </div>
             <div class="info-block" style="margin-top: 0.5rem;">
@@ -148,13 +105,11 @@
             <div class="form-row">
               <label>Линия</label>
               <select>
-                <option>Линия экструзии №1</option>
-                <option>Линия выдува №2</option>
               </select>
             </div>
             <div class="form-row">
               <label>Кол-во</label>
-              <input type="number" min="1" value="1000" required>
+              <input type="number" min="1" value="" required>
             </div>
             <div class="form-actions">
               <button type="submit" class="btn btn-primary">Создать</button>
@@ -169,10 +124,10 @@
         <div class="modal">
           <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
           <h3>Подтвердить</h3>
-          <p><strong>Заказ:</strong> Пакет с ручками</p>
-          <p><strong>Рецепт:</strong> Пакет ПВД</p>
-          <p><strong>Линия:</strong> Линия выдува №2</p>
-          <p><strong>План:</strong> 2000 шт</p>
+          <p><strong>Заказ:</strong></p>
+          <p><strong>Рецепт:</strong></p>
+          <p><strong>Линия:</strong></p>
+          <p><strong>План:</strong></p>
           <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 0.75rem;">После подтверждения заказ станет доступен в Производстве.</p>
           <form class="form-grid">
             <div class="form-row">

@@ -6,7 +6,7 @@
   <title>Материалы склада — DIYAS</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body data-page="materials">
   <div class="app-layout">
     <aside class="sidebar">
       <div class="logo">DIYAS <span class="logo-sub">Пластик</span></div>
@@ -60,38 +60,6 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Гранулы ПВД</td>
-                  <td>кг</td>
-                  <td class="actions">
-                    <a href="#modal-edit-raw" class="btn btn-secondary btn-sm">Редактировать</a>
-                    <a href="#modal-delete-raw" class="btn btn-danger btn-sm">Удалить</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Гранулы ПП</td>
-                  <td>кг</td>
-                  <td class="actions">
-                    <a href="#modal-edit-raw" class="btn btn-secondary btn-sm">Редактировать</a>
-                    <a href="#modal-delete-raw" class="btn btn-danger btn-sm">Удалить</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Краситель</td>
-                  <td>кг</td>
-                  <td class="actions">
-                    <a href="#modal-edit-raw" class="btn btn-secondary btn-sm">Редактировать</a>
-                    <a href="#modal-delete-raw" class="btn btn-danger btn-sm">Удалить</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Добавка антиокислитель</td>
-                  <td>кг</td>
-                  <td class="actions">
-                    <a href="#modal-edit-raw" class="btn btn-secondary btn-sm">Редактировать</a>
-                    <a href="#modal-delete-raw" class="btn btn-danger btn-sm">Удалить</a>
-                  </td>
-                </tr>
               </tbody>
             </table>
           </div>
@@ -120,22 +88,6 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>10.02.2025</td>
-                  <td>Гранулы ПВД</td>
-                  <td>500 кг</td>
-                  <td>LOT-2025-001</td>
-                  <td>ПолимерСнаб</td>
-                  <td>—</td>
-                </tr>
-                <tr>
-                  <td>09.02.2025</td>
-                  <td>Добавка антиокислитель</td>
-                  <td>50 кг</td>
-                  <td>LOT-2024-015</td>
-                  <td>ХимПласт</td>
-                  <td>—</td>
-                </tr>
               </tbody>
             </table>
           </div>
@@ -163,22 +115,6 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Гранулы ПВД</td>
-                  <td>500 кг</td>
-                  <td>LOT-2025-001</td>
-                  <td>500 кг</td>
-                  <td>10.02.2025</td>
-                  <td>ПолимерСнаб</td>
-                </tr>
-                <tr>
-                  <td>Добавка антиокислитель</td>
-                  <td>50 кг</td>
-                  <td>LOT-2024-015</td>
-                  <td>50 кг</td>
-                  <td>09.02.2025</td>
-                  <td>ХимПласт</td>
-                </tr>
               </tbody>
             </table>
           </div>
@@ -187,7 +123,7 @@
 
       <div id="modal-add-raw" class="modal-overlay">
         <div class="modal">
-          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <a href="#" class="modal-close" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
           <h3>Добавить</h3>
           <form class="form-grid">
             <div class="form-row">
@@ -213,12 +149,12 @@
 
       <div id="modal-edit-raw" class="modal-overlay">
         <div class="modal">
-          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <a href="#" class="modal-close" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
           <h3>Редактировать</h3>
           <form class="form-grid">
             <div class="form-row">
               <label>Название</label>
-              <input type="text" value="Гранулы ПВД" required>
+              <input type="text" value="" required>
             </div>
             <div class="form-row">
               <label>Ед.</label>
@@ -239,7 +175,7 @@
 
       <div id="modal-incoming" class="modal-overlay">
         <div class="modal">
-          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <a href="#" class="modal-close" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
           <h3>Приход</h3>
           <form class="form-grid">
             <div class="form-row">
@@ -249,10 +185,6 @@
             <div class="form-row">
               <label>Сырьё</label>
               <select>
-                <option>Гранулы ПВД</option>
-                <option>Гранулы ПП</option>
-                <option>Краситель</option>
-                <option>Добавка антиокислитель</option>
               </select>
             </div>
             <div class="form-row">
@@ -281,7 +213,7 @@
 
       <div id="modal-delete-raw" class="modal-overlay">
         <div class="modal">
-          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <a href="#" class="modal-close" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
           <h3>Удалить?</h3>
           <p>Если сырьё используется, удаление может быть запрещено.</p>
           <div class="modal-actions">

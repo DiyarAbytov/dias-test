@@ -6,7 +6,7 @@
   <title>Продажа — DIYAS</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body data-page="sales">
   <div class="app-layout">
     <aside class="sidebar">
       <div class="logo">DIYAS <span class="logo-sub">Пластик</span></div>
@@ -59,45 +59,6 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td><span class="badge badge-warning">В работе</span></td>
-                <td>SO-2025-001</td>
-                <td>ООО «УпаковкаПлюс»</td>
-                <td>Плёнка ПВД 50 мкм</td>
-                <td>50 шт</td>
-                <td>Партия FG-001</td>
-                <td>10.02.2025</td>
-                <td>Петрова А.</td>
-                <td class="actions">
-                  <a href="#modal-transfer-shipment" class="btn btn-primary btn-sm">Передать</a>
-                  <a href="#modal-edit-sale" class="btn btn-secondary btn-sm">Изменить</a>
-                </td>
-              </tr>
-              <tr>
-                <td><span class="badge badge-default">Новый</span></td>
-                <td>SO-2025-002</td>
-                <td>ИП Петров</td>
-                <td>Пакет с ручками</td>
-                <td>200 шт</td>
-                <td>—</td>
-                <td>11.02.2025</td>
-                <td>Иванов И.</td>
-                <td class="actions">
-                  <a href="#modal-reserve" class="btn btn-secondary btn-sm">Резерв</a>
-                  <a href="#modal-edit-sale" class="btn btn-secondary btn-sm">Изменить</a>
-                </td>
-              </tr>
-              <tr>
-                <td><span class="badge badge-success">Передан в отгрузку</span></td>
-                <td>SO-2024-089</td>
-                <td>ООО «УпаковкаПлюс»</td>
-                <td>Плёнка ПВД 50 мкм</td>
-                <td>100 шт</td>
-                <td>FG-001</td>
-                <td>08.02.2025</td>
-                <td>Петрова А.</td>
-                <td class="actions">—</td>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -124,7 +85,7 @@
             </div>
             <div class="form-row">
               <label>Кол-во, шт</label>
-              <input type="number" min="1" max="50" value="50" required>
+              <input type="number" min="1" value="" required>
               <span style="margin-left: 0.5rem; color: var(--text-muted); font-size: 12px;">Макс: 50 шт (доступно на складе)</span>
             </div>
             <div class="info-block" style="margin-top: 0.5rem;">
@@ -189,7 +150,7 @@
             </div>
             <div class="form-row">
               <label>Кол-во, шт</label>
-              <input type="number" min="1" value="50">
+              <input type="number" min="1" value="">
             </div>
             <div class="form-actions">
               <button type="submit" class="btn btn-primary">Сохранить</button>

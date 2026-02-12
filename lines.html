@@ -6,7 +6,7 @@
   <title>Линии — DIYAS</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body data-page="lines">
   <div class="app-layout">
     <aside class="sidebar">
       <div class="logo">DIYAS <span class="logo-sub">Пластик</span></div>
@@ -39,8 +39,6 @@
         <div class="toolbar">
           <select class="search" style="min-width: 220px;">
             <option>Поиск по названию…</option>
-            <option>Линия экструзии №1</option>
-            <option>Линия выдува №2</option>
           </select>
         </div>
         <div class="table-wrap">
@@ -52,20 +50,6 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Линия экструзии №1</td>
-                <td class="actions">
-                  <a href="#modal-edit-line" class="btn btn-secondary btn-sm">Редактировать</a>
-                  <a href="#modal-delete-line" class="btn btn-danger btn-sm">Удалить</a>
-                </td>
-              </tr>
-              <tr>
-                <td>Линия выдува №2</td>
-                <td class="actions">
-                  <a href="#modal-edit-line" class="btn btn-secondary btn-sm">Редактировать</a>
-                  <a href="#modal-delete-line" class="btn btn-danger btn-sm">Удалить</a>
-                </td>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -95,7 +79,7 @@
           <form class="form-grid">
             <div class="form-row">
               <label>Название</label>
-              <input type="text" value="Линия экструзии №1" maxlength="255" required>
+              <input type="text" value="" maxlength="255" required>
             </div>
             <div class="form-actions">
               <button type="submit" class="btn btn-primary">Сохранить</button>

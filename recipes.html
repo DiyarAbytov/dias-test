@@ -6,7 +6,7 @@
   <title>Рецепты — DIYAS</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body data-page="recipes">
   <div class="app-layout">
     <aside class="sidebar">
       <div class="logo">DIYAS <span class="logo-sub">Пластик</span></div>
@@ -55,28 +55,6 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Плёнка ПВД</td>
-                <td>Плёнка ПВД 50 мкм</td>
-                <td>Композиция ПВД 0.5 кг, Гранулы ПВД 0.1 кг</td>
-                <td><span class="badge badge-success">Подтверждён <span class="confirmed-badge">✓</span></span></td>
-                <td class="actions">
-                  <span style="color: var(--success); font-size: 12px;">✓ Доступен</span>
-                  <a href="#modal-edit-recipe" class="btn btn-secondary btn-sm">Редактировать</a>
-                  <a href="#modal-delete-recipe" class="btn btn-danger btn-sm">Удалить</a>
-                </td>
-              </tr>
-              <tr>
-                <td>Пакет ПВД</td>
-                <td>Пакет с ручками</td>
-                <td>Композиция ПВД 0.3 кг, Мастербатч цветной 0.05 кг</td>
-                <td><span class="badge badge-warning">Создан</span></td>
-                <td class="actions">
-                  <a href="#modal-confirm-recipe-2" class="btn btn-success btn-sm">Подтвердить</a>
-                  <a href="#modal-edit-recipe" class="btn btn-secondary btn-sm">Редактировать</a>
-                  <a href="#modal-delete-recipe" class="btn btn-danger btn-sm">Удалить</a>
-                </td>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -106,14 +84,8 @@
                   <select style="min-width: 160px;" id="recipe-component-select">
                     <option value="">— Выберите —</option>
                     <optgroup label="Сырьё (из Склада сырья)">
-                      <option>Гранулы ПВД</option>
-                      <option>Гранулы ПП</option>
-                      <option>Краситель</option>
-                      <option>Добавка антиокислитель</option>
                     </optgroup>
                     <optgroup label="Хим. элементы (подтверждённые, со склада)">
-                      <option>Композиция ПВД <span class="confirmed-badge">✓</span> (остаток: 100 кг)</option>
-                      <option disabled>Мастербатч цветной (не подтверждён, недоступен)</option>
                     </optgroup>
                   </select>
                   <input type="number" step="any" min="0.01" placeholder="Кол-во" style="width: 90px;">
@@ -124,18 +96,6 @@
                   <table>
                     <thead><tr><th>Тип</th><th>Наименование</th><th>Кол-во</th><th></th></tr></thead>
                     <tbody>
-                      <tr>
-                        <td>Хим. элемент <span class="confirmed-badge">✓</span></td>
-                        <td>Композиция ПВД</td>
-                        <td>0.5 кг</td>
-                        <td><a href="#" class="btn btn-danger btn-sm">×</a></td>
-                      </tr>
-                      <tr>
-                        <td>Сырьё</td>
-                        <td>Гранулы ПВД</td>
-                        <td>0.1 кг</td>
-                        <td><a href="#" class="btn btn-danger btn-sm">×</a></td>
-                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -156,11 +116,11 @@
           <form class="form-grid">
             <div class="form-row">
               <label>Рецепт</label>
-              <input type="text" value="Плёнка ПВД" required>
+              <input type="text" value="" required>
             </div>
             <div class="form-row">
               <label>Товар</label>
-              <input type="text" value="Плёнка ПВД 50 мкм" required>
+              <input type="text" value="" required>
             </div>
             <div class="form-row">
               <label>Состав</label>
@@ -169,18 +129,6 @@
                   <table>
                     <thead><tr><th>Тип</th><th>Наименование</th><th>Кол-во</th><th></th></tr></thead>
                     <tbody>
-                      <tr>
-                        <td>Хим. элемент <span class="confirmed-badge">✓</span></td>
-                        <td>Композиция ПВД</td>
-                        <td><input type="number" step="any" value="0.5" style="width:80px;"> кг</td>
-                        <td><a href="#" class="btn btn-danger btn-sm">×</a></td>
-                      </tr>
-                      <tr>
-                        <td>Сырьё</td>
-                        <td>Гранулы ПВД</td>
-                        <td><input type="number" step="any" value="0.1" style="width:80px;"> кг</td>
-                        <td><a href="#" class="btn btn-danger btn-sm">×</a></td>
-                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -200,8 +148,8 @@
         <div class="modal">
           <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
           <h3>Подтвердить</h3>
-          <p><strong>Рецепт:</strong> Пакет ПВД</p>
-          <p><strong>Товар:</strong> Пакет с ручками</p>
+          <p><strong>Рецепт:</strong></p>
+          <p><strong>Товар:</strong></p>
           <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 0.75rem;">После подтверждения рецепт станет доступен в Заказах.</p>
           <form class="form-grid">
             <div class="form-row">
