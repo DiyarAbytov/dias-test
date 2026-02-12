@@ -150,8 +150,12 @@ body {
   margin-bottom: 1rem;
 }
 .card-header h2 { margin: 0; font-size: 15px; font-weight: 600; }
-.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; width: 100%; box-sizing: border-box; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: auto; }
+table th, table td { word-wrap: break-word; overflow-wrap: break-word; padding: 0.5rem; box-sizing: border-box; }
+table th { white-space: nowrap; }
+table td { overflow: hidden; text-overflow: ellipsis; }
+table td select { max-width: 100%; box-sizing: border-box; }
 th, td {
   padding: 0.75rem;
   text-align: left;
@@ -244,6 +248,7 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
+  overflow-x: hidden;
   box-shadow: 0 8px 32px rgba(0,0,0,0.4);
 }
 .modal h3 { margin: 0 0 1rem; font-size: 16px; font-weight: 600; }

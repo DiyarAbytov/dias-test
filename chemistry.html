@@ -51,11 +51,9 @@
               <thead>
                 <tr>
                   <th>Задание</th>
-                  <th>Хим. элемент</th>
-                  <th>Кол-во, кг</th>
+                  <th>Хим. элементы</th>
                   <th>Срок</th>
                   <th>Статус</th>
-                  <th>Исполнитель</th>
                   <th>Действия</th>
                 </tr>
               </thead>
@@ -121,28 +119,49 @@
 
       <!-- Модал: добавить задание в план -->
       <div id="modal-create-task-chem" class="modal-overlay">
-        <div class="modal">
-          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+        <div class="modal" style="max-width: 600px;">
+          <a href="#" class="modal-close" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
           <h3>Добавить</h3>
           <form class="form-grid">
             <div class="form-row">
-              <label>Хим. элемент</label>
-              <select>
-              </select>
+              <label>Название задания</label>
+              <input type="text" placeholder="Название задания" required>
             </div>
             <div class="form-row">
-              <label>Кол-во</label>
-              <input type="number" step="any" min="0.01" value=""> <span style="margin-left: 0.5rem; color: var(--text-muted);">кг</span>
+              <label>Хим. элементы</label>
+              <div>
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap; align-items: center;">
+                  <select style="min-width: 180px;" id="chem-element-select">
+                    <option value="">— Выберите —</option>
+                  </select>
+                  <input type="number" step="any" min="0.01" placeholder="Кол-во" style="width: 100px;" id="chem-quantity-input">
+                  <select style="width: 80px;" id="chem-unit-select">
+                    <option value="кг">кг</option>
+                    <option value="г">г</option>
+                    <option value="л">л</option>
+                    <option value="мл">мл</option>
+                  </select>
+                  <button type="button" class="btn btn-secondary btn-sm" id="add-chem-element-btn">Добавить</button>
+                </div>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Хим. элемент</th>
+                        <th>Кол-во</th>
+                        <th>Ед.</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="chem-elements-list">
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
             <div class="form-row">
               <label>Срок</label>
-              <input type="date" value="">
-            </div>
-            <div class="form-row">
-              <label>Исполнитель</label>
-              <select>
-                <option value="">—</option>
-              </select>
+              <input type="date" required>
             </div>
             <div class="form-actions">
               <button type="submit" class="btn btn-primary">Добавить</button>
@@ -155,7 +174,7 @@
       <!-- Создать химический элемент -->
       <div id="modal-create-chem" class="modal-overlay">
         <div class="modal" style="max-width: 540px;">
-          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <a href="#" class="modal-close" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
           <h3>Создать</h3>
           <form class="form-grid">
             <div class="form-row">
@@ -200,7 +219,7 @@
 
       <div id="modal-edit-chem" class="modal-overlay">
         <div class="modal" style="max-width: 540px;">
-          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <a href="#" class="modal-close" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
           <h3>Редактировать</h3>
           <form class="form-grid">
             <div class="form-row">
