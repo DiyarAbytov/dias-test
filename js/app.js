@@ -1,168 +1,43 @@
+/**
+ * Главный файл приложения
+ * Использует модули: storage.js, utils.js, components.js, forms.js
+ */
 (function () {
   'use strict';
 
-  // ===== Утилиты для работы с localStorage =====
-  var Storage = {
-    get: function(key) {
-      var data = localStorage.getItem(key);
-      return data ? JSON.parse(data) : [];
-    },
-    set: function(key, data) {
-      localStorage.setItem(key, JSON.stringify(data));
-    },
-    add: function(key, item) {
-      var data = this.get(key);
-      item.id = Date.now().toString();
-      data.push(item);
-      this.set(key, data);
-      return item;
-    },
-    update: function(key, id, updates) {
-      var data = this.get(key);
-      var index = data.findIndex(function(item) { return item.id === id; });
-      if (index !== -1) {
-        Object.assign(data[index], updates);
-        this.set(key, data);
-        return data[index];
-      }
-      return null;
-    },
-    delete: function(key, id) {
-      var data = this.get(key);
-      data = data.filter(function(item) { return item.id !== id; });
-      this.set(key, data);
-    }
-  };
-
-  // ===== Вкладки =====
-  function initTabs() {
-    var tabsWrap = document.querySelector('.tabs');
-    if (!tabsWrap) return;
-
-    var firstLink = tabsWrap.querySelector('a[href^="#"]');
-    var firstHash = firstLink ? firstLink.getAttribute('href') : '';
-    var panelIds = [];
-    tabsWrap.querySelectorAll('a[href^="#"]').forEach(function (a) {
-      var id = a.getAttribute('href').slice(1);
-      if (id && document.getElementById(id)) panelIds.push(id);
-    });
-
-    var currentHash = document.location.hash || '';
-    var hashId = currentHash.slice(1);
-    var hasValidTab = panelIds.indexOf(hashId) !== -1;
-
-    if (!hasValidTab && firstHash) {
-      document.location.hash = firstHash;
-      return;
-    }
-
-    function updateTabActive() {
-      var id = (document.location.hash || '').slice(1);
-      tabsWrap.querySelectorAll('a[href^="#"]').forEach(function (a) {
-        var href = a.getAttribute('href').slice(1);
-        a.classList.toggle('active', href === id && panelIds.indexOf(href) !== -1);
-      });
-    }
-    updateTabActive();
-    window.addEventListener('hashchange', updateTabActive);
+  // Проверяем, что модули загружены
+  if (typeof window.Storage === 'undefined') {
+    console.error('Модуль storage.js не загружен!');
+    return;
+  }
+  if (typeof window.getFieldKey === 'undefined') {
+    console.error('Модуль utils.js не загружен!');
+    return;
+  }
+  if (typeof window.initTabs === 'undefined') {
+    console.error('Модуль components.js не загружен!');
+    return;
+  }
+  if (typeof window.initUniversalForms === 'undefined') {
+    console.error('Модуль forms.js не загружен!');
+    return;
   }
 
-  // ===== Модалки =====
-  var hashBeforeModal = '';
+  // Используем модули
+  var Storage = window.Storage;
 
-  function isModalId(id) {
-    if (!id) return false;
-    var el = document.getElementById(id);
-    return el && el.classList && el.classList.contains('modal-overlay');
-  }
-
-  function getFirstTabHash() {
-    var tabsWrap = document.querySelector('.tabs');
-    if (!tabsWrap) return '';
-    var first = tabsWrap.querySelector('a[href^="#"]');
-    return first ? first.getAttribute('href') : '';
-  }
-
-  function closeModal(goToTab) {
-    // Очищаем все модалки создания при закрытии
-    var createModals = ['modal-create-task-chem', 'modal-create-recipe', 'modal-create-chem', 'modal-open-shift'];
-    createModals.forEach(function(modalId) {
-      var modal = document.getElementById(modalId);
-      if (modal) {
-        var form = modal.querySelector('form');
-        if (form) {
-          form.reset();
-          
-          // Очищаем все tbody в форме
-          form.querySelectorAll('tbody').forEach(function(tbody) {
-            tbody.innerHTML = '';
-          });
-          
-          // Очищаем специфичные элементы
-          if (modalId === 'modal-create-task-chem') {
-            var elementsList = modal.querySelector('#chem-elements-list');
-            if (elementsList) {
-              elementsList.innerHTML = '';
-            }
-          }
-          
-          if (modalId === 'modal-create-recipe') {
-            var compositionRow = Array.from(form.querySelectorAll('.form-row')).find(function(row) {
-              var label = row.querySelector('label');
-              return label && label.textContent.trim() === 'Состав';
-            });
-            if (compositionRow) {
-              var tbody = compositionRow.querySelector('tbody');
-              if (tbody) {
-                tbody.innerHTML = '';
-              }
-              var recipeComponentSelect = compositionRow.querySelector('#recipe-component-select');
-              if (recipeComponentSelect) {
-                recipeComponentSelect.value = '';
-                recipeComponentSelect.selectedIndex = 0;
-              }
-            }
-          }
-          
-          if (modalId === 'modal-create-chem') {
-            var compositionRow = Array.from(form.querySelectorAll('.form-row')).find(function(row) {
-              var label = row.querySelector('label');
-              return label && label.textContent.trim() === 'Состав';
-            });
-            if (compositionRow) {
-              var tbody = compositionRow.querySelector('tbody');
-              if (tbody) {
-                tbody.innerHTML = '';
-              }
-            }
-          }
-          
-          if (modalId === 'modal-open-shift') {
-            // Очищаем select линий
-            var lineSelect = form.querySelector('select');
-            if (lineSelect) {
-              lineSelect.value = '';
-              lineSelect.selectedIndex = 0;
-            }
-          }
-        }
-        modal.dataset.itemId = '';
-      }
-    });
-    
-    var target = goToTab || hashBeforeModal || getFirstTabHash();
-    if (target && target.charAt(0) === '#') target = target.slice(1);
-    document.location.hash = target || '';
-  }
-
-  window.addEventListener('hashchange', function (e) {
-    var newHash = (document.location.hash || '').slice(1);
-    if (isModalId(newHash) && e.oldURL) {
-      var match = e.oldURL.match(/#([^#]*)$/);
-      hashBeforeModal = match ? match[1] : '';
-    }
-    if (!isModalId(newHash)) hashBeforeModal = '';
-  });
+  // Используем функции из модулей
+  var initTabs = window.initTabs;
+  var isModalId = window.isModalId;
+  var getFirstTabHash = window.getFirstTabHash;
+  var closeModal = window.closeModal;
+  var renderTable = window.renderTable;
+  var getInputValue = window.getInputValue;
+  var getFieldKey = window.getFieldKey;
+  var getStorageKeyByTable = window.getStorageKeyByTable;
+  var getFormConfig = window.getFormConfig;
+  var collectFormData = window.collectFormData;
+  var collectChemistryTaskData = window.collectChemistryTaskData;
 
   // ===== Рендеринг таблиц =====
   function renderTable(tbody, data, rowTemplate) {
@@ -455,26 +330,98 @@
   }
 
   // ===== Линии =====
+  var LINE_HISTORY_KEY = 'lineHistory';
+
+  function getLineStatus(lineId, history) {
+    var last = history.filter(function(h) { return h.lineId === lineId; }).sort(function(a, b) {
+      var da = (a.date || '') + ' ' + (a.time || '');
+      var db = (b.date || '') + ' ' + (b.time || '');
+      return db.localeCompare(da);
+    })[0];
+    return last ? last.action : 'Закрыта';
+  }
+
+  function getLastOpenClose(lineId, history, action) {
+    var ev = history.filter(function(h) { return h.lineId === lineId && h.action === action; }).sort(function(a, b) {
+      var da = (a.date || '') + ' ' + (a.time || '');
+      var db = (b.date || '') + ' ' + (b.time || '');
+      return db.localeCompare(da);
+    })[0];
+    return ev ? (ev.date || '') + ' ' + (ev.time || '') : '—';
+  }
+
   function initLines() {
     var page = document.querySelector('body[data-page="lines"]');
     if (!page) return;
 
-    var tbody = document.querySelector('tbody');
-    if (!tbody) return;
+    var tbody = document.querySelector('#tab-lines-list tbody');
+    var openTbody = document.getElementById('lines-open-tbody');
+    var historyTbody = document.getElementById('lines-history-tbody');
 
     function loadLines() {
       var data = Storage.get('lines');
-      renderTable(tbody, data, function(item) {
-        return '<td>' + item.name + '</td>' +
-               '<td class="actions">' +
-               '<a href="#modal-edit-line" data-id="' + item.id + '" class="btn btn-secondary btn-sm">Редактировать</a> ' +
-               '<a href="#modal-delete-line" data-id="' + item.id + '" class="btn btn-danger btn-sm">Удалить</a>' +
-               '</td>';
+      if (tbody) {
+        renderTable(tbody, data, function(item) {
+          return '<td>' + (item.name || '') + '</td>' +
+                 '<td class="actions">' +
+                 '<a href="#modal-edit-line" data-id="' + item.id + '" class="btn btn-secondary btn-sm">Редактировать</a> ' +
+                 '<a href="#modal-delete-line" data-id="' + item.id + '" class="btn btn-danger btn-sm">Удалить</a>' +
+                 '</td>';
+        });
+      }
+    }
+
+    function loadLinesOpen() {
+      if (!openTbody) return;
+      var lines = Storage.get('lines');
+      var history = Storage.get(LINE_HISTORY_KEY);
+      openTbody.innerHTML = '';
+      lines.forEach(function(line) {
+        var status = getLineStatus(line.id, history);
+        var lastOpen = getLastOpenClose(line.id, history, 'Открыта');
+        var lastClose = getLastOpenClose(line.id, history, 'Закрыта');
+        var statusClass = status === 'Открыта' ? 'badge-success' : 'badge-default';
+        var openBtn = status === 'Закрыта' ? '<button type="button" class="btn btn-success btn-sm btn-open-line" data-line-id="' + line.id + '" data-line-name="' + (line.name || '').replace(/"/g, '&quot;') + '">Открыть</button>' : '';
+        var closeBtn = status === 'Открыта' ? '<button type="button" class="btn btn-secondary btn-sm btn-close-line" data-line-id="' + line.id + '" data-line-name="' + (line.name || '').replace(/"/g, '&quot;') + '">Закрыть</button>' : '';
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td>' + (line.name || '') + '</td>' +
+          '<td><span class="badge ' + statusClass + '">' + status + '</span></td>' +
+          '<td>' + lastOpen + '</td>' +
+          '<td>' + lastClose + '</td>' +
+          '<td class="actions">' + openBtn + ' ' + closeBtn + '</td>';
+        openTbody.appendChild(tr);
+      });
+      if (lines.length === 0) {
+        var empty = document.createElement('tr');
+        empty.innerHTML = '<td colspan="5" style="text-align: center; color: var(--text-muted); padding: 2rem;">Нет линий. Создайте линию во вкладке «Линия».</td>';
+        openTbody.appendChild(empty);
+      }
+    }
+
+    function loadLinesHistory() {
+      if (!historyTbody) return;
+      var history = Storage.get(LINE_HISTORY_KEY);
+      history = history.slice().sort(function(a, b) {
+        var da = (a.date || '') + ' ' + (a.time || '');
+        var db = (b.date || '') + ' ' + (b.time || '');
+        return db.localeCompare(da);
+      });
+      renderTable(historyTbody, history, function(item) {
+        var actionClass = item.action === 'Открыта' ? 'badge-success' : 'badge-default';
+        return '<td>' + (item.date || '') + ' ' + (item.time || '') + '</td>' +
+               '<td>' + (item.lineName || '—') + '</td>' +
+               '<td><span class="badge ' + actionClass + '">' + (item.action || '') + '</span></td>';
       });
     }
 
-    // Форма обрабатывается универсальной системой
     loadLines();
+    loadLinesOpen();
+    loadLinesHistory();
+
+    window.refreshLinesOpenAndHistory = function() {
+      loadLinesOpen();
+      loadLinesHistory();
+    };
   }
 
   // ===== Химия: задания =====
@@ -512,376 +459,10 @@
     loadChemistryTasks();
   }
 
-  // ===== Универсальная обработка форм =====
-  function initUniversalForms() {
-    // Используем делегирование событий для всех форм
-    document.body.addEventListener('submit', function(e) {
-      var form = e.target.closest('form');
-      if (!form || !form.closest('.modal')) return;
-      
-      e.preventDefault();
-      e.stopPropagation();
-      
-      var modal = form.closest('.modal-overlay');
-      var modalId = modal ? modal.id : '';
-      var page = document.body.getAttribute('data-page');
-      
-      // Определяем ключ хранилища и действие
-      var config = getFormConfig(page, modalId);
-      
-      // Специальная обработка для задания химии - собираем данные отдельно
-      var formData;
-      if (config && config.specialHandler === 'chemistryTask') {
-        formData = collectChemistryTaskData(form);
-        if (!formData) {
-          alert('Заполните название задания');
-          return false;
-        }
-        if (!formData.name || formData.name.trim() === '') {
-          alert('Введите название задания');
-          return false;
-        }
-        if (!formData.elements || formData.elements.length === 0) {
-          alert('Добавьте хотя бы один химический элемент');
-          return false;
-        }
-      } else {
-        // Обычная обработка формы
-        formData = collectFormData(form);
-        
-        if (!formData) {
-          var emptyFields = [];
-          form.querySelectorAll('input[required], select[required], textarea[required]').forEach(function(field) {
-            if (!field.value || (typeof field.value === 'string' && field.value.trim() === '')) {
-              var label = field.closest('.form-row') ? field.closest('.form-row').querySelector('label') : null;
-              if (label) emptyFields.push(label.textContent.trim());
-            }
-          });
-          if (emptyFields.length > 0) {
-            alert('Заполните обязательные поля: ' + emptyFields.join(', '));
-          } else {
-            alert('Заполните обязательные поля');
-          }
-          return false;
-        }
-      }
-      
-      if (config && config.storageKey) {
-        try {
-          var id = form.dataset.itemId || modal.dataset.itemId;
-          
-          if (config.action === 'add' && !id) {
-            Storage.add(config.storageKey, formData);
-          } else if (config.action === 'update' || id) {
-            if (id) {
-              Storage.update(config.storageKey, id, formData);
-            } else {
-              return false;
-            }
-          } else if (config.action === 'delete') {
-            if (id) {
-              Storage.delete(config.storageKey, id);
-            }
-          }
-          
-          // Перезагружаем данные страницы
-          reloadPageData(page);
-          
-          form.reset();
-          // Очищаем таблицу элементов
-          var elementsList = form.querySelector('#chem-elements-list');
-          if (elementsList) elementsList.innerHTML = '';
-          
-          // Очищаем select единиц
-          var unitSelect = form.querySelector('#chem-unit-select');
-          if (unitSelect) unitSelect.value = 'кг';
-          
-          if (modal) modal.dataset.itemId = '';
-          closeModal();
-        } catch (e) {
-          console.error('Ошибка сохранения:', e);
-          alert('Ошибка при сохранении данных: ' + e.message);
-          return false;
-        }
-      } else {
-        form.reset();
-        closeModal();
-      }
-      
-      return false;
-    }, true);
-  }
-
-  function collectFormData(form) {
-    var data = {};
-    
-    // Собираем данные из всех полей формы
-    form.querySelectorAll('input, select, textarea').forEach(function(input) {
-      // Пропускаем кнопки
-      if (input.type === 'submit' || input.type === 'button') return;
-      
-      // Пропускаем скрытые поля без значения
-      if (input.type === 'hidden' && !input.value) return;
-      
-      var key = '';
-      var value = null;
-      
-      // Пытаемся найти label для поля
-      var label = null;
-      var row = input.closest('.form-row');
-      if (row) {
-        label = row.querySelector('label');
-      }
-      
-      if (label) {
-        key = getFieldKey(label.textContent.trim());
-      } else if (input.name) {
-        key = input.name;
-      } else if (input.id) {
-        key = input.id.replace('modal-', '').replace('-', '_');
-      }
-      
-      if (!key) return;
-      
-      value = getInputValue(input);
-      
-      // Сохраняем значение, если оно не null
-      if (value !== null) {
-        // Для чекбоксов добавляем в массив
-        if (input.type === 'checkbox') {
-          if (!data[key]) data[key] = [];
-          if (input.checked) data[key].push(input.value || 'true');
-        } else {
-          data[key] = value;
-        }
-      }
-    });
-    
-    // Собираем состав рецепта из таблицы (если есть секция "Состав")
-    var compositionRow = Array.from(form.querySelectorAll('.form-row')).find(function(row) {
-      var label = row.querySelector('label');
-      return label && label.textContent.trim() === 'Состав';
-    });
-    
-    if (compositionRow) {
-      var compositionTbody = compositionRow.querySelector('tbody');
-      if (compositionTbody && compositionTbody.children.length > 0) {
-        var composition = [];
-        compositionTbody.querySelectorAll('tr').forEach(function(tr) {
-          var cells = tr.querySelectorAll('td');
-          if (cells.length >= 3) {
-            var typeCell = cells[0].textContent.trim();
-            var nameCell = cells[1].textContent.trim();
-            var qtyCell = cells[2].textContent.trim();
-            
-            // Определяем тип компонента
-            var type = 'raw';
-            if (typeCell.includes('Хим') || typeCell.toLowerCase().includes('chem')) {
-              type = 'chem';
-            }
-            
-            // Определяем название компонента
-            var componentName = nameCell;
-            
-            // Определяем количество
-            var quantity = parseFloat(qtyCell) || 0;
-            
-            if (componentName && quantity > 0) {
-              composition.push({
-                type: type,
-                name: componentName,
-                quantity: quantity,
-                unit: 'кг' // По умолчанию, можно улучшить
-              });
-            }
-          }
-        });
-        
-        if (composition.length > 0) {
-          data.composition = composition;
-        }
-      }
-    }
-    
-    // Проверяем обязательные поля
-    var requiredFields = form.querySelectorAll('input[required], select[required], textarea[required]');
-    var allRequiredFilled = true;
-    requiredFields.forEach(function(field) {
-      var val = field.value;
-      if (!val || (typeof val === 'string' && val.trim() === '')) {
-        allRequiredFilled = false;
-        field.style.borderColor = 'var(--danger)';
-        setTimeout(function() {
-          field.style.borderColor = '';
-        }, 2000);
-      }
-    });
-    
-    // Если есть данные и все обязательные поля заполнены
-    if (Object.keys(data).length > 0 && allRequiredFilled) {
-      return data;
-    }
-    
-    return null;
-  }
-
-  function collectChemistryTaskData(form) {
-    var data = {};
-    
-    // Собираем название задания - ищем поле с label "Название задания"
-    var nameRow = Array.from(form.querySelectorAll('.form-row')).find(function(row) {
-      var label = row.querySelector('label');
-      return label && label.textContent.trim() === 'Название задания';
-    });
-    
-    if (nameRow) {
-      var nameInput = nameRow.querySelector('input[type="text"]');
-      if (nameInput && nameInput.value) {
-        data.name = nameInput.value.trim();
-        data.description = nameInput.value.trim();
-      }
-    }
-    
-    // Собираем дату
-    var dateRow = Array.from(form.querySelectorAll('.form-row')).find(function(row) {
-      var label = row.querySelector('label');
-      return label && label.textContent.trim() === 'Срок';
-    });
-    
-    if (dateRow) {
-      var dateInput = dateRow.querySelector('input[type="date"]');
-      if (dateInput && dateInput.value) {
-        data.deadline = dateInput.value;
-      }
-    }
-    
-    // Собираем элементы из таблицы
-    var elementsList = form.querySelector('#chem-elements-list');
-    var elements = [];
-    if (elementsList) {
-      elementsList.querySelectorAll('tr').forEach(function(tr) {
-        var cells = tr.querySelectorAll('td');
-        if (cells.length >= 3) {
-          var elementName = cells[0].textContent.trim();
-          var quantity = parseFloat(cells[1].textContent.trim()) || 0;
-          var unit = cells[2].textContent.trim();
-          
-          if (elementName && quantity > 0 && unit) {
-            elements.push({
-              element: elementName,
-              quantity: quantity,
-              unit: unit
-            });
-          }
-        }
-      });
-    }
-    data.elements = elements;
-    
-    // Устанавливаем статус по умолчанию
-    data.status = 'Создан';
-    
-    return (data.name && data.elements.length > 0) ? data : null;
-  }
-
-  function getInputValue(input) {
-    if (input.type === 'checkbox') return input.checked;
-    if (input.type === 'radio') return input.checked ? input.value : null;
-    if (input.tagName === 'SELECT') return input.value || null;
-    if (input.type === 'date') return input.value || null;
-    if (input.type === 'number') return input.value ? parseFloat(input.value) : null;
-    return input.value || null;
-  }
-
-  function getFieldKey(labelText) {
-    var map = {
-      'Название': 'name',
-      'ФИО': 'name',
-      'Email': 'email',
-      'Пароль': 'password',
-      'Роль': 'role',
-      'Ед.': 'unit',
-      'Кол-во': 'quantity',
-      'Количество': 'quantity',
-      'Дата прихода': 'date',
-      'Дата': 'date',
-      'Сырьё': 'material',
-      'Партия': 'batch',
-      'Поставщик': 'supplier',
-      'Комментарий': 'comment',
-      'ИНН': 'inn',
-      'Контакт': 'contact',
-      'Телефон': 'phone',
-      'Адрес доставки': 'address',
-      'Адрес': 'address',
-      'Рецепт': 'recipe',
-      'Товар': 'product',
-      'Линия': 'line',
-      'Срок': 'deadline',
-      'Исполнитель': 'executor',
-      'Описание': 'description'
-    };
-    return map[labelText] || labelText.toLowerCase().replace(/\s+/g, '_');
-  }
-
-  function getFormConfig(page, modalId) {
-    var configs = {
-      'materials': {
-        'modal-add-raw': { storageKey: 'rawMaterials', action: 'add' },
-        'modal-edit-raw': { storageKey: 'rawMaterials', action: 'update' },
-        'modal-incoming': { storageKey: 'incoming', action: 'add' }
-      },
-      'chemistry': {
-        'modal-create-task-chem': { storageKey: 'chemistryTasks', action: 'add', specialHandler: 'chemistryTask' },
-        'modal-create-chem': { storageKey: 'chemistryCatalog', action: 'add' },
-        'modal-produce-chem': { storageKey: 'chemistryBatches', action: 'add' },
-        'modal-confirm-chem-1': { storageKey: 'chemistryTasks', action: 'update' }
-      },
-      'recipes': {
-        'modal-create-recipe': { storageKey: 'recipes', action: 'add' },
-        'modal-confirm-recipe-2': { storageKey: 'recipes', action: 'update' }
-      },
-      'orders': {
-        'modal-create-order': { storageKey: 'orders', action: 'add' },
-        'modal-confirm-order-2': { storageKey: 'orders', action: 'update' }
-      },
-      'production': {
-        'modal-produce': { storageKey: 'productionBatches', action: 'add' },
-        'modal-confirm-production': { storageKey: 'productionBatches', action: 'update' }
-      },
-      'otk': {
-        'modal-check-otk': { storageKey: 'otkChecks', action: 'add' }
-      },
-      'warehouse': {
-        'modal-accept-gp': { storageKey: 'warehouseBatches', action: 'add' }
-      },
-      'sales': {
-        'modal-create-sale': { storageKey: 'sales', action: 'add' },
-        'modal-reserve': { storageKey: 'sales', action: 'update' },
-        'modal-transfer-shipment': { storageKey: 'sales', action: 'update' }
-      },
-      'shipment': {
-        'modal-ship': { storageKey: 'shipments', action: 'add' }
-      },
-      'clients': {
-        'modal-create-client': { storageKey: 'clients', action: 'add' },
-        'modal-edit-client': { storageKey: 'clients', action: 'update' }
-      },
-      'lines': {
-        'modal-create-line': { storageKey: 'lines', action: 'add' },
-        'modal-edit-line': { storageKey: 'lines', action: 'update' }
-      },
-      'users': {
-        'modal-create-user': { storageKey: 'users', action: 'add' },
-        'modal-edit-user': { storageKey: 'users', action: 'update' },
-        'modal-create-role': { storageKey: 'roles', action: 'add' }
-      },
-      'shifts': {
-        'modal-open-shift': { storageKey: 'shifts', action: 'add' }
-      }
-    };
-    return configs[page] && configs[page][modalId] ? configs[page][modalId] : null;
-  }
+  // Используем функции из модулей (уже определены выше)
+  var initUniversalForms = window.initUniversalForms;
+  var collectFormData = window.collectFormData;
+  var collectChemistryTaskData = window.collectChemistryTaskData;
 
   function getDeleteStorageKey(page, modalId) {
     var keyMap = {
@@ -914,7 +495,13 @@
         'modal-edit-raw': 'rawMaterials'
       },
       'users': {
-        'modal-edit-user': 'users'
+        'modal-edit-user': 'users',
+        'modal-edit-role-admin': 'roles',
+        'modal-edit-role-shift': 'roles',
+        'modal-edit-role-chem': 'roles',
+        'modal-edit-role-tech': 'roles',
+        'modal-edit-role-operator': 'roles',
+        'modal-edit-role-otk': 'roles'
       },
       'clients': {
         'modal-edit-client': 'clients'
@@ -923,6 +510,9 @@
         'modal-edit-line': 'lines'
       }
     };
+    if (page === 'users' && modalId && modalId.indexOf('modal-edit-role-') === 0) {
+      return 'roles';
+    }
     return keyMap[page] && keyMap[page][modalId] ? keyMap[page][modalId] : null;
   }
 
@@ -1023,11 +613,26 @@
       
       var storageKey = getStorageKeyByTable(page, headers);
       if (storageKey) {
-        var data = Storage.get(storageKey);
+        var data = storageKey === 'productionBatchesPending' ? Storage.get('productionBatches') : Storage.get(storageKey);
+        if (storageKey === 'productionBatchesPending') {
+          data = (data || []).filter(function(b) { return (b.otkStatus || '') === 'Ожидает ОТК'; });
+        }
         if (data.length > 0) {
-          // Если данные есть, но таблица пустая, загружаем их
           if (tbody.children.length === 0 || tbody.textContent.trim() === '') {
-            renderTableFromStorage(tbody, storageKey, headers);
+            if (storageKey === 'productionBatchesPending') {
+              renderTable(tbody, data, function(item) {
+                return '<td>' + (item.otkStatus || 'Ожидает') + '</td>' +
+                  '<td>' + (item.product || '—') + '</td>' +
+                  '<td>' + (item.quantity || '—') + '</td>' +
+                  '<td>' + (item.operator || '—') + '</td>' +
+                  '<td>' + (item.date || '—') + '</td>' +
+                  '<td class="actions">' +
+                  '<a href="#modal-check-otk" class="btn btn-success btn-sm" data-batch-id="' + (item.id || '') + '" data-order-id="' + (item.orderId || '') + '">Проверить</a>' +
+                  '</td>';
+              });
+            } else {
+              renderTableFromStorage(tbody, storageKey, headers);
+            }
           }
         }
       }
@@ -1051,6 +656,8 @@
     if (headerTexts.includes('Статус') && headerTexts.includes('Продукт') && headerTexts.includes('Рецепт')) return 'orders';
     if (headerTexts.includes('Статус ОТК') || headerTexts.includes('Выпущено')) return 'productionBatches';
     if (headerTexts.includes('Принято') && headerTexts.includes('Брак')) return 'otkChecks';
+    // ОТК: таблица "Ожидают проверки" (Статус, Продукт, Кол-во, Оператор, Дата, Действия)
+    if (page === 'otk' && headerTexts.includes('Кол-во') && headerTexts.includes('Оператор') && headerTexts.includes('Действия') && !headerTexts.includes('Принято')) return 'productionBatchesPending';
     if (headerTexts.includes('Партия ГП') || headerTexts.includes('Статус') && headerTexts.includes('Партия')) return 'warehouseBatches';
     if (headerTexts.includes('Заказ клиента') || headerTexts.includes('Клиент') && headerTexts.includes('Кол-во')) return 'sales';
     if (headerTexts.includes('Накладная') || headerTexts.includes('Отгружено')) return 'shipments';
@@ -1087,15 +694,50 @@
     });
   }
 
+  // Маппинг заголовков таблиц на ключи данных (для Заказы, Производство, ОТК)
+  var headerToKey = {
+    'Статус': 'status',
+    'Продукт': 'product',
+    'Рецепт': 'recipe',
+    'Линия': 'line',
+    'Кто': 'operator',
+    'Дата': 'date',
+    'Выпущено': 'quantity',
+    'Статус ОТК': 'otkStatus',
+    'Оператор': 'operator',
+    'Кол-во': 'quantity',
+    'Принято': 'accepted',
+    'Брак': 'rejected',
+    'Причина брака': 'rejectReason',
+    'Инспектор': 'inspector',
+    'Проверено': 'checkedDate',
+    'Комментарий': 'comment'
+  };
+
   function getTableValue(item, headerText, index) {
-    var key = getFieldKey(headerText);
-    if (item[key] !== undefined) {
-      return item[key] || '—';
+    var key = headerToKey[headerText] || getFieldKey(headerText);
+    var value = item[key];
+    if (value !== undefined && value !== null && typeof value === 'object') {
+      value = value.name || value.status || value.value || '—';
     }
-    // Пытаемся найти по индексу
+    if (headerText === 'Статус' && value) {
+      var status = String(value);
+      var badgeClass = 'badge-default';
+      if (status === 'В работе') badgeClass = 'badge-warning';
+      else if (status === 'Принято') badgeClass = 'badge-success';
+      else if (status === 'Принято с браком') badgeClass = 'badge-danger';
+      else if (status === 'Открыта') badgeClass = 'badge-success';
+      else if (status === 'Закрыта') badgeClass = 'badge-default';
+      return '<span class="badge ' + badgeClass + '">' + status + '</span>';
+    }
+    if (value !== undefined && value !== null) {
+      return String(value);
+    }
     var keys = Object.keys(item);
     if (keys[index]) {
-      return item[keys[index]] || '—';
+      var v = item[keys[index]];
+      if (v !== undefined && v !== null && typeof v === 'object') v = v.name || v.status || '—';
+      return v !== undefined && v !== null ? String(v) : '—';
     }
     return '—';
   }
@@ -1157,6 +799,7 @@
 
   // ===== Основная инициализация =====
   document.addEventListener('DOMContentLoaded', function () {
+    initLinkedData();
     initTabs();
 
     // Закрытие модалки по клику на overlay
@@ -1167,6 +810,30 @@
           closeModal();
         }
       });
+    });
+
+    // Открытие/закрытие линии (вкладка Открытие)
+    document.body.addEventListener('click', function(e) {
+      var openBtn = e.target.closest('.btn-open-line');
+      var closeBtn = e.target.closest('.btn-close-line');
+      if (openBtn && document.body.getAttribute('data-page') === 'lines') {
+        e.preventDefault();
+        var lineId = openBtn.dataset.lineId;
+        var lineName = openBtn.dataset.lineName || '';
+        var now = new Date();
+        Storage.add(LINE_HISTORY_KEY, { lineId: lineId, lineName: lineName, action: 'Открыта', date: now.toISOString().split('T')[0], time: now.toTimeString().slice(0, 5) });
+        if (window.refreshLinesOpenAndHistory) window.refreshLinesOpenAndHistory();
+        return;
+      }
+      if (closeBtn && document.body.getAttribute('data-page') === 'lines') {
+        e.preventDefault();
+        var lineId = closeBtn.dataset.lineId;
+        var lineName = closeBtn.dataset.lineName || '';
+        var now = new Date();
+        Storage.add(LINE_HISTORY_KEY, { lineId: lineId, lineName: lineName, action: 'Закрыта', date: now.toISOString().split('T')[0], time: now.toTimeString().slice(0, 5) });
+        if (window.refreshLinesOpenAndHistory) window.refreshLinesOpenAndHistory();
+        return;
+      }
     });
 
     // Закрытие по кнопкам "Отмена" и "×" - используем делегирование
@@ -1192,6 +859,18 @@
     // Универсальная обработка форм
     initUniversalForms();
     
+    // При открытии модалки ОТК "Проверить" сохраняем batchId и orderId для обновления статуса заказа
+    document.body.addEventListener('click', function(e) {
+      var otkLink = e.target.closest('a[href="#modal-check-otk"]');
+      if (otkLink && otkLink.dataset.batchId) {
+        var modal = document.getElementById('modal-check-otk');
+        if (modal) {
+          modal.dataset.batchId = otkLink.dataset.batchId || '';
+          modal.dataset.orderId = otkLink.dataset.orderId || '';
+        }
+      }
+    }, true);
+
     // Делегирование событий для кнопок удаления
     document.body.addEventListener('click', function(e) {
       var deleteBtn = e.target.closest('a[href*="delete"]');
@@ -1810,13 +1489,11 @@
           var currentValue = orderSelect.value;
           orderSelect.innerHTML = '<option value="">— Выберите —</option>';
           
-          // Показываем все заказы со статусом "ГОТОВО" или "В РАБОТЕ"
+          // Показываем заказы со статусом "Создан" (их выпускаем в производство)
           if (orders && orders.length > 0) {
             orders.forEach(function(order) {
-              var status = (order.status || '').toString().toLowerCase();
-              // Показываем заказы со статусом "ГОТОВО" или "В РАБОТЕ" или без фильтрации (для тестирования)
-              // Убираем строгую фильтрацию, показываем все заказы кроме "СОЗДАН"
-              if (!status.includes('создан') && status !== 'создан') {
+              var status = (order.status || 'Создан').toString();
+              if (status === 'Создан') {
                 var orderText = '';
                 if (order.product) {
                   orderText = order.product;
@@ -1825,7 +1502,6 @@
                 } else if (order.name) {
                   orderText = order.name;
                 }
-                
                 if (order.line) {
                   orderText += ' (' + order.line;
                   if (order.quantity) {
@@ -1833,12 +1509,6 @@
                   }
                   orderText += ')';
                 }
-                
-                // Добавляем индикатор статуса
-                if (status.includes('готово')) {
-                  orderText += ' ✓';
-                }
-                
                 var option = document.createElement('option');
                 option.value = order.id || order.name || order.product || order.recipe;
                 option.textContent = orderText;
@@ -1962,7 +1632,6 @@
                   }
                 });
               }
-              });
             }
           }
         }
@@ -2096,7 +1765,6 @@
       }
     });
     
-    // Добавляем тестовые данные для склад сырья и прихода
     initTestData();
 
     // Валидация ОТК
@@ -2207,5 +1875,86 @@
         initMaterials();
       }
     }, 100);
+  }
+
+  // ===== Полное заполнение базы при первом запуске =====
+  var SEED_FLAG = 'dias_db_seeded';
+
+  function seedAllData() {
+    var orders = Storage.get('orders');
+    var users = Storage.get('users');
+    var clients = Storage.get('clients');
+    // Заполняем, если что-то из основного пусто
+    if (orders.length > 0 && users.length > 0 && clients.length > 0) return;
+    var d = new Date().toISOString().split('T')[0];
+
+    Storage.set('users', [
+      { id: 'u1', name: 'Иванов Иван Иванович', email: 'ivanov@example.com', role: 'Администратор' },
+      { id: 'u2', name: 'Петрова Анна', email: 'petrova@example.com', role: 'Начальник смены' }
+    ]);
+    Storage.set('roles', [
+      { id: 'r1', name: 'Администратор', description: 'Полный доступ' },
+      { id: 'r2', name: 'Начальник смены', description: 'Управление сменами' },
+      { id: 'r3', name: 'Оператор', description: 'Выпуск продукции' }
+    ]);
+    Storage.set('rawMaterials', [
+      { id: 'm1', name: 'Полиэтилен ПВД', unit: 'кг' },
+      { id: 'm2', name: 'Полиэтилен ПНД', unit: 'кг' },
+      { id: 'm3', name: 'Сахар', unit: 'кг' }
+    ]);
+    Storage.set('incoming', [
+      { id: 'in1', date: d, material: 'Полиэтилен ПВД', quantity: 500, unit: 'кг', batch: 'LOT-001', supplier: 'ООО Поставщик', comment: '' },
+      { id: 'in2', date: d, material: 'Полиэтилен ПНД', quantity: 300, unit: 'кг', batch: 'LOT-002', supplier: 'ООО Поставщик', comment: '' }
+    ]);
+    Storage.set('lines', [
+      { id: 'line1', name: 'Первая линия' },
+      { id: 'line2', name: 'Линия экструзии №2' }
+    ]);
+    Storage.set('clients', [
+      { id: 'c1', name: 'ООО Рога и копыта', inn: '7700123456', contact: 'Иванов', phone: '+7 495 111-22-33', address: 'Москва' },
+      { id: 'c2', name: 'ИП Петров', inn: '7700987654', contact: 'Петров', phone: '+7 495 444-55-66', address: 'Москва' }
+    ]);
+    Storage.set('recipes', [
+      { id: 'rec1', recipe: 'Рецепт счастье', product: 'Плёнка ПВД 50 мкм', composition: [{ type: 'raw', name: 'Полиэтилен ПВД', quantity: 10, unit: 'кг' }] },
+      { id: 'rec2', recipe: 'Плёнка ПВХ', product: 'Плёнка 30 мкм', composition: [{ type: 'raw', name: 'Полиэтилен ПНД', quantity: 8, unit: 'кг' }] }
+    ]);
+    Storage.set('orders', [
+      { id: 'ord1', status: 'Принято', product: 'Плёнка ПВД 50 мкм', recipe: 'Рецепт счастье', line: 'Первая линия', quantity: 20, operator: 'Иванов И.И.', date: d },
+      { id: 'ord2', status: 'В работе', product: 'Плёнка 30 мкм', recipe: 'Плёнка ПВХ', line: 'Линия экструзии №2', quantity: 15, operator: 'Петрова А.', date: d },
+      { id: 'ord3', status: 'Создан', product: 'Плёнка ПВД 50 мкм', recipe: 'Рецепт счастье', line: 'Первая линия', quantity: 10, operator: '', date: d }
+    ]);
+    Storage.set('productionBatches', [
+      { id: 'batch1', orderId: 'ord1', otkStatus: 'Принято', product: 'Плёнка ПВД 50 мкм', line: 'Первая линия', quantity: 20, operator: 'Иванов И.И.', date: d },
+      { id: 'batch2', orderId: 'ord2', otkStatus: 'Ожидает ОТК', product: 'Плёнка 30 мкм', line: 'Линия экструзии №2', quantity: 15, operator: 'Петрова А.', date: d }
+    ]);
+    Storage.set('otkChecks', [
+      { id: 'otk1', batchId: 'batch1', orderId: 'ord1', status: 'Принято', product: 'Плёнка ПВД 50 мкм', quantity: 20, accepted: 20, rejected: 0, rejectReason: '', inspector: 'Сидорова О.Т.', checkedDate: d, comment: 'Партия принята' },
+      { id: 'otk2', batchId: 'batch2', orderId: 'ord2', status: 'Ожидает', product: 'Плёнка 30 мкм', quantity: 15, accepted: 0, rejected: 0, rejectReason: '', inspector: '', checkedDate: '', comment: '' }
+    ]);
+    Storage.set('chemistryCatalog', [
+      { id: 'chem1', name: 'Добавка А', unit: 'кг' },
+      { id: 'chem2', name: 'Стабилизатор', unit: 'кг' }
+    ]);
+    Storage.set('chemistryTasks', [
+      { id: 'ct1', name: 'Приготовление партии А', status: 'Выполнено', deadline: d, elements: [{ element: 'Добавка А', quantity: 5, unit: 'кг' }] }
+    ]);
+    Storage.set('shifts', [
+      { id: 's1', line: 'Первая линия', date: d, status: 'Открыта' }
+    ]);
+    Storage.set('warehouseBatches', [
+      { id: 'w1', product: 'Плёнка ПВД 50 мкм', quantity: 20, status: 'На складе', date: d }
+    ]);
+    Storage.set('sales', [
+      { id: 'sale1', client: 'ООО Рога и копыта', product: 'Плёнка ПВД 50 мкм', quantity: 10, status: 'Оформлен', date: d }
+    ]);
+    Storage.set('shipments', [
+      { id: 'sh1', client: 'ООО Рога и копыта', product: 'Плёнка ПВД 50 мкм', quantity: 10, date: d, status: 'Отгружено' }
+    ]);
+
+    localStorage.setItem(SEED_FLAG, '1');
+  }
+
+  function initLinkedData() {
+    seedAllData();
   }
 })();
