@@ -321,3 +321,52 @@ tr:hover td { background: rgba(255,255,255,0.02); }
 }
 .flow-chain a { color: var(--accent); text-decoration: none; }
 .flow-chain a:hover { text-decoration: underline; }
+
+/* Блокировки и предупреждения */
+.blocked, .unavailable {
+  opacity: 0.5;
+  pointer-events: none;
+  position: relative;
+}
+.blocked::after, .unavailable::after {
+  content: "Недоступно";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(248, 81, 73, 0.9);
+  color: #fff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 11px;
+  white-space: nowrap;
+  z-index: 10;
+}
+.warning-block {
+  background: rgba(210, 153, 34, 0.1);
+  border-left: 3px solid var(--warning);
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.75rem;
+  font-size: 13px;
+  color: var(--text);
+}
+.warning-block strong { color: var(--warning); }
+.info-block {
+  background: rgba(88, 166, 255, 0.1);
+  border-left: 3px solid var(--accent);
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.75rem;
+  font-size: 13px;
+  color: var(--text);
+}
+.confirmed-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--success);
+  font-size: 12px;
+}
+.confirmed-badge::before {
+  content: "✓";
+  font-weight: bold;
+}

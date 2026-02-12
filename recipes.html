@@ -30,6 +30,11 @@
     </aside>
     <main class="main">
       <h1 class="page-title">Рецепты</h1>
+      <p class="page-desc">Технолог составляет рецепт: берёт товары из <strong>Склада сырья</strong> и готовые <strong>Химические элементы</strong> из их склада, смешивает — создаётся рецепт.</p>
+
+      <div class="warning-block">
+        <strong>Важно:</strong> В рецептах можно использовать только те химические элементы, которые <strong>подтверждены</strong> в разделе <strong>Хим. элементы</strong> и поступили на склад хим. элементов. Пока химик не подтвердит выполнение задания, элемент недоступен.
+      </div>
 
       <div class="card">
         <div class="card-header">
@@ -46,6 +51,7 @@
                 <th>Рецепт</th>
                 <th>Товар (продукт)</th>
                 <th>Состав</th>
+                <th>Статус</th>
                 <th>Действия</th>
               </tr>
             </thead>
@@ -54,7 +60,9 @@
                 <td>Плёнка ПВД</td>
                 <td>Плёнка ПВД 50 мкм</td>
                 <td>Композиция ПВД 0.5 кг, Гранулы ПВД 0.1 кг</td>
+                <td><span class="badge badge-success">Подтверждён <span class="confirmed-badge">✓</span></span></td>
                 <td class="actions">
+                  <span style="color: var(--success); font-size: 12px;">✓ Доступен для заказов</span>
                   <a href="#modal-edit-recipe" class="btn btn-secondary btn-sm">Редактировать</a>
                   <a href="#modal-delete-recipe" class="btn btn-danger btn-sm">Удалить</a>
                 </td>
@@ -63,7 +71,9 @@
                 <td>Пакет ПВД</td>
                 <td>Пакет с ручками</td>
                 <td>Композиция ПВД 0.3 кг, Мастербатч цветной 0.05 кг</td>
+                <td><span class="badge badge-warning">Создан</span></td>
                 <td class="actions">
+                  <a href="#modal-confirm-recipe-2" class="btn btn-success btn-sm">Подтвердить рецепт</a>
                   <a href="#modal-edit-recipe" class="btn btn-secondary btn-sm">Редактировать</a>
                   <a href="#modal-delete-recipe" class="btn btn-danger btn-sm">Удалить</a>
                 </td>
@@ -90,16 +100,22 @@
               <label>Состав</label>
               <div>
                 <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap; align-items: center;">
-                  <select style="min-width: 160px;" title="Тип">
-                    <option>Сырьё (склад сырья)</option>
-                    <option>Химический элемент (склад хим. элементов)</option>
+                  <select style="min-width: 180px;" title="Откуда берём">
+                    <option>Сырьё (из Склада сырья)</option>
+                    <option>Хим. элемент (из Склада хим. элементов)</option>
                   </select>
-                  <select style="min-width: 160px;">
-                    <option>Гранулы ПВД</option>
-                    <option>Гранулы ПП</option>
-                    <option>Краситель</option>
-                    <option>Композиция ПВД</option>
-                    <option>Мастербатч цветной</option>
+                  <select style="min-width: 160px;" id="recipe-component-select">
+                    <option value="">— Выберите —</option>
+                    <optgroup label="Сырьё (из Склада сырья)">
+                      <option>Гранулы ПВД</option>
+                      <option>Гранулы ПП</option>
+                      <option>Краситель</option>
+                      <option>Добавка антиокислитель</option>
+                    </optgroup>
+                    <optgroup label="Хим. элементы (подтверждённые, со склада)">
+                      <option>Композиция ПВД <span class="confirmed-badge">✓</span> (остаток: 100 кг)</option>
+                      <option disabled>Мастербатч цветной (не подтверждён, недоступен)</option>
+                    </optgroup>
                   </select>
                   <input type="number" step="any" min="0.01" placeholder="Кол-во" style="width: 90px;">
                   <span style="color: var(--text-muted);">ед.</span>
@@ -109,8 +125,18 @@
                   <table>
                     <thead><tr><th>Тип</th><th>Наименование</th><th>Количество</th><th></th></tr></thead>
                     <tbody>
-                      <tr><td>Хим. элемент</td><td>Композиция ПВД</td><td>0.5 кг</td><td><a href="#" class="btn btn-danger btn-sm">×</a></td></tr>
-                      <tr><td>Сырьё</td><td>Гранулы ПВД</td><td>0.1 кг</td><td><a href="#" class="btn btn-danger btn-sm">×</a></td></tr>
+                      <tr>
+                        <td>Хим. элемент <span class="confirmed-badge">✓</span></td>
+                        <td>Композиция ПВД</td>
+                        <td>0.5 кг</td>
+                        <td><a href="#" class="btn btn-danger btn-sm">×</a></td>
+                      </tr>
+                      <tr>
+                        <td>Сырьё</td>
+                        <td>Гранулы ПВД</td>
+                        <td>0.1 кг</td>
+                        <td><a href="#" class="btn btn-danger btn-sm">×</a></td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -144,8 +170,18 @@
                   <table>
                     <thead><tr><th>Тип</th><th>Наименование</th><th>Количество</th><th></th></tr></thead>
                     <tbody>
-                      <tr><td>Хим. элемент</td><td>Композиция ПВД</td><td><input type="number" step="any" value="0.5" style="width:80px;"> кг</td><td><a href="#" class="btn btn-danger btn-sm">×</a></td></tr>
-                      <tr><td>Сырьё</td><td>Гранулы ПВД</td><td><input type="number" step="any" value="0.1" style="width:80px;"> кг</td><td><a href="#" class="btn btn-danger btn-sm">×</a></td></tr>
+                      <tr>
+                        <td>Хим. элемент <span class="confirmed-badge">✓</span></td>
+                        <td>Композиция ПВД</td>
+                        <td><input type="number" step="any" value="0.5" style="width:80px;"> кг</td>
+                        <td><a href="#" class="btn btn-danger btn-sm">×</a></td>
+                      </tr>
+                      <tr>
+                        <td>Сырьё</td>
+                        <td>Гранулы ПВД</td>
+                        <td><input type="number" step="any" value="0.1" style="width:80px;"> кг</td>
+                        <td><a href="#" class="btn btn-danger btn-sm">×</a></td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -154,6 +190,27 @@
             </div>
             <div class="form-actions">
               <button type="submit" class="btn btn-primary">Сохранить</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Модалка подтверждения рецепта -->
+      <div id="modal-confirm-recipe-2" class="modal-overlay">
+        <div class="modal">
+          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <h3>Подтвердить рецепт</h3>
+          <p><strong>Рецепт:</strong> Пакет ПВД</p>
+          <p><strong>Товар:</strong> Пакет с ручками</p>
+          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 0.75rem;">После подтверждения рецепт станет доступен для использования в <strong>Заказах</strong>.</p>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Комментарий</label>
+              <textarea placeholder="Необязательно"></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-success">Подтвердить рецепт</button>
               <a href="#" class="btn btn-secondary">Отмена</a>
             </div>
           </form>

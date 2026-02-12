@@ -30,7 +30,14 @@
     </aside>
     <main class="main">
       <h1 class="page-title">Пользователи</h1>
+      <p class="page-desc">Управление сотрудниками и их ролями. Роль определяет доступ к разделам системы и права на выполнение операций.</p>
 
+      <div class="tabs">
+        <a href="#tab-users" class="active">Пользователи</a>
+        <a href="#tab-roles">Роли</a>
+      </div>
+
+      <div id="tab-users" class="tab-panel">
       <div class="card">
         <div class="card-header">
           <h2>Список</h2>
@@ -74,6 +81,88 @@
           </table>
         </div>
       </div>
+      </div>
+
+      <!-- Вкладка Роли -->
+      <div id="tab-roles" class="tab-panel">
+        <div class="card">
+          <div class="card-header">
+            <h2>Роли</h2>
+            <a href="#modal-create-role" class="btn btn-primary">Создать роль</a>
+          </div>
+          <div class="toolbar">
+            <input type="search" class="search" placeholder="Поиск по названию роли">
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Название роли</th>
+                  <th>Описание</th>
+                  <th>Пользователей</th>
+                  <th>Действия</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Администратор</strong></td>
+                  <td>Полный доступ ко всем разделам системы</td>
+                  <td>1</td>
+                  <td class="actions">
+                    <a href="#modal-edit-role-admin" class="btn btn-secondary btn-sm">Редактировать</a>
+                    <a href="#modal-delete-role" class="btn btn-danger btn-sm">Удалить</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Начальник смены</strong></td>
+                  <td>Управление сменами, просмотр производства и заказов</td>
+                  <td>1</td>
+                  <td class="actions">
+                    <a href="#modal-edit-role-shift" class="btn btn-secondary btn-sm">Редактировать</a>
+                    <a href="#modal-delete-role" class="btn btn-danger btn-sm">Удалить</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Химик</strong></td>
+                  <td>Работа с химическими элементами, план заданий</td>
+                  <td>0</td>
+                  <td class="actions">
+                    <a href="#modal-edit-role-chem" class="btn btn-secondary btn-sm">Редактировать</a>
+                    <a href="#modal-delete-role" class="btn btn-danger btn-sm">Удалить</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Технолог</strong></td>
+                  <td>Создание и редактирование рецептов</td>
+                  <td>0</td>
+                  <td class="actions">
+                    <a href="#modal-edit-role-tech" class="btn btn-secondary btn-sm">Редактировать</a>
+                    <a href="#modal-delete-role" class="btn btn-danger btn-sm">Удалить</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Оператор</strong></td>
+                  <td>Выпуск продукции на линии</td>
+                  <td>0</td>
+                  <td class="actions">
+                    <a href="#modal-edit-role-operator" class="btn btn-secondary btn-sm">Редактировать</a>
+                    <a href="#modal-delete-role" class="btn btn-danger btn-sm">Удалить</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Инспектор ОТК</strong></td>
+                  <td>Проверка качества продукции</td>
+                  <td>0</td>
+                  <td class="actions">
+                    <a href="#modal-edit-role-otk" class="btn btn-secondary btn-sm">Редактировать</a>
+                    <a href="#modal-delete-role" class="btn btn-danger btn-sm">Удалить</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 
       <div id="modal-create-user" class="modal-overlay">
         <div class="modal">
@@ -98,7 +187,12 @@
                 <option>Администратор</option>
                 <option>Начальник смены</option>
                 <option>Оператор</option>
+                <option>Химик</option>
+                <option>Технолог</option>
                 <option>Инспектор ОТК</option>
+                <option>Кладовщик</option>
+                <option>Менеджер</option>
+                <option>Планировщик</option>
               </select>
             </div>
             <div class="form-actions">
@@ -196,6 +290,246 @@
               <a href="#" class="btn btn-secondary">Отмена</a>
             </div>
           </form>
+        </div>
+      </div>
+
+      <!-- Модалки для ролей -->
+      <div id="modal-create-role" class="modal-overlay">
+        <div class="modal modal-access">
+          <a href="#" class="modal-close">×</a>
+          <h3>Создать роль</h3>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Название роли</label>
+              <input type="text" placeholder="Например: Менеджер по продажам" required>
+            </div>
+            <div class="form-row">
+              <label>Описание</label>
+              <textarea placeholder="Краткое описание роли и её функций"></textarea>
+            </div>
+            <div class="form-row">
+              <label>Доступы к разделам</label>
+              <div class="access-form" style="margin-top: 0.5rem;">
+                <label class="access-check"><input type="checkbox" name="access" value="users"> Пользователи</label>
+                <label class="access-check"><input type="checkbox" name="access" value="lines"> Линии</label>
+                <label class="access-check"><input type="checkbox" name="access" value="materials"> Склад сырья</label>
+                <label class="access-check"><input type="checkbox" name="access" value="chemistry"> Хим. элементы</label>
+                <label class="access-check"><input type="checkbox" name="access" value="recipes"> Рецепты</label>
+                <label class="access-check"><input type="checkbox" name="access" value="shifts"> Смены</label>
+                <label class="access-check"><input type="checkbox" name="access" value="orders"> Заказы</label>
+                <label class="access-check"><input type="checkbox" name="access" value="production"> Производство</label>
+                <label class="access-check"><input type="checkbox" name="access" value="otk"> ОТК</label>
+                <label class="access-check"><input type="checkbox" name="access" value="warehouse"> Склад ГП</label>
+                <label class="access-check"><input type="checkbox" name="access" value="sales"> Продажа</label>
+                <label class="access-check"><input type="checkbox" name="access" value="shipment"> Отгрузка</label>
+                <label class="access-check"><input type="checkbox" name="access" value="clients"> База клиентов</label>
+                <label class="access-check"><input type="checkbox" name="access" value="analytics"> Аналитика</label>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Создать роль</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="modal-edit-role-admin" class="modal-overlay">
+        <div class="modal modal-access">
+          <a href="#" class="modal-close">×</a>
+          <h3>Редактировать роль: Администратор</h3>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Название роли</label>
+              <input type="text" value="Администратор" required>
+            </div>
+            <div class="form-row">
+              <label>Описание</label>
+              <textarea>Полный доступ ко всем разделам системы</textarea>
+            </div>
+            <div class="form-row">
+              <label>Доступы к разделам</label>
+              <div class="access-form" style="margin-top: 0.5rem;">
+                <label class="access-check"><input type="checkbox" name="access" value="users" checked> Пользователи</label>
+                <label class="access-check"><input type="checkbox" name="access" value="lines" checked> Линии</label>
+                <label class="access-check"><input type="checkbox" name="access" value="materials" checked> Склад сырья</label>
+                <label class="access-check"><input type="checkbox" name="access" value="chemistry" checked> Хим. элементы</label>
+                <label class="access-check"><input type="checkbox" name="access" value="recipes" checked> Рецепты</label>
+                <label class="access-check"><input type="checkbox" name="access" value="shifts" checked> Смены</label>
+                <label class="access-check"><input type="checkbox" name="access" value="orders" checked> Заказы</label>
+                <label class="access-check"><input type="checkbox" name="access" value="production" checked> Производство</label>
+                <label class="access-check"><input type="checkbox" name="access" value="otk" checked> ОТК</label>
+                <label class="access-check"><input type="checkbox" name="access" value="warehouse" checked> Склад ГП</label>
+                <label class="access-check"><input type="checkbox" name="access" value="sales" checked> Продажа</label>
+                <label class="access-check"><input type="checkbox" name="access" value="shipment" checked> Отгрузка</label>
+                <label class="access-check"><input type="checkbox" name="access" value="clients" checked> База клиентов</label>
+                <label class="access-check"><input type="checkbox" name="access" value="analytics" checked> Аналитика</label>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Сохранить</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="modal-edit-role-shift" class="modal-overlay">
+        <div class="modal modal-access">
+          <a href="#" class="modal-close">×</a>
+          <h3>Редактировать роль: Начальник смены</h3>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Название роли</label>
+              <input type="text" value="Начальник смены" required>
+            </div>
+            <div class="form-row">
+              <label>Описание</label>
+              <textarea>Управление сменами, просмотр производства и заказов</textarea>
+            </div>
+            <div class="form-row">
+              <label>Доступы к разделам</label>
+              <div class="access-form" style="margin-top: 0.5rem;">
+                <label class="access-check"><input type="checkbox" name="access" value="lines" checked> Линии</label>
+                <label class="access-check"><input type="checkbox" name="access" value="shifts" checked> Смены</label>
+                <label class="access-check"><input type="checkbox" name="access" value="orders" checked> Заказы</label>
+                <label class="access-check"><input type="checkbox" name="access" value="production" checked> Производство</label>
+                <label class="access-check"><input type="checkbox" name="access" value="otk" checked> ОТК</label>
+                <label class="access-check"><input type="checkbox" name="access" value="warehouse" checked> Склад ГП</label>
+                <label class="access-check"><input type="checkbox" name="access" value="analytics"> Аналитика</label>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Сохранить</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="modal-edit-role-chem" class="modal-overlay">
+        <div class="modal modal-access">
+          <a href="#" class="modal-close">×</a>
+          <h3>Редактировать роль: Химик</h3>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Название роли</label>
+              <input type="text" value="Химик" required>
+            </div>
+            <div class="form-row">
+              <label>Описание</label>
+              <textarea>Работа с химическими элементами, план заданий</textarea>
+            </div>
+            <div class="form-row">
+              <label>Доступы к разделам</label>
+              <div class="access-form" style="margin-top: 0.5rem;">
+                <label class="access-check"><input type="checkbox" name="access" value="materials" checked> Склад сырья</label>
+                <label class="access-check"><input type="checkbox" name="access" value="chemistry" checked> Хим. элементы</label>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Сохранить</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="modal-edit-role-tech" class="modal-overlay">
+        <div class="modal modal-access">
+          <a href="#" class="modal-close">×</a>
+          <h3>Редактировать роль: Технолог</h3>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Название роли</label>
+              <input type="text" value="Технолог" required>
+            </div>
+            <div class="form-row">
+              <label>Описание</label>
+              <textarea>Создание и редактирование рецептов</textarea>
+            </div>
+            <div class="form-row">
+              <label>Доступы к разделам</label>
+              <div class="access-form" style="margin-top: 0.5rem;">
+                <label class="access-check"><input type="checkbox" name="access" value="materials" checked> Склад сырья</label>
+                <label class="access-check"><input type="checkbox" name="access" value="chemistry" checked> Хим. элементы</label>
+                <label class="access-check"><input type="checkbox" name="access" value="recipes" checked> Рецепты</label>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Сохранить</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="modal-edit-role-operator" class="modal-overlay">
+        <div class="modal modal-access">
+          <a href="#" class="modal-close">×</a>
+          <h3>Редактировать роль: Оператор</h3>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Название роли</label>
+              <input type="text" value="Оператор" required>
+            </div>
+            <div class="form-row">
+              <label>Описание</label>
+              <textarea>Выпуск продукции на линии</textarea>
+            </div>
+            <div class="form-row">
+              <label>Доступы к разделам</label>
+              <div class="access-form" style="margin-top: 0.5rem;">
+                <label class="access-check"><input type="checkbox" name="access" value="orders" checked> Заказы</label>
+                <label class="access-check"><input type="checkbox" name="access" value="production" checked> Производство</label>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Сохранить</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="modal-edit-role-otk" class="modal-overlay">
+        <div class="modal modal-access">
+          <a href="#" class="modal-close">×</a>
+          <h3>Редактировать роль: Инспектор ОТК</h3>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Название роли</label>
+              <input type="text" value="Инспектор ОТК" required>
+            </div>
+            <div class="form-row">
+              <label>Описание</label>
+              <textarea>Проверка качества продукции</textarea>
+            </div>
+            <div class="form-row">
+              <label>Доступы к разделам</label>
+              <div class="access-form" style="margin-top: 0.5rem;">
+                <label class="access-check"><input type="checkbox" name="access" value="production" checked> Производство</label>
+                <label class="access-check"><input type="checkbox" name="access" value="otk" checked> ОТК</label>
+                <label class="access-check"><input type="checkbox" name="access" value="warehouse" checked> Склад ГП</label>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Сохранить</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="modal-delete-role" class="modal-overlay">
+        <div class="modal">
+          <a href="#" class="modal-close">×</a>
+          <h3>Удалить роль?</h3>
+          <p>Если роль используется пользователями, удаление может быть ограничено. Пользователи с этой ролью останутся без роли.</p>
+          <div class="modal-actions">
+            <a href="#" class="btn btn-danger">Удалить</a>
+            <a href="#" class="btn btn-secondary">Отмена</a>
+          </div>
         </div>
       </div>
     </main>

@@ -30,6 +30,7 @@
     </aside>
     <main class="main">
       <h1 class="page-title">Хим. элементы</h1>
+      <p class="page-desc">Химики берут сырьё из <strong>Склада сырья</strong>, смешивают и создают химические элементы. Готовые элементы хранятся на складе хим. элементов.</p>
 
       <div class="tabs">
         <a href="#tab-chem-plan" class="active">План</a>
@@ -38,6 +39,9 @@
       </div>
 
       <div id="tab-chem-plan" class="tab-panel">
+        <div class="info-block">
+          <strong>Важно:</strong> Пока задание не подтверждено как "Выполнено", химический элемент не будет доступен в <strong>Рецептах</strong>. Каждый этап должен подтвердить свою работу.
+        </div>
         <div class="card">
           <div class="card-header">
             <h2>План заданий</h2>
@@ -66,7 +70,7 @@
                   <td>Сидоров П.</td>
                   <td class="actions">
                     <a href="#modal-produce-chem" class="btn btn-primary btn-sm">Выполнить</a>
-                    <a href="#" class="btn btn-success btn-sm">Выполнено</a>
+                    <a href="#modal-confirm-chem-1" class="btn btn-success btn-sm">Подтвердить выполнение</a>
                   </td>
                 </tr>
                 <tr>
@@ -85,9 +89,11 @@
                   <td>Композиция ПВД</td>
                   <td>100 кг</td>
                   <td>10.02.2025</td>
-                  <td><span class="badge badge-success">Выполнено</span></td>
+                  <td><span class="badge badge-success">Выполнено <span class="confirmed-badge">Подтверждено</span></span></td>
                   <td>Сидоров П.</td>
-                  <td class="actions">—</td>
+                  <td class="actions">
+                    <span style="color: var(--success); font-size: 12px;">✓ Доступно для рецептов</span>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -325,11 +331,11 @@
               <input type="number" step="any" min="0.01" value="10"> <span style="margin-left: 0.35rem; color: var(--text-muted);">кг</span>
             </div>
             <div class="form-row">
-              <label>Партии сырья</label>
+              <label>Сырьё со склада сырья (списание)</label>
               <div class="table-wrap">
                 <table>
                   <thead>
-                    <tr><th>Сырьё</th><th>Требуется</th><th>Партия сырья</th><th>Остаток</th></tr>
+                    <tr><th>Сырьё</th><th>Требуется</th><th>Партия со склада сырья</th><th>Остаток на складе</th></tr>
                   </thead>
                   <tbody>
                     <tr>
@@ -349,11 +355,45 @@
               </div>
             </div>
             <div class="form-row">
+              <label>Результат</label>
+              <div style="padding: 0.5rem; background: rgba(88, 166, 255, 0.1); border-left: 3px solid var(--accent); font-size: 12px; color: var(--text-muted);">
+                <strong>Важно:</strong> После создания партии нужно вернуться к заданию и нажать <strong>"Подтвердить выполнение"</strong>. Только после подтверждения химический элемент станет доступен в разделе <strong>Рецепты</strong>.
+              </div>
+            </div>
+            <div class="form-row">
               <label>Номер партии</label>
               <input type="text" value="CHEM-002-20250211">
             </div>
             <div class="form-actions">
               <button type="submit" class="btn btn-primary">Создать партию</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Модалка подтверждения выполнения -->
+      <div id="modal-confirm-chem-1" class="modal-overlay">
+        <div class="modal">
+          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <h3>Подтвердить выполнение</h3>
+          <p><strong>Задание #1:</strong> Композиция ПВД, 200 кг</p>
+          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 0.75rem;">После подтверждения химический элемент поступит на склад хим. элементов и станет доступен для использования в <strong>Рецептах</strong>.</p>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Партия хим. элемента</label>
+              <input type="text" value="CHEM-001-20250211" required>
+            </div>
+            <div class="form-row">
+              <label>Количество создано</label>
+              <input type="number" step="any" min="0.01" value="200"> <span style="margin-left: 0.5rem; color: var(--text-muted);">кг</span>
+            </div>
+            <div class="form-row">
+              <label>Комментарий</label>
+              <textarea placeholder="Необязательно"></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-success">Подтвердить выполнение</button>
               <a href="#" class="btn btn-secondary">Отмена</a>
             </div>
           </form>

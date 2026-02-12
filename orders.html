@@ -30,7 +30,11 @@
     </aside>
     <main class="main">
       <h1 class="page-title">Заказы</h1>
-      <p class="page-desc">План производства. Заказы в работе выполняются в <strong>Производство</strong>.</p>
+      <p class="page-desc">Планировщик создаёт заказ: выбирает <strong>Рецепт</strong>, <strong>Линию</strong> и <strong>Количество</strong>. Заказы в работе выполняются в <strong>Производство</strong>.</p>
+
+      <div class="info-block">
+        <strong>Статусы заказов:</strong> <span class="badge badge-default">Создан</span> → <span class="badge badge-warning">В работе</span> (после подтверждения) → <span class="badge badge-success">Готово</span>. Пока заказ не подтверждён, он недоступен в <strong>Производстве</strong>.
+      </div>
 
       <div class="card flow-hint">
         <span class="flow-from">Поступает из: <a href="recipes.html">Рецепты</a>, <a href="lines.html">Линии</a>, <a href="shifts.html">Смены</a></span>
@@ -85,17 +89,21 @@
                 <th>Линия</th>
                 <th>Кто создал</th>
                 <th>Дата</th>
+                <th>Действия</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><span class="badge badge-warning">В работе</span></td>
+                <td><span class="badge badge-warning">В работе <span class="confirmed-badge">✓</span></span></td>
                 <td>Плёнка ПВД 50 мкм</td>
                 <td>Плёнка ПВД</td>
                 <td>1000</td>
                 <td>Линия экструзии №1</td>
                 <td>Петрова А.</td>
                 <td>11.02.2025</td>
+                <td class="actions">
+                  <span style="color: var(--success); font-size: 12px;">✓ Доступен в производстве</span>
+                </td>
               </tr>
               <tr>
                 <td><span class="badge badge-default">Создан</span></td>
@@ -105,15 +113,19 @@
                 <td>Линия выдува №2</td>
                 <td>Иванов И.</td>
                 <td>10.02.2025</td>
+                <td class="actions">
+                  <a href="#modal-confirm-order-2" class="btn btn-success btn-sm">Подтвердить заказ</a>
+                </td>
               </tr>
               <tr>
-                <td><span class="badge badge-success">Готово</span></td>
+                <td><span class="badge badge-success">Готово <span class="confirmed-badge">✓</span></span></td>
                 <td>Плёнка ПВД 50 мкм</td>
                 <td>Плёнка ПВД</td>
                 <td>500</td>
                 <td>Линия экструзии №1</td>
                 <td>Иванов И.</td>
                 <td>09.02.2025</td>
+                <td class="actions">—</td>
               </tr>
             </tbody>
           </table>
@@ -145,6 +157,29 @@
             </div>
             <div class="form-actions">
               <button type="submit" class="btn btn-primary">Создать</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Модалка подтверждения заказа -->
+      <div id="modal-confirm-order-2" class="modal-overlay">
+        <div class="modal">
+          <a href="#" style="float:right; color: var(--text-muted); text-decoration: none;">×</a>
+          <h3>Подтвердить заказ</h3>
+          <p><strong>Заказ:</strong> Пакет с ручками</p>
+          <p><strong>Рецепт:</strong> Пакет ПВД</p>
+          <p><strong>Линия:</strong> Линия выдува №2</p>
+          <p><strong>План:</strong> 2000 шт</p>
+          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 0.75rem;">После подтверждения заказ перейдёт в статус "В работе" и станет доступен в разделе <strong>Производство</strong>.</p>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Комментарий</label>
+              <textarea placeholder="Необязательно"></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-success">Подтвердить заказ</button>
               <a href="#" class="btn btn-secondary">Отмена</a>
             </div>
           </form>

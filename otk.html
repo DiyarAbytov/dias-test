@@ -30,7 +30,11 @@
     </aside>
     <main class="main">
       <h1 class="page-title">ОТК</h1>
-      <p class="page-desc">Проверка партий. Принятое передаётся на <strong>Склад ГП</strong>.</p>
+      <p class="page-desc">Проверка фактов: <strong>СКОЛЬКО БРАК И СКОЛЬКО ПРИНЯТО</strong>. После подтверждения принятое передаётся на <strong>Склад ГП</strong>.</p>
+
+      <div class="info-block">
+        <strong>Статусы:</strong> <span class="badge badge-warning">Ожидает проверки</span> → <span class="badge badge-success">Принято</span> (передано на Склад ГП) / <span class="badge badge-danger">Брак</span>. Каждая проверка должна быть подтверждена.
+      </div>
 
       <div class="card flow-hint">
         <span class="flow-from">Поступает из: <a href="production.html">Производство</a></span>
@@ -51,6 +55,7 @@
             <table>
               <thead>
                 <tr>
+                  <th>Статус</th>
                   <th>Заказ (продукт)</th>
                   <th>Количество</th>
                   <th>Оператор</th>
@@ -60,6 +65,7 @@
               </thead>
               <tbody>
                 <tr>
+                  <td><span class="badge badge-warning">Ожидает проверки</span></td>
                   <td>Плёнка ПВД 50 мкм</td>
                   <td>50 шт</td>
                   <td>Петрова Анна</td>
@@ -95,14 +101,14 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><span class="badge badge-success">Принято</span></td>
+                  <td><span class="badge badge-success">Принято <span class="confirmed-badge">✓</span></span></td>
                   <td>Плёнка ПВД 50 мкм</td>
                   <td>50</td>
                   <td>0</td>
                   <td>—</td>
                   <td>Иванов Иван</td>
                   <td>09.02.2025</td>
-                  <td>—</td>
+                  <td>✓ Передано на Склад ГП</td>
                 </tr>
               </tbody>
             </table>
@@ -117,14 +123,15 @@
           <p><strong>Продукт:</strong> Плёнка ПВД 50 мкм</p>
           <p><strong>Оператор:</strong> Петрова Анна</p>
           <p><strong>Количество произведено:</strong> 50 шт</p>
+          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 0.75rem;">Проверьте факты: <strong>СКОЛЬКО БРАК И СКОЛЬКО ПРИНЯТО</strong>. После подтверждения принятое передаётся на <strong>Склад ГП</strong>.</p>
           <form class="form-grid" style="margin-top: 1rem;">
             <div class="form-row">
               <label>Принято (шт)</label>
-              <input type="number" min="0" value="50">
+              <input type="number" min="0" value="50" required>
             </div>
             <div class="form-row">
               <label>Брак (шт)</label>
-              <input type="number" min="0" value="0">
+              <input type="number" min="0" value="0" required>
             </div>
             <div class="form-row">
               <label>Причина брака</label>
@@ -135,6 +142,10 @@
               <textarea placeholder="Необязательно"></textarea>
             </div>
             <div class="form-actions">
+              <button type="submit" name="action" value="accept" class="btn btn-success">Подтвердить: Принято</button>
+              <button type="submit" name="action" value="reject" class="btn btn-danger">Подтвердить: Брак</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
               <button type="submit" class="btn btn-primary">Сохранить</button>
               <a href="#" class="btn btn-secondary">Отмена</a>
             </div>
