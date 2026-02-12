@@ -127,11 +127,18 @@
           <form class="form-grid" style="margin-top: 1rem;">
             <div class="form-row">
               <label>Принято (шт)</label>
-              <input type="number" min="0" value="50" required>
+              <input type="number" min="0" value="50" required id="otk-accepted">
             </div>
             <div class="form-row">
               <label>Брак (шт)</label>
-              <input type="number" min="0" value="0" required>
+              <input type="number" min="0" value="0" required id="otk-rejected">
+            </div>
+            <div class="form-row">
+              <label>Итого</label>
+              <span id="otk-total" style="color: var(--text-muted);">50 шт (должно быть 50 шт)</span>
+            </div>
+            <div class="warning-block" id="otk-warning" style="display: none; margin-top: 0.5rem;">
+              <strong>Ошибка:</strong> Сумма "Принято" + "Брак" должна равняться количеству произведённого (50 шт)!
             </div>
             <div class="form-row">
               <label>Причина брака</label>

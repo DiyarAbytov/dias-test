@@ -120,13 +120,17 @@
             <div class="form-row">
               <label>Продукт (со склада ГП)</label>
               <select>
-                <option>Плёнка ПВД 50 мкм</option>
-                <option>Пакет с ручками</option>
+                <option>Плёнка ПВД 50 мкм (остаток: 50 шт, доступно)</option>
+                <option disabled>Пакет с ручками (остаток: 0 шт, недоступно)</option>
               </select>
             </div>
             <div class="form-row">
               <label>Количество</label>
-              <input type="number" min="1" value="50" required>
+              <input type="number" min="1" max="50" value="50" required>
+              <span style="margin-left: 0.5rem; color: var(--text-muted); font-size: 12px;">Макс: 50 шт (доступно на складе)</span>
+            </div>
+            <div class="info-block" style="margin-top: 0.5rem;">
+              <strong>Проверка:</strong> Можно заказать только то, что есть на складе ГП в статусе "Доступна".
             </div>
             <div class="form-row">
               <label>Комментарий</label>
@@ -149,8 +153,12 @@
             <div class="form-row">
               <label>Партия ГП</label>
               <select>
-                <option>FG-001-20250209 — Плёнка ПВД 50 мкм, остаток 50</option>
+                <option>FG-001-20250209 — Плёнка ПВД 50 мкм, остаток 50 шт (доступно)</option>
+                <option disabled>FG-002-20250210 — Плёнка ПВД 50 мкм, остаток 0 шт (зарезервировано)</option>
               </select>
+            </div>
+            <div class="info-block" style="margin-top: 0.5rem;">
+              <strong>Важно:</strong> Для резерва доступны только партии ГП в статусе "Доступна".
             </div>
             <div class="form-actions">
               <button type="submit" class="btn btn-primary">Зарезервировать</button>

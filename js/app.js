@@ -107,5 +107,47 @@
         });
       }
     });
+
+    // Валидация ОТК: сумма принято + брак должна равняться произведённому
+    var otkAccepted = document.getElementById('otk-accepted');
+    var otkRejected = document.getElementById('otk-rejected');
+    var otkTotal = document.getElementById('otk-total');
+    var otkWarning = document.getElementById('otk-warning');
+    var otkForm = otkAccepted ? otkAccepted.closest('form') : null;
+    var producedQty = 50; // Количество произведённого (можно брать из данных)
+
+    if (otkAccepted && otkRejected && otkTotal && otkWarning) {
+      function updateOtkTotal() {
+        var accepted = parseInt(otkAccepted.value) || 0;
+        var rejected = parseInt(otkRejected.value) || 0;
+        var total = accepted + rejected;
+        otkTotal.textContent = total + ' шт (должно быть ' + producedQty + ' шт)';
+        
+        if (total !== producedQty) {
+          otkWarning.style.display = 'block';
+          otkTotal.style.color = 'var(--danger)';
+          if (otkForm) {
+            var submitBtns = otkForm.querySelectorAll('button[type="submit"]');
+            submitBtns.forEach(function(btn) {
+              btn.disabled = true;
+              btn.style.opacity = '0.5';
+            });
+          }
+        } else {
+          otkWarning.style.display = 'none';
+          otkTotal.style.color = 'var(--success)';
+          if (otkForm) {
+            var submitBtns = otkForm.querySelectorAll('button[type="submit"]');
+            submitBtns.forEach(function(btn) {
+              btn.disabled = false;
+              btn.style.opacity = '1';
+            });
+          }
+        }
+      }
+      otkAccepted.addEventListener('input', updateOtkTotal);
+      otkRejected.addEventListener('input', updateOtkTotal);
+      updateOtkTotal();
+    }
   });
 })();
