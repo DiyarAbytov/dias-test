@@ -312,19 +312,34 @@
     function loadClients() {
       var data = Storage.get('clients');
       renderTable(tbody, data, function(item) {
-        return '<td>' + item.name + '</td>' +
-               '<td>' + (item.inn || '—') + '</td>' +
-               '<td>' + (item.contact || '—') + '</td>' +
+        var fio = item.fio || item.contact || '—';
+        var company = item.company || item.name || '—';
+        var displayName = (item.fio || item.contact || item.name || 'Клиент');
+        var safeName = displayName.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        return '<td>' + (fio !== '—' ? fio : (item.name || '—')) + '</td>' +
                '<td>' + (item.phone || '—') + '</td>' +
+               '<td>' + (company !== '—' ? company : (item.name || '—')) + '</td>' +
+               '<td>' + (item.inn || '—') + '</td>' +
                '<td>' + (item.address || '—') + '</td>' +
                '<td class="actions">' +
+               '<a href="#modal-client-history" class="btn btn-secondary btn-sm btn-client-history" data-client-name="' + safeName + '" data-client-id="' + (item.id || '') + '">История</a> ' +
                '<a href="#modal-edit-client" data-id="' + item.id + '" class="btn btn-secondary btn-sm">Редактировать</a> ' +
                '<a href="#modal-delete-client" data-id="' + item.id + '" class="btn btn-danger btn-sm">Удалить</a>' +
                '</td>';
       });
     }
 
-    // Форма обрабатывается универсальной системой
+    // При клике на «История» подставляем имя клиента в заголовок модалки
+    page.addEventListener('click', function(e) {
+      var btn = e.target && e.target.closest('.btn-client-history');
+      if (!btn) return;
+      var name = btn.getAttribute('data-client-name') || 'Клиент';
+      var modal = document.getElementById('modal-client-history');
+      if (modal) {
+        var h3 = modal.querySelector('h3');
+        if (h3) h3.textContent = 'История клиента: ' + (name.replace(/&quot;/g, '"').replace(/&#39;/g, "'"));
+      }
+    });
 
     loadClients();
   }
