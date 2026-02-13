@@ -30,46 +30,86 @@
     </aside>
     <main class="main">
       <h1 class="page-title">Отгрузка</h1>
+      <p class="page-desc">
+        Заказы из <a href="sales.html">Продажи</a> попадают сюда. Цепочка: <strong>К отгрузке</strong> → отгрузка со склада → <strong>Отгружено</strong> (в пути) → отметка о доставке → <strong>Доставлено</strong>.
+      </p>
 
       <div class="flow-hint">
-        <a href="sales.html">Продажа</a> → Отгрузка
+        Продажа → К отгрузке → Отгружено (дата отгрузки) → Доставлено (дата доставки)
       </div>
 
       <div class="tabs">
         <a href="#tab-shipment-pending" class="active">К отгрузке</a>
         <a href="#tab-shipment-done">Отгружено</a>
+        <a href="#tab-shipment-delivered">Доставлено</a>
       </div>
 
+      <!-- К отгрузке: заказы из продажи, ещё не отгружены -->
       <div id="tab-shipment-pending" class="tab-panel">
         <div class="card">
           <div class="card-header">
             <h2>К отгрузке</h2>
-            <a href="#modal-ship" class="btn btn-primary">Отгрузить</a>
+            <span class="text-muted" style="font-size: 13px;">Заказы из продажи, ожидающие отгрузки со склада</span>
+          </div>
+          <div class="toolbar">
+            <input type="search" class="search" placeholder="По клиенту, заказу, продукту…">
           </div>
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Заказ клиента</th>
+                  <th>Заказ</th>
                   <th>Клиент</th>
                   <th>Продукт</th>
                   <th>Кол-во, шт</th>
                   <th>Партия ГП</th>
-                  <th>Дата заказа</th>
+                  <th>Дата продажи</th>
                   <th>Действия</th>
                 </tr>
               </thead>
               <tbody>
+                <tr>
+                  <td>SO-2025-003</td>
+                  <td>Иванов Пётр Сергеевич<br><span class="text-muted" style="font-size: 12px;">ООО «УпаковкаПлюс»</span></td>
+                  <td>Плёнка ПВД 50 мкм</td>
+                  <td>100</td>
+                  <td>FG-001-20250209</td>
+                  <td>13.02.2025</td>
+                  <td class="actions">
+                    <a href="#modal-ship" class="btn btn-primary btn-sm">Отгрузить</a>
+                    <a href="#modal-edit-shipment" class="btn btn-secondary btn-sm">Изменить</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>SO-2025-002</td>
+                  <td>Петрова Анна Ивановна<br><span class="text-muted" style="font-size: 12px;">ИП Петров</span></td>
+                  <td>Пакет с ручками</td>
+                  <td>500</td>
+                  <td>FG-003-20250210</td>
+                  <td>12.02.2025</td>
+                  <td class="actions">
+                    <a href="#modal-ship" class="btn btn-primary btn-sm">Отгрузить</a>
+                    <a href="#modal-edit-shipment" class="btn btn-secondary btn-sm">Изменить</a>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
+          <p class="flow-hint" style="margin-bottom: 0; margin-top: 0.75rem;">
+            Нажмите «Отгрузить» по строке → укажите накладную и дату отгрузки → заказ перейдёт во вкладку «Отгружено».
+          </p>
         </div>
       </div>
 
+      <!-- Отгружено: уже вывезено со склада, в пути или ожидает отметки о доставке -->
       <div id="tab-shipment-done" class="tab-panel">
         <div class="card">
           <div class="card-header">
             <h2>Отгружено</h2>
+            <span class="text-muted" style="font-size: 13px;">Товар отгружен со склада. Отметьте доставку, когда клиент получит заказ.</span>
+          </div>
+          <div class="toolbar">
+            <input type="search" class="search" placeholder="По накладной, клиенту…">
           </div>
           <div class="table-wrap">
             <table>
@@ -80,44 +120,149 @@
                   <th>Клиент</th>
                   <th>Продукт</th>
                   <th>Кол-во, шт</th>
-                  <th>Дата</th>
-                  <th>Кто</th>
+                  <th>Дата отгрузки</th>
+                  <th>Доставка</th>
+                  <th>Действия</th>
                 </tr>
               </thead>
               <tbody>
+                <tr>
+                  <td>SH-2025-001</td>
+                  <td>SO-2025-001</td>
+                  <td>Иванов Пётр Сергеевич</td>
+                  <td>Плёнка ПВД 50 мкм</td>
+                  <td>50</td>
+                  <td>12.02.2025</td>
+                  <td><span class="badge badge-warning">В пути</span></td>
+                  <td class="actions">
+                    <a href="#modal-mark-delivered" class="btn btn-success btn-sm">Отметить доставленным</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="flow-hint" style="margin-bottom: 0; margin-top: 0.75rem;">
+            Когда клиент получил товар — нажмите «Отметить доставленным», укажите дату доставки. Запись перейдёт во вкладку «Доставлено».
+          </p>
+        </div>
+      </div>
+
+      <!-- Доставлено: полный цикл закрыт -->
+      <div id="tab-shipment-delivered" class="tab-panel">
+        <div class="card">
+          <div class="card-header">
+            <h2>Доставлено</h2>
+            <span class="text-muted" style="font-size: 13px;">Заказы, полученные клиентом. Цикл продажа → отгрузка → доставка завершён.</span>
+          </div>
+          <div class="toolbar">
+            <input type="search" class="search" placeholder="По клиенту, накладной, дате…">
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Накладная</th>
+                  <th>Заказ</th>
+                  <th>Клиент</th>
+                  <th>Продукт</th>
+                  <th>Кол-во, шт</th>
+                  <th>Дата отгрузки</th>
+                  <th>Дата доставки</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>SH-2024-089</td>
+                  <td>SO-2024-120</td>
+                  <td>Петрова Анна Ивановна</td>
+                  <td>Плёнка ПВД 30 мкм</td>
+                  <td>80</td>
+                  <td>05.02.2025</td>
+                  <td>07.02.2025</td>
+                </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
 
+      <!-- Модалка: отгрузка (перенос из «К отгрузке» в «Отгружено») -->
       <div id="modal-ship" class="modal-overlay">
         <div class="modal" style="max-width: 480px;">
           <a href="#" class="modal-close">×</a>
-          <h3>Отгрузка</h3>
+          <h3>Отгрузить заказ</h3>
+          <p class="page-desc" style="margin-bottom: 1rem;">Заказ будет перемещён во вкладку «Отгружено». Укажите данные накладной.</p>
           <form class="form-grid">
             <div class="form-row">
               <label>Заказ</label>
-              <span>SO-2025-001 — ООО «УпаковкаПлюс», Плёнка ПВД 50 мкм, 50 шт</span>
+              <span style="color: var(--text-secondary); font-size: 13px;">SO-2025-003 — Иванов Пётр Сергеевич, Плёнка ПВД 50 мкм, 100 шт</span>
             </div>
             <div class="form-row">
-              <label>Накладная</label>
-              <input type="text" placeholder="SH-2025-002">
+              <label>Номер накладной</label>
+              <input type="text" placeholder="SH-2025-004" required>
             </div>
             <div class="form-row">
-              <label>Дата</label>
+              <label>Дата отгрузки</label>
               <input type="date" required>
             </div>
             <div class="form-row">
-              <label>Адрес</label>
-              <input type="text" value="">
+              <label>Адрес доставки</label>
+              <input type="text" placeholder="г. Москва, ул. Складская, 1">
+            </div>
+            <div class="form-row">
+              <label>Комментарий</label>
+              <textarea placeholder="Транспорт, получатель…"></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Подтвердить отгрузку</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Модалка: отметить доставленным (перенос из «Отгружено» в «Доставлено») -->
+      <div id="modal-mark-delivered" class="modal-overlay">
+        <div class="modal" style="max-width: 420px;">
+          <a href="#" class="modal-close">×</a>
+          <h3>Отметить доставленным</h3>
+          <p class="page-desc" style="margin-bottom: 1rem;">Клиент получил товар. Запись перейдёт во вкладку «Доставлено».</p>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Накладная / заказ</label>
+              <span style="color: var(--text-secondary); font-size: 13px;">SH-2025-001, SO-2025-001 — Иванов Пётр Сергеевич</span>
+            </div>
+            <div class="form-row">
+              <label>Дата доставки</label>
+              <input type="date" required>
+            </div>
+            <div class="form-row">
+              <label>Примечание</label>
+              <input type="text" placeholder="Получено, подпись и т.д.">
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-success">Доставлено</button>
+              <a href="#" class="btn btn-secondary">Отмена</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="modal-edit-shipment" class="modal-overlay">
+        <div class="modal" style="max-width: 480px;">
+          <a href="#" class="modal-close">×</a>
+          <h3>Изменить заказ к отгрузке</h3>
+          <form class="form-grid">
+            <div class="form-row">
+              <label>Адрес доставки</label>
+              <input type="text" placeholder="Адрес">
             </div>
             <div class="form-row">
               <label>Комментарий</label>
               <textarea></textarea>
             </div>
             <div class="form-actions">
-              <button type="submit" class="btn btn-primary">Отгрузить</button>
+              <button type="submit" class="btn btn-primary">Сохранить</button>
               <a href="#" class="btn btn-secondary">Отмена</a>
             </div>
           </form>
@@ -125,7 +270,6 @@
       </div>
     </main>
   </div>
-  <!-- Модули в правильном порядке -->
   <script src="js/storage.js"></script>
   <script src="js/utils.js"></script>
   <script src="js/components.js"></script>

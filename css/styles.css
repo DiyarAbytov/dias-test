@@ -181,6 +181,9 @@ body {
   line-height: 1.6;
   max-width: 56ch;
 }
+.page-desc a { color: var(--accent); text-decoration: none; font-weight: 500; }
+.page-desc a:hover { text-decoration: underline; }
+.text-muted { color: var(--text-muted); }
 
 /* ========== Кнопки ========== */
 .btn {
