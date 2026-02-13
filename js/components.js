@@ -5,6 +5,9 @@
   'use strict';
 
   // ===== Вкладки =====
+  // Запоминаем последнюю вкладку, чтобы при открытой модалке не сбрасывать контент
+  var lastValidTabId = '';
+
   window.initTabs = function() {
     var tabsWrap = document.querySelector('.tabs');
     if (!tabsWrap) return;
@@ -19,15 +22,24 @@
 
     var currentHash = (document.location.hash || '').slice(1);
     var hasValidTab = panelIds.indexOf(currentHash) !== -1;
+    var isModal = currentHash && window.isModalId && window.isModalId(currentHash);
 
-    if (!hasValidTab && firstHash) {
+    // Не подменять hash, если открыта модалка — иначе модалка сразу закрывается и вкладки глючат
+    if (!hasValidTab && firstHash && !isModal) {
       document.location.hash = firstHash;
     }
 
     function updateTabActive() {
-      var id = (document.location.hash || '').slice(1);
+      var hash = (document.location.hash || '').slice(1);
+      var id = hash;
       if (!id || panelIds.indexOf(id) === -1) {
-        id = firstHash;
+        if (hash && window.isModalId && window.isModalId(hash)) {
+          id = lastValidTabId || firstHash;
+        } else {
+          id = firstHash;
+        }
+      } else {
+        lastValidTabId = id;
       }
       tabsWrap.querySelectorAll('a[href^="#"]').forEach(function (a) {
         var href = a.getAttribute('href').slice(1);

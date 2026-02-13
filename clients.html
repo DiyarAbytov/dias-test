@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>База клиентов — DIYAS</title>
+  <title>Клиенты — DIYAS</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body data-page="clients">
@@ -24,12 +24,13 @@
         <a href="warehouse.html">Склад ГП</a>
         <a href="sales.html">Продажа</a>
         <a href="shipment.html">Отгрузка</a>
-        <a href="clients.html" class="active">База клиентов</a>
+        <a href="clients.html" class="active">Клиенты</a>
         <a href="analytics.html">Аналитика</a>
       </nav>
     </aside>
     <main class="main">
-      <h1 class="page-title">База клиентов</h1>
+      <h1 class="page-title">Клиенты</h1>
+      <p class="page-desc">База клиентов. По нажатию на клиента можно открыть историю его покупок.</p>
 
       <div class="card">
         <div class="card-header">
@@ -37,21 +38,45 @@
           <a href="#modal-create-client" class="btn btn-primary">Добавить</a>
         </div>
         <div class="toolbar">
-          <input type="search" class="search" placeholder="Поиск…">
+          <input type="search" class="search" placeholder="Поиск по ФИО, компании, телефону…">
         </div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Название</th>
-                <th>ИНН</th>
-                <th>Контакт</th>
+                <th>ФИО</th>
                 <th>Телефон</th>
+                <th>Компания</th>
+                <th>ИНН</th>
                 <th>Адрес</th>
                 <th>Действия</th>
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <td>Иванов Пётр Сергеевич</td>
+                <td>+7 (495) 123-45-67</td>
+                <td>ООО «УпаковкаПлюс»</td>
+                <td>7707123456</td>
+                <td>г. Москва, ул. Складская, 1</td>
+                <td class="actions">
+                  <a href="#modal-client-history" class="btn btn-secondary btn-sm">История</a>
+                  <a href="#modal-edit-client" class="btn btn-secondary btn-sm">Редактировать</a>
+                  <a href="#modal-delete-client" class="btn btn-danger btn-sm">Удалить</a>
+                </td>
+              </tr>
+              <tr>
+                <td>Петрова Анна Ивановна</td>
+                <td>+7 (495) 987-65-43</td>
+                <td>ИП Петров</td>
+                <td>—</td>
+                <td>г. Москва, пр. Мира, 10</td>
+                <td class="actions">
+                  <a href="#modal-client-history" class="btn btn-secondary btn-sm">История</a>
+                  <a href="#modal-edit-client" class="btn btn-secondary btn-sm">Редактировать</a>
+                  <a href="#modal-delete-client" class="btn btn-danger btn-sm">Удалить</a>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -60,23 +85,23 @@
       <div id="modal-create-client" class="modal-overlay">
         <div class="modal">
           <a href="#" class="modal-close">×</a>
-          <h3>Добавить</h3>
+          <h3>Добавить клиента</h3>
           <form class="form-grid">
             <div class="form-row">
-              <label>Название</label>
-              <input type="text" placeholder="ООО «Название»" required>
+              <label>ФИО</label>
+              <input type="text" placeholder="Иванов Иван Иванович" required>
+            </div>
+            <div class="form-row">
+              <label>Телефон</label>
+              <input type="tel" placeholder="+7 (___) ___-__-__">
+            </div>
+            <div class="form-row">
+              <label>Компания</label>
+              <input type="text" placeholder="ООО «Название»">
             </div>
             <div class="form-row">
               <label>ИНН</label>
               <input type="text" placeholder="ИНН">
-            </div>
-            <div class="form-row">
-              <label>Контакт</label>
-              <input type="text" placeholder="ФИО">
-            </div>
-            <div class="form-row">
-              <label>Телефон</label>
-              <input type="tel" placeholder="+7 …">
             </div>
             <div class="form-row">
               <label>Адрес</label>
@@ -93,23 +118,23 @@
       <div id="modal-edit-client" class="modal-overlay">
         <div class="modal">
           <a href="#" class="modal-close">×</a>
-          <h3>Редактировать</h3>
+          <h3>Редактировать клиента</h3>
           <form class="form-grid">
             <div class="form-row">
-              <label>Название</label>
-              <input type="text" value="" required>
-            </div>
-            <div class="form-row">
-              <label>ИНН</label>
-              <input type="text" value="">
-            </div>
-            <div class="form-row">
-              <label>Контакт</label>
-              <input type="text" value="">
+              <label>ФИО</label>
+              <input type="text" value="Иванов Пётр Сергеевич" required>
             </div>
             <div class="form-row">
               <label>Телефон</label>
-              <input type="tel" value="">
+              <input type="tel" value="+7 (495) 123-45-67">
+            </div>
+            <div class="form-row">
+              <label>Компания</label>
+              <input type="text" value="ООО «УпаковкаПлюс»">
+            </div>
+            <div class="form-row">
+              <label>ИНН</label>
+              <input type="text" value="7707123456">
             </div>
             <div class="form-row">
               <label>Адрес</label>
@@ -120,6 +145,46 @@
               <a href="#" class="btn btn-secondary">Отмена</a>
             </div>
           </form>
+        </div>
+      </div>
+
+      <div id="modal-client-history" class="modal-overlay">
+        <div class="modal" style="max-width: 640px;">
+          <a href="#" class="modal-close">×</a>
+          <h3>История клиента: Иванов Пётр Сергеевич</h3>
+          <p class="page-desc" style="margin-bottom: 1rem;">Покупки по этому клиенту.</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Дата</th>
+                  <th>Продукт</th>
+                  <th>Кол-во</th>
+                  <th>Цена</th>
+                  <th>Сумма</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>12.02.2025</td>
+                  <td>Плёнка ПВД 50 мкм</td>
+                  <td>100</td>
+                  <td>45,00 ₽</td>
+                  <td>4 500 ₽</td>
+                </tr>
+                <tr>
+                  <td>05.02.2025</td>
+                  <td>Пакет с ручками</td>
+                  <td>500</td>
+                  <td>2,80 ₽</td>
+                  <td>1 400 ₽</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-actions" style="margin-top: 1rem;">
+            <a href="#" class="btn btn-secondary">Закрыть</a>
+          </div>
         </div>
       </div>
 
