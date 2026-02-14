@@ -66,6 +66,30 @@
       var data = this.get(key);
       data = data.filter(function(item) { return item.id !== id; });
       this.set(key, data);
+    },
+
+    /**
+     * Получить следующий номер заказа продажи (SO-YYYY-NNN)
+     */
+    getNextOrderNumber: function() {
+      var y = new Date().getFullYear();
+      var key = 'lastOrderNumber_' + y;
+      var n = parseInt(localStorage.getItem(key), 10) || 0;
+      n += 1;
+      localStorage.setItem(key, String(n));
+      return 'SO-' + y + '-' + String(n).padStart(3, '0');
+    },
+
+    /**
+     * Получить следующий номер накладной (SH-YYYY-NNN)
+     */
+    getNextShipmentNumber: function() {
+      var y = new Date().getFullYear();
+      var key = 'lastShipmentNumber_' + y;
+      var n = parseInt(localStorage.getItem(key), 10) || 0;
+      n += 1;
+      localStorage.setItem(key, String(n));
+      return 'SH-' + y + '-' + String(n).padStart(3, '0');
     }
   };
 })();

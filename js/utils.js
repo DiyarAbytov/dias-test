@@ -15,11 +15,12 @@
 
   window.getFieldKey = function(labelText) {
     var map = {
-      'Название': 'name', 'ФИО': 'name', 'Email': 'email', 'Пароль': 'password', 'Роль': 'role',
+      'Название': 'name', 'ФИО': 'fio', 'name': 'name', 'Email': 'email', 'Пароль': 'password', 'Роль': 'role',
       'Ед.': 'unit', 'Кол-во': 'quantity', 'Количество': 'quantity', 'Дата прихода': 'date', 'Дата': 'date',
       'Сырьё': 'material', 'Партия': 'batch', 'Поставщик': 'supplier', 'Комментарий': 'comment',
       'ИНН': 'inn', 'Контакт': 'contact', 'Телефон': 'phone', 'Адрес доставки': 'address', 'Адрес': 'address',
-      'Рецепт': 'recipe', 'Товар': 'product', 'Линия': 'line', 'Срок': 'deadline', 'Исполнитель': 'executor', 'Описание': 'description',
+      'Рецепт': 'recipe', 'Товар': 'product', 'Продукт': 'product', 'Линия': 'line', 'Срок': 'deadline', 'Исполнитель': 'executor', 'Описание': 'description',
+      'Клиент': 'clientId', 'Цена': 'price', 'Номер накладной': 'shipmentNumber', 'Дата отгрузки': 'shipmentDate', 'Дата доставки': 'deliveryDate',
       'Принято': 'accepted', 'Брак': 'rejected', 'Причина брака': 'rejectReason', 'Инспектор': 'inspector', 'Проверено': 'checkedDate'
     };
     return map[labelText] || labelText.toLowerCase().replace(/\s+/g, '_');
@@ -56,10 +57,10 @@
       'production': { 'modal-produce': { storageKey: 'productionBatches', action: 'add' }, 'modal-confirm-production': { storageKey: 'productionBatches', action: 'update' } },
       'otk': { 'modal-check-otk': { storageKey: 'otkChecks', action: 'add' }, 'modal-confirm-otk': { storageKey: 'otkChecks', action: 'update' } },
       'warehouse': { 'modal-add-warehouse': { storageKey: 'warehouseBatches', action: 'add' } },
-      'sales': { 'modal-create-sale': { storageKey: 'sales', action: 'add' } },
+      'sales': { 'modal-create-sale': { storageKey: 'sales', action: 'add' }, 'modal-create-client-sale': { storageKey: 'clients', action: 'add' } },
       'shipment': { 'modal-create-shipment': { storageKey: 'shipments', action: 'add' } },
       'users': { 'modal-create-user': { storageKey: 'users', action: 'add' }, 'modal-edit-user': { storageKey: 'users', action: 'update' }, 'modal-create-role': { storageKey: 'roles', action: 'add' }, 'modal-edit-role': { storageKey: 'roles', action: 'update' }, 'modal-edit-role-admin': { storageKey: 'roles', action: 'update' }, 'modal-edit-role-shift': { storageKey: 'roles', action: 'update' }, 'modal-edit-role-chem': { storageKey: 'roles', action: 'update' }, 'modal-edit-role-tech': { storageKey: 'roles', action: 'update' }, 'modal-edit-role-operator': { storageKey: 'roles', action: 'update' }, 'modal-edit-role-otk': { storageKey: 'roles', action: 'update' } },
-      'clients': { 'modal-add-client': { storageKey: 'clients', action: 'add' }, 'modal-edit-client': { storageKey: 'clients', action: 'update' } },
+      'clients': { 'modal-create-client': { storageKey: 'clients', action: 'add' }, 'modal-add-client': { storageKey: 'clients', action: 'add' }, 'modal-edit-client': { storageKey: 'clients', action: 'update' } },
       'lines': { 'modal-create-line': { storageKey: 'lines', action: 'add' }, 'modal-edit-line': { storageKey: 'lines', action: 'update' } },
       'shifts': { 'modal-open-shift': { storageKey: 'shifts', action: 'add' } }
     };

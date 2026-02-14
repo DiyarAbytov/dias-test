@@ -333,15 +333,283 @@
     page.addEventListener('click', function(e) {
       var btn = e.target && e.target.closest('.btn-client-history');
       if (!btn) return;
+      var clientId = btn.getAttribute('data-client-id') || '';
       var name = btn.getAttribute('data-client-name') || 'Клиент';
       var modal = document.getElementById('modal-client-history');
       if (modal) {
+        modal.dataset.clientId = clientId;
         var h3 = modal.querySelector('h3');
         if (h3) h3.textContent = 'История клиента: ' + (name.replace(/&quot;/g, '"').replace(/&#39;/g, "'"));
+        var tbody = modal.querySelector('tbody');
+        if (tbody) {
+          var sales = Storage.get('sales').filter(function(s) { return (s.clientId || '') === clientId; });
+          sales = sales.slice().sort(function(a, b) { return (b.date || '').localeCompare(a.date || ''); });
+          renderTable(tbody, sales, function(item) {
+            var qty = item.quantity || 0;
+            var price = item.price || 0;
+            var sum = (qty * price).toFixed(2);
+            var dateStr = (item.date || '').split('T')[0] || '—';
+            if (dateStr.length === 10) dateStr = dateStr.split('-').reverse().join('.');
+            return '<td>' + dateStr + '</td><td>' + (item.product || '—') + '</td><td>' + qty + '</td><td>' + (price ? price.toFixed(2) : '—') + ' ₽</td><td>' + sum.replace('.', ',') + ' ₽</td>';
+          });
+        }
       }
     });
 
     loadClients();
+  }
+
+  // ===== Продажи =====
+  window.reloadSales = function() {
+    var page = document.querySelector('body[data-page="sales"]');
+    if (!page) return;
+    initSales();
+  };
+
+  function initSales() {
+    var page = document.querySelector('body[data-page="sales"]');
+    if (!page) return;
+
+    var warehouse = Storage.get('warehouseBatches');
+    var products = [];
+    warehouse.forEach(function(b) {
+      if (b.product && products.indexOf(b.product) === -1) products.push(b.product);
+    });
+    var productSelect = page.querySelector('#form-new-sale select');
+    if (productSelect && productSelect.closest('.form-row') && productSelect.closest('.form-row').querySelector('label').textContent.trim().indexOf('Продукт') !== -1) {
+      var cur = productSelect.value;
+      productSelect.innerHTML = '<option value="">— Выберите продукт —</option>';
+      products.forEach(function(p) {
+        var opt = document.createElement('option');
+        opt.value = p;
+        opt.textContent = p;
+        if (p === cur) opt.selected = true;
+        productSelect.appendChild(opt);
+      });
+    }
+
+    var historyTbody = page.querySelector('#tab-history tbody');
+    if (historyTbody) {
+      var sales = Storage.get('sales');
+      sales = sales.slice().sort(function(a, b) { return (b.date || '').localeCompare(a.date || ''); });
+      renderTable(historyTbody, sales, function(item) {
+        var qty = item.quantity || 0;
+        var price = item.price || 0;
+        var sum = (qty * price).toFixed(2);
+        var dateStr = (item.date || '').split('T')[0] || item.date || '—';
+        if (dateStr.length === 10) dateStr = dateStr.split('-').reverse().join('.');
+        return '<td>' + dateStr + '</td><td>' + (item.clientName || item.client || '—') + '</td><td>' + (item.product || '—') + '</td><td>' + qty + '</td><td>' + price.toFixed(2) + ' ₽</td><td>' + sum.replace('.', ',') + ' ₽</td>';
+      });
+    }
+
+    var form = document.getElementById('form-new-sale');
+    if (form && !form.dataset.salesHandler) {
+      form.dataset.salesHandler = '1';
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var clientSelect = form.querySelectorAll('select')[1] || form.querySelector('select[required]');
+        var productSel = form.querySelector('select');
+        var clientId = clientSelect ? clientSelect.value : '';
+        var product = productSel && productSel.options[productSel.selectedIndex] ? productSel.options[productSel.selectedIndex].textContent.trim() : '';
+        var quantity = parseInt(form.querySelector('input[type="number"]') && form.querySelectorAll('input[type="number"]').length >= 1 ? form.querySelectorAll('input[type="number"]')[0].value : 0, 10) || 0;
+        var price = parseFloat(form.querySelectorAll('input[type="number"]')[1] ? form.querySelectorAll('input[type="number"]')[1].value : 0, 10) || 0;
+        if (!clientId || !product || quantity <= 0) {
+          alert('Заполните клиента, продукт и количество');
+          return false;
+        }
+        var clients = Storage.get('clients');
+        var client = clients.find(function(c) { return (c.id || c.name) === clientId; });
+        var clientName = client ? ((client.contact || client.fio) + (client.name && client.contact ? ' (' + client.name + ')' : '')) : clientId;
+        var d = new Date().toISOString().split('T')[0];
+        var orderNumber = Storage.getNextOrderNumber && Storage.getNextOrderNumber();
+        if (!orderNumber) orderNumber = 'SO-' + new Date().getFullYear() + '-' + String(Storage.get('sales').length + 1).padStart(3, '0');
+        var sale = Storage.add('sales', {
+          orderNumber: orderNumber,
+          clientId: clientId,
+          clientName: clientName,
+          product: product,
+          quantity: quantity,
+          price: price,
+          date: d
+        });
+        Storage.add('shipments', {
+          saleId: sale.id,
+          orderNumber: orderNumber,
+          clientId: clientId,
+          clientName: clientName,
+          product: product,
+          quantity: quantity,
+          status: 'pending',
+          date: d
+        });
+        form.reset();
+        initSales();
+        if (window.reloadShipment) window.reloadShipment();
+        alert('Продажа оформлена. Заказ ' + orderNumber + ' добавлен в «К отгрузке».');
+        return false;
+      });
+    }
+  }
+
+  // ===== Отгрузка =====
+  window.reloadShipment = function() {
+    var page = document.querySelector('body[data-page="shipment"]');
+    if (!page) return;
+    initShipment();
+  };
+
+  function initShipment() {
+    var page = document.querySelector('body[data-page="shipment"]');
+    if (!page) return;
+
+    var shipments = Storage.get('shipments');
+    var pending = shipments.filter(function(s) { return (s.status || '') === 'pending'; });
+    var shipped = shipments.filter(function(s) { return (s.status || '') === 'shipped'; });
+    var delivered = shipments.filter(function(s) { return (s.status || '') === 'delivered'; });
+
+    var tbodyPending = page.querySelector('#tab-shipment-pending tbody');
+    var tbodyDone = page.querySelector('#tab-shipment-done tbody');
+    var tbodyDelivered = page.querySelector('#tab-shipment-delivered tbody');
+
+    if (tbodyPending) {
+      renderTable(tbodyPending, pending, function(item) {
+        var dateStr = (item.date || '').split('T')[0] || '—';
+        if (dateStr.length === 10) dateStr = dateStr.split('-').reverse().join('.');
+        return '<td>' + (item.orderNumber || '—') + '</td>' +
+          '<td>' + (item.clientName || item.client || '—') + '</td>' +
+          '<td>' + (item.product || '—') + '</td>' +
+          '<td>' + (item.quantity || '—') + '</td>' +
+          '<td>—</td>' +
+          '<td>' + dateStr + '</td>' +
+          '<td class="actions">' +
+          '<a href="#modal-ship" class="btn btn-primary btn-sm btn-ship-one" data-shipment-id="' + (item.id || '') + '">Отгрузить</a> ' +
+          '<a href="#modal-edit-shipment" class="btn btn-secondary btn-sm">Изменить</a>' +
+          '</td>';
+      });
+    }
+    if (tbodyDone) {
+      renderTable(tbodyDone, shipped, function(item) {
+        var shipDate = (item.shipmentDate || item.date || '').toString().split('T')[0] || '—';
+        if (shipDate.length === 10) shipDate = shipDate.split('-').reverse().join('.');
+        return '<td>' + (item.shipmentNumber || '—') + '</td>' +
+          '<td>' + (item.orderNumber || '—') + '</td>' +
+          '<td>' + (item.clientName || item.client || '—') + '</td>' +
+          '<td>' + (item.product || '—') + '</td>' +
+          '<td>' + (item.quantity || '—') + '</td>' +
+          '<td>' + shipDate + '</td>' +
+          '<td><span class="badge badge-warning">В пути</span></td>' +
+          '<td class="actions">' +
+          '<a href="#modal-mark-delivered" class="btn btn-success btn-sm btn-mark-delivered" data-shipment-id="' + (item.id || '') + '">Отметить доставленным</a>' +
+          '</td>';
+      });
+    }
+    if (tbodyDelivered) {
+      renderTable(tbodyDelivered, delivered, function(item) {
+        var shipDate = (item.shipmentDate || '').toString().split('T')[0] || '—';
+        var delDate = (item.deliveryDate || '').toString().split('T')[0] || '—';
+        if (shipDate.length === 10) shipDate = shipDate.split('-').reverse().join('.');
+        if (delDate.length === 10) delDate = delDate.split('-').reverse().join('.');
+        return '<td>' + (item.shipmentNumber || '—') + '</td>' +
+          '<td>' + (item.orderNumber || '—') + '</td>' +
+          '<td>' + (item.clientName || item.client || '—') + '</td>' +
+          '<td>' + (item.product || '—') + '</td>' +
+          '<td>' + (item.quantity || '—') + '</td>' +
+          '<td>' + shipDate + '</td>' +
+          '<td>' + delDate + '</td>';
+      });
+    }
+
+    page.querySelectorAll('.btn-ship-one').forEach(function(btn) {
+      btn.onclick = function() {
+        var mid = document.getElementById('modal-ship');
+        if (mid) mid.dataset.shipmentId = btn.getAttribute('data-shipment-id');
+      };
+    });
+    page.querySelectorAll('.btn-mark-delivered').forEach(function(btn) {
+      btn.onclick = function() {
+        var mid = document.getElementById('modal-mark-delivered');
+        if (mid) mid.dataset.shipmentId = btn.getAttribute('data-shipment-id');
+      };
+    });
+
+    var shipForm = document.querySelector('#modal-ship form');
+    if (shipForm && !shipForm.dataset.shipHandler) {
+      shipForm.dataset.shipHandler = '1';
+      shipForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var modal = document.getElementById('modal-ship');
+        var sid = modal && modal.dataset.shipmentId;
+        if (!sid) { alert('Выберите строку для отгрузки'); return false; }
+        var numInput = shipForm.querySelector('input[type="text"]');
+        var dateInput = shipForm.querySelector('input[type="date"]');
+        var shipNumber = (numInput && numInput.value.trim()) || (Storage.getNextShipmentNumber && Storage.getNextShipmentNumber());
+        if (!shipNumber) shipNumber = 'SH-' + new Date().getFullYear() + '-' + String(Storage.get('shipments').length + 1).padStart(3, '0');
+        var shipDate = dateInput && dateInput.value ? dateInput.value : new Date().toISOString().split('T')[0];
+        var ship = Storage.get('shipments').find(function(s) { return s.id === sid; });
+        if (!ship) { alert('Запись не найдена'); return false; }
+        Storage.update('shipments', sid, { status: 'shipped', shipmentNumber: shipNumber, shipmentDate: shipDate });
+        var batches = Storage.get('warehouseBatches');
+        var product = ship.product;
+        var qty = ship.quantity || 0;
+        for (var i = 0; i < batches.length; i++) {
+          if (batches[i].product === product && (batches[i].quantity || 0) >= qty) {
+            var newQty = (batches[i].quantity || 0) - qty;
+            Storage.update('warehouseBatches', batches[i].id, { quantity: newQty });
+            break;
+          }
+        }
+        closeModal();
+        initShipment();
+        alert('Отгрузка подтверждена. Накладная ' + shipNumber);
+        return false;
+      });
+    }
+
+    var delForm = document.querySelector('#modal-mark-delivered form');
+    if (delForm && !delForm.dataset.deliveredHandler) {
+      delForm.dataset.deliveredHandler = '1';
+      delForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var modal = document.getElementById('modal-mark-delivered');
+        var sid = modal && modal.dataset.shipmentId;
+        if (!sid) { alert('Выберите строку'); return false; }
+        var dateInput = delForm.querySelector('input[type="date"]');
+        var delDate = dateInput && dateInput.value ? dateInput.value : new Date().toISOString().split('T')[0];
+        Storage.update('shipments', sid, { status: 'delivered', deliveryDate: delDate });
+        closeModal();
+        initShipment();
+        alert('Доставка отмечена.');
+        return false;
+      });
+    }
+  }
+
+  // ===== Аналитика =====
+  function initAnalytics() {
+    var tbody = document.getElementById('analytics-summary-tbody');
+    if (!tbody) return;
+    var sales = Storage.get('sales');
+    var shipments = Storage.get('shipments');
+    var totalSales = 0;
+    sales.forEach(function(s) {
+      totalSales += (s.quantity || 0) * (s.price || 0);
+    });
+    var pending = shipments.filter(function(s) { return (s.status || '') === 'pending'; }).length;
+    var shipped = shipments.filter(function(s) { return (s.status || '') === 'shipped'; }).length;
+    var delivered = shipments.filter(function(s) { return (s.status || '') === 'delivered'; }).length;
+    var rows = [
+      ['Продажи, шт', sales.reduce(function(sum, s) { return sum + (s.quantity || 0); }, 0), 'Продажа'],
+      ['Продажи, сумма ₽', totalSales.toFixed(2).replace('.', ','), 'Продажа'],
+      ['К отгрузке', pending, 'Отгрузка'],
+      ['Отгружено (в пути)', shipped, 'Отгрузка'],
+      ['Доставлено', delivered, 'Отгрузка']
+    ];
+    tbody.innerHTML = '';
+    rows.forEach(function(r) {
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + r[0] + '</td><td>' + r[1] + '</td><td>' + r[2] + '</td>';
+      tbody.appendChild(tr);
+    });
   }
 
   // ===== Линии =====
@@ -553,20 +821,23 @@
 
   function updateClientSelects() {
     var clients = Storage.get('clients');
-    document.querySelectorAll('.modal select').forEach(function(select) {
+    function fillClientSelect(select) {
       var label = select.closest('.form-row') ? select.closest('.form-row').querySelector('label') : null;
-      if (label && (label.textContent.trim() === 'Клиент' || label.textContent.includes('Клиент'))) {
-        var currentValue = select.value;
-        select.innerHTML = '<option value="">—</option>';
-        clients.forEach(function(c) {
-          var option = document.createElement('option');
-          option.value = c.name;
-          option.textContent = c.name;
-          if (c.name === currentValue) option.selected = true;
-          select.appendChild(option);
-        });
-      }
-    });
+      if (!label || (label.textContent.trim() !== 'Клиент' && !label.textContent.trim().includes('Клиент'))) return;
+      var currentValue = select.value;
+      select.innerHTML = '<option value="">— Выберите клиента —</option>';
+      clients.forEach(function(c) {
+        var option = document.createElement('option');
+        option.value = c.id || c.name;
+        var display = (c.contact || c.fio || c.name) + (c.name && (c.contact || c.fio) && c.name !== (c.contact || c.fio) ? ' (' + c.name + ')' : '');
+        option.textContent = display;
+        if ((c.id || c.name) === currentValue) option.selected = true;
+        select.appendChild(option);
+      });
+    }
+    document.querySelectorAll('.modal select').forEach(fillClientSelect);
+    var saleForm = document.getElementById('form-new-sale');
+    if (saleForm) saleForm.querySelectorAll('select').forEach(fillClientSelect);
   }
 
   function updateLineSelects() {
@@ -792,6 +1063,18 @@
         }
         updateClientSelects();
       }
+      else if (page === 'sales') {
+        if (typeof window.reloadSales === 'function') window.reloadSales();
+        else initSales();
+        updateClientSelects();
+      }
+      else if (page === 'shipment') {
+        if (typeof window.reloadShipment === 'function') window.reloadShipment();
+        else initShipment();
+      }
+      else if (page === 'analytics') {
+        initAnalytics();
+      }
       else if (page === 'lines') {
         if (typeof window.reloadLines === 'function') {
           window.reloadLines();
@@ -916,6 +1199,16 @@
         
         if (id) {
           var storageKey = getDeleteStorageKey(page, modalId);
+          if (storageKey === 'clients') {
+            var sales = Storage.get('sales');
+            var shipments = Storage.get('shipments');
+            var hasSales = sales.some(function(s) { return s.clientId === id; });
+            var hasShipments = shipments.some(function(s) { return s.clientId === id; });
+            if (hasSales || hasShipments) {
+              alert('Нельзя удалить клиента: по нему есть продажи или отгрузки. Можно деактивировать учётную запись вручную.');
+              return;
+            }
+          }
           if (storageKey && confirm('Удалить запись?')) {
             Storage.delete(storageKey, id);
             reloadPageData(page);
@@ -947,6 +1240,9 @@
             var data = Storage.get(storageKey);
             var item = data.find(function(i) { return i.id === id; });
             if (item) {
+              if (storageKey === 'clients') {
+                item = { id: item.id, name: item.contact || item.fio, company: item.name, phone: item.phone, inn: item.inn, address: item.address };
+              }
               fillForm(modal.querySelector('form'), item);
             }
           }
@@ -1758,7 +2054,10 @@
     initClients();
     initLines();
     initChemistryTasks();
-    
+    if (document.body.getAttribute('data-page') === 'sales') initSales();
+    if (document.body.getAttribute('data-page') === 'shipment') initShipment();
+    if (document.body.getAttribute('data-page') === 'analytics') initAnalytics();
+
     // Универсальная загрузка данных для всех страниц
     initUniversalDataLoading();
     
@@ -1957,13 +2256,15 @@
       { id: 's1', line: 'Первая линия', date: d, status: 'Открыта' }
     ]);
     Storage.set('warehouseBatches', [
-      { id: 'w1', product: 'Плёнка ПВД 50 мкм', quantity: 20, status: 'На складе', date: d }
+      { id: 'w1', product: 'Плёнка ПВД 50 мкм', quantity: 100, status: 'Доступна', date: d }
     ]);
     Storage.set('sales', [
-      { id: 'sale1', client: 'ООО Рога и копыта', product: 'Плёнка ПВД 50 мкм', quantity: 10, status: 'Оформлен', date: d }
+      { id: 'sale1', orderNumber: 'SO-2025-001', clientId: 'c1', clientName: 'ООО Рога и копыта', product: 'Плёнка ПВД 50 мкм', quantity: 10, price: 45, date: d },
+      { id: 'sale2', orderNumber: 'SO-2025-002', clientId: 'c2', clientName: 'ИП Петров', product: 'Плёнка ПВД 50 мкм', quantity: 20, price: 42, date: d }
     ]);
     Storage.set('shipments', [
-      { id: 'sh1', client: 'ООО Рога и копыта', product: 'Плёнка ПВД 50 мкм', quantity: 10, date: d, status: 'Отгружено' }
+      { id: 'sh1', saleId: 'sale1', orderNumber: 'SO-2025-001', clientId: 'c1', clientName: 'ООО Рога и копыта', product: 'Плёнка ПВД 50 мкм', quantity: 10, status: 'shipped', shipmentNumber: 'SH-2025-001', shipmentDate: d },
+      { id: 'sh2', saleId: 'sale2', orderNumber: 'SO-2025-002', clientId: 'c2', clientName: 'ИП Петров', product: 'Плёнка ПВД 50 мкм', quantity: 20, status: 'pending' }
     ]);
 
     localStorage.setItem(SEED_FLAG, '1');

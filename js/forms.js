@@ -251,6 +251,11 @@
             if (modalId === 'modal-create-order') {
               formData.status = 'Создан';
             }
+            // Клиент: ФИО -> contact, Компания -> name для совместимости с хранилищем
+            if (config.storageKey === 'clients') {
+              if (formData.name !== undefined) { formData.contact = formData.name; delete formData.name; }
+              if (formData.company !== undefined) { formData.name = formData.company; delete formData.company; }
+            }
             window.Storage.add(config.storageKey, formData);
             // Производство: после выпуска меняем статус заказа на "В работе"
             if (modalId === 'modal-produce') {
@@ -283,7 +288,7 @@
                 window.Storage.add('warehouseBatches', {
                   product: product,
                   quantity: accepted,
-                  status: 'На складе',
+                  status: 'Доступна',
                   date: d,
                   orderId: orderId,
                   batchId: batchId
@@ -292,6 +297,10 @@
             }
           } else if (config.action === 'update' || id) {
             if (id) {
+              if (config.storageKey === 'clients') {
+                if (formData.name !== undefined) { formData.contact = formData.name; delete formData.name; }
+                if (formData.company !== undefined) { formData.name = formData.company; delete formData.company; }
+              }
               window.Storage.update(config.storageKey, id, formData);
             } else {
               return false;
